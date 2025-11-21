@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Clases - CuerpoSano</title>
+    <link rel="stylesheet" href="../HTML/CSS/style.css" />
+  </head>
+
+  <body>
+    <!-- ================= HEADER ================= -->
+    <header class="navbar">
+      <div class="menu-container">
+        <button class="menu-btn" id="menu-btn">☰</button>
+        <div class="logo">CuerpoSano</div>
+      </div>
+
+    <!-- Botón sidebar derecho (solo visible en móvil) -->
+      <button class="menu-btn-right" id="menu-btn-right">☰</button>
+      <nav class="nav-links">
+        <button class="close-btn-right" id="close-btn-right">×</button> <!-- botón cierre -->
+        <a href="index.html">Inicio</a>
+        <a href="horarios.html">Horario</a>
+        <a href="contacto.html">Contacto</a>
+        <button id="modoNocturnoBtn" class="modo-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-toggle-left-icon lucide-toggle-left"><circle cx="9" cy="12" r="3"/><rect width="20" height="14" x="2" y="5" rx="7"/></svg>
+        </button>
+      </nav>
+    </header>
+
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside id="sidebar" class="sidebar">
+      <button class="close-btn" id="close-btn">×</button>
+      <ul>
+        <li><a href="clases.html">Clases</a></li>
+        <li><a href="actividades.html">Actividades</a></li>
+        <li><a href="entrenadores.html">Entrenadores</a></li>
+        <li><a href="miembros.html">Miembros</a></li>
+        <li><a href="membresias.html">Membresías</a></li>
+      <li><a href="reporte-asistencia.html">Asistencias</a></li>
+      <li><a href="reporte-ingresos.html">Ingresos</a></li>
+      </ul>
+    </aside>
+
+    <!-- ================= OVERLAY ================= -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- ================= CONTENIDO PRINCIPAL ================= -->
+    <main class="main-container">
+      <section class="gestor">
+
+        <!-- ===== BOTONES SUPERIORES ===== -->
+        <div class="btn-row">
+          <button id="btnRegistrar" class="btn btn-save">Registrar Clase</button>
+          <h1>Gestión de Clases</h1>
+          <button id="btnConsultar" class="btn btn-save">Consultar Clase</button>
+        </div>
+
+        <!-- ===== MODAL REGISTRO / MODIFICACIÓN ===== -->
+        <div id="modalClase" class="modal">
+          <div class="modal-content" id="claseForm">
+              <input type="hidden" id="claseId" />
+
+              <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" required placeholder="Ej: CrossFit Intermedio" />
+              </div>
+
+              <div class="form-group">
+                <label>Actividades:</label>
+                <div id="listaActividades" class="lista-actividades"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="cupos">Cupos:</label>
+                <input type="number" id="cupos" min="1" required placeholder="Ej: 20" />
+              </div>
+
+              <div class="form-group">
+                <label for="idEntrenador">Entrenador:</label>
+                <input type="text" id="idEntrenador" required placeholder="Ej: Nombre del Entrenador" />
+              </div>
+
+              <!-- ============= NUEVO BLOQUE DE HORARIO ============= -->
+              <div class="form-group">
+                <label for="dia">Día:</label>
+                <select id="dia" required>
+                  <option value="">Seleccione un día</option>
+                  <option value="Lunes">Lunes</option>
+                  <option value="Martes">Martes</option>
+                  <option value="Miércoles">Miércoles</option>
+                  <option value="Jueves">Jueves</option>
+                  <option value="Viernes">Viernes</option>
+                  <option value="Sábado">Sábado</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="horaInicio">Hora de inicio:</label>
+                <input type="time" id="horaInicio" required />
+              </div>
+
+              <div class="form-group">
+                <label for="duracion">Duración (min):</label>
+                <input type="number" id="duracion" min="15" step="5" placeholder="Ej: 60" required />
+              </div>
+
+              <div class="btn-group">
+                <button type="button" id="cancelarBtn" class="btn btn-secondary">Cancelar</button>
+                <button type="button" id="guardarBtn"class="btn btn-save">Guardar</button>
+              </div>
+          </div>
+        </div>
+
+        <!-- ===== MODAL CONSULTA ===== -->
+        <div id="modalConsulta" class="modal">
+          <div class="modal-content small">
+            <h3>Consultar Clase</h3>
+            <input type="text" id="buscarClaseInput" placeholder="Nombre o ID de clase" />
+            <div class="btn-group">
+              <button id="cancelarConsultaBtn" class="btn btn-secondary">Cancelar</button>
+              <button id="confirmarConsultaBtn" class="btn btn-save">Consultar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== MODAL DETALLES ===== -->
+        <div id="modalDetalle" class="modal">
+          <div class="modal-content">
+            <div id="detalleContenido" class="detalle-izquierda"></div>
+            <div class="btn-group">
+              <button id="btnCerrarDetalle" class="btn btn-secondary btn-small">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-delete-icon lucide-delete"><path d="M10 5a2 2 0 0 0-1.344.519l-6.328 5.74a1 1 0 0 0 0 1.481l6.328 5.741A2 2 0 0 0 10 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/><path d="m12 9 6 6"/><path d="m18 9-6 6"/></svg>
+              </button>
+              <button id="btnEditarClase" class="btn btn-edit btn-small">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-pen-line-icon lucide-file-pen-line"><path d="m18.226 5.226-2.52-2.52A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.351"/><path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><path d="M8 18h1"/></svg>
+              </button>
+              <button id="btnEliminarClase" class="btn btn-delete btn-small">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              </button>
+              <button id="btnImprimirDetalle" class="btn-small btn btn-save">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+              </button>
+              <button id="btnVerInscriptos" class="btn btn-save btn-small">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== MODAL INSCRIPTOS ===== -->
+        <div id="modalInscriptos" class="modal">
+          <div class="modal-content detalle-izquierda">
+            <h3>Inscriptos en la Clase</h3>
+            <ul id="listaInscriptos"></ul>
+            <div class="btn-group">
+              <button id="btnCerrarInscriptos" class="btn btn-secondary btn-small">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-delete-icon lucide-delete"><path d="M10 5a2 2 0 0 0-1.344.519l-6.328 5.74a1 1 0 0 0 0 1.481l6.328 5.741A2 2 0 0 0 10 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/><path d="m12 9 6 6"/><path d="m18 9-6 6"/></svg>
+              </button>
+              <button id="btnEliminarMiembro" class="btn btn-delete btn-small">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-minus-icon lucide-user-minus"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+              </button>
+              <button id="btnInscribirMiembro" class="btn btn-save btn-small">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-plus-icon lucide-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== MODAL PEDIR DNI ===== -->
+        <div id="modalPedirDNI" class="modal">
+          <div class="modal-content detalle-izquierda">
+            <h3 id="tituloPedirDNI">Ingrese DNI</h3>
+
+            <input 
+              id="inputDNI"
+              type="number"
+              placeholder="Ingrese DNI"
+              style="width:100%; padding:10px; margin:10px 0; border-radius:5px;"
+            />
+
+            <div class="btn-group">
+              <button id="btnCancelarDNI" class="btn btn-secondary btn-small">Cancelar</button>
+              <button id="btnAceptarDNI" class="btn btn-save btn-small">Aceptar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== LISTADO ===== -->
+        <table id="clasesTabla" class="tabla-gestion">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Actividades</th>
+              <th>Cupo</th>
+              <th>Entrenador</th>
+              <th>Horario</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div id="paginacion" class="pagination"></div>
+      </section>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+      <div class="footer-container">
+        <div class="footer-left">
+          <img
+            src="../ASSETS/img/logo-unaj-2016-01.jpg"
+            alt="icono UNAJ"
+            class="unaj-icon"
+          />
+        </div>
+        <div class="footer-center">
+          <h2>Ingeniería de Software I - UNAJ</h2>
+        </div>
+        <div class="footer-right">
+          <h2>CuerpoSano</h2>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 CuerpoSano. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+
+    <!-- ================= SCRIPTS ================= -->
+    <script src="../HTML/JS/index.js"></script>
+    <script src="../HTML/JS/utils.js"></script>
+    <script src="../HTML/JS/clases.js"></script>
+    <!-- Importo todos los íconos -->
+    <object type="image/svg+xml" data="assets/icons/icons.svg" style="display:none;"></object>
+  </body>
+</html>

@@ -1,0 +1,1544 @@
+/* =========================================================
+   VARIABLES DE COLOR
+========================================================= */
+:root {
+  --bg: #ced4da;           /* Fondo principal */
+  --bg-alt: #e9ecef;      /* Fondo de cards, tablas, formularios */ 
+  --text: #010101;          /* Texto principal */
+  --text-alt: #000000;      /* Texto secundario */
+  --highlight: #0d6efd;    /* Color principal / amarillo */
+  --highlight-hover: #0b5ed7;/* Hover amarillo */
+  --btn-alt: #adb5bd;      /* Botón secundario */
+  --btn-edit: #198754;     /* Botón editar */
+  --btn-delete: #dc3545;   /* Botón eliminar */
+  --border: #f8f9fa;       /* Bordes */
+  --overlay: rgba(33,37,41,0.5); /* Overlay */
+  --card-shadow: rgba(0,0,0,0.15);
+  --hover-bg: #97afd4; /* Verde claro para hover en modo día */
+
+}
+.tabla-gestion tbody tr:hover { 
+  background-color: var(--hover-bg);
+}
+
+/* === Botón Cancelar (solo modo día) === */
+.btn-secondary,
+#cancelarFormBtn {
+  background-color: var(--btn-delete);
+  color: #fff;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.btn-secondary:hover,
+#cancelarFormBtn:hover {
+  background-color: #bb2d3b; /* tono más oscuro al pasar el mouse */
+}
+
+[data-paleta="Nocturno"] {
+  --bg: #111;             
+  --bg-alt: #1e293b;      
+  --text: #ffffff;        
+  --text-alt: #ccc;       
+  --highlight: #fa3715;    
+  --highlight-hover: #fd5f2ffd; 
+  --btn-alt: #333;         
+  --btn-edit: #4ade80;     
+  --btn-delete: #f87171;   
+  --border: #333;          
+  --overlay: rgba(0,0,0,0.5); 
+  --card-shadow: rgba(0,0,0,0.3);
+}
+
+.modo-btn {
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  background-color: rgb(0, 0, 0);
+  transition: background-color 0.3s ease;
+}
+
+.modo-btn:hover {
+  background-color: rgb(0, 0, 0);
+}
+
+
+/* =========================================================
+   RESET Y CONFIGURACIÓN GENERAL
+========================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+  min-height: 100vh;
+}
+
+body {
+  background-color: var(--bg);
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================================
+   HEADER / NAVBAR
+========================================================= */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  color:  #fff;
+  z-index: 1000;
+  background-color: rgb(0, 0, 0); 
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--highlight);
+}
+
+.menu-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color:  #fff;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color:  #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--highlight);
+}
+
+/* Botón derecho (visible solo en pantallas pequeñas) */
+.menu-btn-right {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color:  #fff;
+  cursor: pointer;
+  display: none;
+}
+
+/* Botón de cierre dentro del sidebar derecho */
+.close-btn-right {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color:  #fff;
+  cursor: pointer;
+  display: none; /* Solo se muestra cuando el sidebar esté activo */
+}
+
+/* Mostrar solo en pantallas pequeñas */
+@media (max-width: 768px) {
+  .menu-btn-right {
+    display: block;
+  }
+
+  .nav-links {
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: 100vh;
+    background-color: var(--bg-alt);
+    flex-direction: column;
+    padding: 60px 20px 20px 20px;
+    gap: 20px;
+    box-shadow: -2px 0 5px var(--overlay);
+    transition: right 0.3s ease;
+    z-index: 2000;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  /* Mostrar el botón de cierre solo cuando el menú esté abierto */
+  .nav-links.active .close-btn-right {
+    display: block;
+  }
+
+  .nav-links a {
+    font-size: 1rem;
+    padding: 10px 0;
+    color: var(--text);
+  }
+
+  .close-btn-right {
+    color: var(--text);
+  }
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: var(--bg);
+  color: var(--text);
+  padding: 20px;
+  box-shadow: 2px 0 5px var(--overlay);
+  transition: left 0.3s ease;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin-top: 40px;
+}
+
+.sidebar ul li {
+  margin: 20px 0;
+}
+
+.sidebar ul li a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.sidebar ul li a:hover {
+  color: var(--highlight);
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--text);
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar-left,
+  .sidebar-right {
+    width: 220px;
+  }
+}
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--overlay);
+  display: none;
+  z-index: 900;
+}
+
+.overlay.active {
+  display: block;
+}
+
+/* =========================================================
+   HERO (SLIDER PRINCIPAL)
+========================================================= */
+.hero-slider {
+  position: relative;
+  height: 90vh;
+  overflow: hidden;
+
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.hero-slide .overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--overlay);
+  z-index: 2;
+}
+
+.hero-slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55); /* Ajustá la opacidad aquí */
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 15px  #fff;
+}
+
+.hero-content p {
+  font-size: 1.5rem;
+  color:  #fff;
+  text-shadow: 0 0 8px  #fff;
+}
+
+/* Responsive Hero */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  .hero-content p {
+    font-size: 1rem;
+  }
+}
+
+/* =========================================================
+   SECCIÓN ESTADÍSTICAS
+========================================================= */
+.stats {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: var(--bg);
+}
+
+.stats h2 {
+  color: var(--highlight);
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.stats p {
+  color: var(--text-alt);
+  margin-bottom: 40px;
+}
+
+.stats-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+
+.stat-card {
+  background-color: var(--bg-alt);
+  border-radius: 10px;
+  padding: 25px;
+  width: 200px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-card .circle {
+  width: 35px;
+  height: 35px;
+  background-color: var(--highlight);
+  border-radius: 50%;
+  margin: 0 auto 10px;
+}
+
+.stat-card h3 {
+  font-size: 1.5rem;
+  color: var(--text);
+}
+
+.stat-card p {
+  color: var(--text-alt);
+}
+
+/* =========================================================
+   SECCIÓN ENTRENADORES
+========================================================= */
+.trainers {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: var(--bg);
+}
+
+.trainers h2 {
+  color: var(--highlight);
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.trainers p {
+  color: var(--text-alt);
+  margin-bottom: 40px;
+}
+
+.trainer-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.trainer-card {
+  background-color: var(--bg-alt);
+  box-shadow: 0 4px 8px var(--card-shadow);
+  border-radius: 10px;
+  padding: 30px;
+  width: 220px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.trainer-card:hover {
+  transform: translateY(-5px);
+}
+
+.trainer-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: var(--btn-alt);
+  border: 4px solid var(--highlight);
+  margin: 0 auto 15px;
+}
+
+/* =========================================================
+   MODALES (actualizados para consultas y detalles)
+========================================================= */
+
+/* Contenedor general */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  background:  var(--overlay);
+  animation: fadeIn 0.3s ease;
+}
+
+.modal.show {
+  display: flex;
+}
+
+/* Contenido principal del modal */
+.modal-content {
+  background-color: var(--bg-alt);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 25px var(--card-shadow);
+  width: 90%;
+  max-width: 500px;
+  color: var(--text);
+  position: relative;
+  animation: modalFadeIn 0.3s ease;
+}
+
+.modal-content form {
+  background-color: var(--bg);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px var(--card-shadow);
+}
+
+.modal .btn {
+  width: 45%;
+  text-align: center;
+}
+
+/* Versión más pequeña (modal de consulta) */
+.modal-content.small {
+  max-width: 350px;
+  text-align: center;
+}
+
+/* Animaciones */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Inputs dentro del modal */
+.modal-content input[type="text"],
+.modal-content textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+/* Título del modal */
+.modal-content h3 {
+  color: var(--highlight);
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Cierre del modal */
+.cerrar-modal,
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: var(--text-alt);
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.cerrar-modal:hover,
+.close-modal:hover {
+  color: var(--highlight);
+}
+
+/* Botones dentro del modal */
+.modal .btn-group {
+  display: flex;
+  justify-content: center;   /* Centra horizontalmente */
+  align-items: center;
+  gap: 15px;                 /* Espacio entre los botones */
+  margin-top: 20px;          /* Separación del resto del formulario */
+}
+
+/* Contenido del modal de detalle */
+#detalleContenido p {
+  margin: 8px 0;
+  color: var(--text-alt);
+  font-size: 1rem;
+}
+#detalleEntrenadorContenido p, #detalleEntrenadorContenido ul {
+  margin: 8px 0;
+  color: var(--text-alt);
+  font-size: 1rem;
+}
+
+.modal-confirm {
+  text-align: center;
+}
+
+.modal-confirm h4 {
+  margin-bottom: 15px;
+  color: var(--highlight);
+}
+
+/* =========================================================
+   MODAL DE MIEMBRO (ESTILOS ÚNICOS Y AISLADOS)
+   No afecta a ningún otro modal
+========================================================= */
+
+/* Contenedor del modal miembro */
+.modal-miembro .modal-content {
+  max-width: 900px !important;  /* Más ancho SOLO aquí */
+  width: 90%;
+  padding: 2rem;
+}
+
+/* Doble columna solo dentro de este modal */
+.modal-miembro .form-row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.modal-miembro .form-row .form-group {
+  flex: 1;
+}
+
+/* Inputs dentro del modal miembro */
+.modal-miembro select,
+.modal-miembro input[type="text"],
+.modal-miembro input[type="date"]{
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+}
+.modal-miembro input[type="file"]{
+  width: 100%;
+  padding: 5px;
+  margin: 10px 0 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+/* Botones centrados del modal miembro */
+.modal-miembro .btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+/* Título si querés usarlo */
+.modal-miembro h3 {
+  color: var(--highlight);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* =========================================================
+   SECCIONES CLASES Y ACTIVIDADES
+========================================================= */
+
+.class {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: var(--bg);
+}
+
+.container_Class h2 {
+  color: var(--highlight);
+  margin-bottom: 10px;
+  font-size: 2rem;
+}
+
+.container_Class p {
+  color: var(--text-alt);
+  margin-bottom: 40px;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  padding: 40px; 
+}
+
+.card {
+  background-color: var(--bg-alt);
+  border-radius: 10px;
+  overflow: hidden;
+  width: 300px;
+  box-shadow: 0 4px 8px var(--card-shadow);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.card-content h3 {
+  color: var(--highlight);
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.card-content p {
+  font-size: 0.9rem;
+  color: var(--text-alt);
+  margin-bottom: 10px;
+}
+
+.card-content small {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+/* =========================================================
+   SECCIÓN PLANES
+========================================================= */
+.plans {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: var(--bg);
+}
+
+.plans h2 {
+  color: var(--highlight);
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.plans p {
+  color: var(--text-alt);;
+  margin-bottom: 40px;
+}
+
+.plans-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+
+.plan-card {
+  background-color: var(--bg-alt);
+  border-radius: 10px;
+  padding: 30px;
+  width: 260px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 8px var(--card-shadow);
+  transition: transform 0.3s;
+}
+
+.plan-card:hover {
+  transform: translateY(-5px);
+}
+
+.plan-card .circle {
+  width: 35px;
+  height: 35px;
+  background-color: var(--highlight);
+  border-radius: 50%;
+  margin: 0 auto 15px;
+}
+
+.plan-card h3 {
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.plan-card p {
+  color: var(--text-alt);
+  margin-bottom: 15px;
+}
+
+.plan-card .price {
+  color: var(--highlight);
+  font-size: 1.6rem;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.plan-card ul {
+  list-style: none;
+  color: var(--text-alt);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.tag, .tag-1{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--highlight);
+  color: var(--bg);
+  font-size: 0.75rem;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.tag-1 {
+  background-color: lab(72.83% 26 70.53);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+footer {
+  background-color: var(--bg);
+  color: var(--text);
+  padding: 20px;
+  margin-top: auto;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.unaj-icon {
+  width: 200px;
+  height: auto;
+}
+
+.footer-right h2 {
+  color: var(--highlight);
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* =========================================================
+   ANIMACIONES / TRANSICIONES
+========================================================= */
+section {
+  scroll-margin-top: 80px;
+  transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+}
+
+/* ========================================================= 
+    CONTACTOS
+========================================================= */ 
+.contacts { 
+  padding: 60px 20px; 
+  background-color: var(--bg); 
+  color: var(--text);
+  text-align: center; 
+} 
+
+.contacts h1 { 
+  color: var(--highlight);
+  margin-bottom: 40px;
+} 
+
+.contact-card { 
+  background-color: var(--bg-alt); 
+  border-radius: 10px; 
+  width: 250px; 
+  padding: 20px; 
+  box-shadow: 0 4px 8px var(--card-shadow);
+  transition: transform 0.3s; 
+} 
+
+.contact-card:hover { 
+  transform: translateY(-5px); 
+} 
+
+.contact-card h3 { 
+  color: var(--highlight); 
+  margin-bottom: 10px; 
+  font-size: 1rem; 
+} 
+
+.contact-card p { 
+  margin: 5px 0; 
+  font-size: 0.8rem; 
+  color: var(--text-alt);
+}
+
+
+.circle {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: var(--highlight) !important;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+  position: relative;
+  z-index: 2;
+}
+
+
+/* =========================================================
+   ESTILOS DE PÁGINAS DE GESTIÓN (Clases / Actividades)
+========================================================= */
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL DE GESTIÓN
+========================================================= */
+
+.main-content {
+  padding: 60px 20px;
+  background-color: var(--bg);
+  min-height: 80vh;
+}
+
+/* =========================================================
+   ENCABEZADOS Y TITULOS
+========================================================= */
+
+.gestor h1 {
+  text-align: center;
+  color: var(--highlight);
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.gestor h2 {
+  text-align: center;
+  color: var(--highlight);
+  font-size: 1.6rem;
+  margin: 40px 0 15px;
+}
+
+/* =========================================================
+   FORMULARIOS DE GESTIÓN
+========================================================= */
+
+.form-gestion {
+  background-color: var(--bg-alt);
+  border-radius: 12px;
+  padding: 25px 30px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 4px 10px var(--card-shadow);
+}
+
+.form-gestion label {
+  display: block;
+  font-weight: bold;
+  margin-top: 15px;
+  color: var(--highlight);
+}
+
+.form-gestion input[type="text"],
+.form-gestion input[type="number"],
+.form-gestion select,
+.form-gestion textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.form-gestion textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.lista-actividades {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.lista-actividades label {
+  background: var(--bg-alt);
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.lista-actividades input {
+  margin-right: 5px;
+}
+
+/* =========================================================
+   SELECTOR DE HORARIO (día + hora + duración)
+========================================================= */
+.form-group select,
+.form-group input[type="time"],
+.form-group input[type="number"] {
+  background-color: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px;
+  width: 100%;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group select:focus,
+.form-group input[type="time"]:focus,
+.form-group input[type="number"]:focus {
+  outline: none;
+  border-color: var(--highlight);
+  box-shadow: 0 0 8px var(--highlight);
+}
+
+
+/* =========================================================
+   GRUPOS Y SECCIONES DEL CRUD
+========================================================= */
+
+.main-container {
+  padding: 40px;
+  text-align: center;
+}
+
+.form-section,
+.list-section {
+  background-color: var(--bg-alt);
+  padding: 25px;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: 40px auto;
+  color: var(--text);
+  box-shadow: 0 4px 8px var(--card-shadow);
+}
+
+.form-group {
+  margin: 15px 0;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--highlight);
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+}
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* =========================================================
+   TABLAS DE GESTIÓN
+========================================================= */
+
+.tabla-gestion,
+.tabla {
+  width: 90%;
+  margin: 30px auto;
+  border-collapse: collapse;
+  background-color: var(--bg-alt);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px var(--card-shadow);
+  color: var(--text);
+}
+
+.tabla-gestion th,
+.tabla th {
+  background-color: var(--highlight);
+  color: var(--bg);
+  font-weight: bold;
+  text-align: center;
+  padding: 12px 15px;
+}
+
+
+.tabla-gestion td,
+.tabla td {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+.tabla-gestion tr:hover,
+.tabla tr:hover {
+  background-color: #243147;
+}
+
+.tabla button {
+  margin: 0 5px;
+}
+/* =========================================================
+   RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 992px) {
+  .main-content {
+    padding: 40px 15px;
+  }
+
+  .form-gestion {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .tabla-gestion,
+  .tabla {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    padding: 20px;
+  }
+
+  .form-section,
+  .list-section {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .tabla-gestion,
+  .tabla {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gestor h1 {
+    font-size: 1.8rem;
+  }
+
+  .gestor h2 {
+    font-size: 1.3rem;
+  }
+
+  .form-gestion,
+  .form-section,
+  .list-section {
+    padding: 15px;
+  }
+
+  .tabla-gestion,
+  .tabla {
+    font-size: 0.85rem;
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
+
+/* =========================================================
+   BOTONES UNIFICADOS (Guardar / Editar / Eliminar)
+========================================================= */
+
+/* Base general */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: transform 0.2s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  color: var(--border);
+  background-color: var(--highlight);
+  letter-spacing: 0.5px;
+}
+
+/* Hover general con efecto neón */
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 12px var(--highlight), 0 0 25px var(--highlight);
+}
+
+/* Botón Guardar */
+.btn-save {
+  background-color: var(--highlight);
+  color: var(--border);
+}
+.btn-save:hover {
+  background-color: var(--highlight);
+  box-shadow: 0 0 12px var(--highlight-hover), 0 0 25px var(--highlight-hover);
+}
+
+
+/* Botón Editar */
+.btn-edit {
+  background-color: #22c55e;
+  color: var(--border);
+}
+.btn-edit:hover {
+  background-color: #4ade80;
+  box-shadow: 0 0 12px #22c55e, 0 0 25px #22c55e;
+}
+
+/* Botón Eliminar */
+.btn-delete {
+  background-color: #ff0000;
+  color: var(--border);
+}
+.btn-delete:hover {
+  background-color: #f87171;
+  box-shadow: 0 0 12px #ff0000, 0 0 25px #ff0000;
+}
+
+/* Botón Secundario */
+.btn-secondary {
+  background-color: #ef4444;
+  color: var(--text);
+}
+.btn-secondary:hover {
+  background-color: #f87171;
+  box-shadow: 0 0 12px #ef4444, 0 0 25px #ef4444;
+}
+
+/* Tamaños opcionales */
+.btn-small {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+.btn-large {
+  padding: 12px 24px;
+  font-size: 1.05rem;
+}
+
+/* Contenedor del botón alineado*/
+.btn-row {
+  display: flex;
+  justify-content: space-between; /* Uno a la izquierda, otro a la derecha */
+  align-items: center;            /* Alinea verticalmente */
+  margin: 20px 8%;                /* Espacio arriba/abajo y a los costados */
+}
+
+/* =========================================================
+   ALERTAS
+========================================================= */
+.alert {
+  background-color: var(--highlight);
+  color: var(--border);
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.alert.error {
+  background-color: #ef4444;
+}
+
+.alert.success {
+  background-color: #22c55e;
+}
+
+
+
+::placeholder {
+  color: var(--text-alt);
+  opacity: 0.7;
+}
+
+/* =========================================================
+   BOTONES DE CLASE EN TABLA DE HORARIOS
+========================================================= */
+.btn-clase {
+  display: inline-block;
+  background-color: rgba(13, 110, 253, 0.15); /* Azul suave */
+  color: #0d6efd;
+  font-weight: 600;
+  border: 1px solid #0d6efd;
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-clase:hover {
+  background-color: #0d6efd;
+  color: #fff;
+
+/* --- Modal general --- */
+.modal-content {
+  max-width: 900px;
+  width: 90%;
+  margin: auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Formulario principal --- */
+.form-horizontal {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* --- Cada fila con dos columnas --- */
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start; /* etiqueta arriba */
+}
+
+/* --- Cada grupo (label + campo) --- */
+.form-group {
+  flex: 1 1 45%;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Etiquetas --- */
+.form-group label {
+  margin-bottom: 6px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* --- Campos uniformes --- */
+.form-group input,
+.form-group select {
+  height: 42px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* --- Ajustes para campos especiales --- */
+.form-group input[type="date"],
+.form-group input[type="file"] {
+  height: 42px;
+  padding: 6px 10px;
+  line-height: normal;
+  background-color: #f9f9f9; /* opcional para diferenciar file/date */
+}
+
+/* --- Grupo de botones --- */
+.btn-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Botón Guardar */
+.btn-save {
+  background-color: var(--highlight);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 20px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+.btn-save:hover {
+  background-color: var(--highlight-hover);
+}
+
+/* Botón Cancelar */
+.btn-secondary,
+#cancelarFormBtn {
+  background-color: var(--btn-delete);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 20px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+.btn-secondary:hover,
+#cancelarFormBtn:hover {
+  background-color: #bb2d3b;
+}
+
+/* --- Responsividad --- */
+@media (max-width: 700px) {
+  .form-row {
+    flex-direction: column;
+  }
+  .form-group {
+    flex: 1 1 100%;
+  }
+}
+
+
+/*===== CÍRCULOS ================= */
+.stats-grid, .plans-grid {
+  display: flex;
+  gap: 20px; /* separación horizontal */
+  flex-wrap: wrap; /* para que bajen en pantallas pequeñas */
+}
+
+.stat-card, .plan-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* ✅ centra horizontalmente los elementos dentro */
+  text-align: center;
+}
+
+.stat-card .circle,
+.plan-card .circle {
+  width: 50px;   /* tamaño del círculo */
+  height: 50px;
+  border-radius: 50%;
+  background-color: #007bff; /* azul */
+  margin-bottom: 15px; /* separación del título */
+  display: block; /* aseguramos que sea bloque */
+}
+
+/* Opcional: asegurar que los títulos estén alineados debajo del círculo */
+.stat-card h3,
+.plan-card h3 {
+  margin: 0;
+  line-height: 1.2;
+}}
+
+.detalle-izquierda {
+  text-align: left;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    vertical-align: middle;
+    margin-right: 6px
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+}
+
+.pagination {
+  margin: 20px auto;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border: 1px solid var(--highlight);
+  background: var(--bg-alt);
+  color: var(--text);
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.pagination button.active {
+  background: var(--highlight);
+  color: white;
+}
+
+.pagination button:hover {
+  background: var(--highlight-hover);
+  color: white;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border: 1px solid var(--highlight);
+  background: var(--bg-alt);
+  color: var(--text);
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+.pagination button:hover:not(.active):not(:disabled) {
+  background: var(--highlight-hover);
+  color: white;
+}
+
+.pagination button.active {
+  background: var(--highlight);
+  color: white;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+

@@ -1,0 +1,165 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\application\\usecases\\miembroservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\usecases\\miembroservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\application\\dtos\\responses\\miembroresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\dtos\\responses\\miembroresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\application\\dtos\\responses\\membresiaresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\dtos\\responses\\membresiaresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\application\\usecases\\pagoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\usecases\\pagoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\application\\usecases\\membresiaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\usecases\\membresiaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\infrastructure\\queries\\miembroquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\queries\\miembroquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22B14A6D-C2FD-4FEE-84A7-70FC3841B236}|API\\API.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\api\\controllers\\miembrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22B14A6D-C2FD-4FEE-84A7-70FC3841B236}|API\\API.csproj|solutionrelative:api\\controllers\\miembrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\domain\\entities\\descuento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\descuento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\infrastructure\\persistence\\factory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\factory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PagoService.cs",
+              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\UseCases\\PagoService.cs",
+              "RelativeDocumentMoniker": "Application\\UseCases\\PagoService.cs",
+              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\UseCases\\PagoService.cs",
+              "RelativeToolTip": "Application\\UseCases\\PagoService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T04:41:14.838Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MiembroQuery.cs",
+              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Infrastructure\\Queries\\MiembroQuery.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Queries\\MiembroQuery.cs",
+              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Infrastructure\\Queries\\MiembroQuery.cs",
+              "RelativeToolTip": "Infrastructure\\Queries\\MiembroQuery.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACAAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T04:39:41.44Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MembresiaService.cs",
+              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\UseCases\\MembresiaService.cs",
+              "RelativeDocumentMoniker": "Application\\UseCases\\MembresiaService.cs",
+              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\UseCases\\MembresiaService.cs",
+              "RelativeToolTip": "Application\\UseCases\\MembresiaService.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAowDcAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T01:16:56.185Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MembresiaResponse.cs",
+              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\DTOs\\Responses\\MembresiaResponse.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\Responses\\MembresiaResponse.cs",
+              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\DTOs\\Responses\\MembresiaResponse.cs",
+              "RelativeToolTip": "Application\\DTOs\\Responses\\MembresiaResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T18:44:40.334Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MiembroResponse.cs",
+              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\DTOs\\Responses\\MiembroResponse.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\Responses\\MiembroResponse.cs",
+              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\DTOs\\Responses\\MiembroResponse.cs",
+              "RelativeToolTip": "Application\\DTOs\\Responses\\MiembroResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T18:44:30.478Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MiembroService.cs",
+              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\UseCases\\MiembroService.cs",
+              "RelativeDocumentMoniker": "Application\\UseCases\\MiembroService.cs",
+              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\UseCases\\MiembroService.cs",
+              "RelativeToolTip": "Application\\UseCases\\MiembroService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T18:43:50.487Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MiembroController.cs",
+              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\API\\Controllers\\MiembroController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\MiembroController.cs",
+              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\API\\Controllers\\MiembroController.cs",
+              "RelativeToolTip": "API\\Controllers\\MiembroController.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAA5wC8AAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T18:43:25.414Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Descuento.cs",
+              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Domain\\Entities\\Descuento.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\Descuento.cs",
+              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Domain\\Entities\\Descuento.cs",
+              "RelativeToolTip": "Domain\\Entities\\Descuento.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T15:45:50.684Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Factory.cs",
+              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Infrastructure\\Persistence\\Factory.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Factory.cs",
+              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Infrastructure\\Persistence\\Factory.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\Factory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-10T22:28:45.717Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
