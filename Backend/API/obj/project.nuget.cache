@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "uv8aeCYBOTg=",
+  "dgSpecHash": "KiiFPFLvErU=",
   "success": true,
-  "projectFilePath": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\API\\API.csproj",
+  "projectFilePath": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\54116\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\54116\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
