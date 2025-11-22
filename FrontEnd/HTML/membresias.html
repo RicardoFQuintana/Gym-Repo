@@ -8,40 +8,12 @@
   </head>
 
   <body>
+    
     <!-- ================= HEADER ================= -->
-    <header class="navbar">
-      <div class="menu-container">
-        <button class="menu-btn" id="menu-btn">☰</button>
-        <div class="logo">CuerpoSano</div>
-      </div>
-
-      <!-- Botón sidebar derecho (solo visible en móvil) -->
-      <button class="menu-btn-right" id="menu-btn-right">☰</button>
-      
-      <nav class="nav-links">
-        <button class="close-btn-right" id="close-btn-right">×</button> <!-- botón cierre -->
-        <a href="index.html">Inicio</a>
-        <a href="horarios.html">Horario</a>
-        <a href="contacto.html">Contacto</a>
-        <button id="modoNocturnoBtn" class="modo-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-toggle-left-icon lucide-toggle-left"><circle cx="9" cy="12" r="3"/><rect width="20" height="14" x="2" y="5" rx="7"/></svg>
-        </button>
-      </nav>
-    </header>
+    <div id="header-placeholder"></div>
 
     <!-- ================= SIDEBAR ================= -->
-    <aside id="sidebar" class="sidebar">
-      <button class="close-btn" id="close-btn">×</button>
-      <ul>
-        <li><a href="clases.html">Clases</a></li>
-        <li><a href="actividades.html">Actividades</a></li>
-        <li><a href="entrenadores.html">Entrenadores</a></li>
-        <li><a href="miembros.html">Miembros</a></li>
-        <li><a href="membresias.html">Membresías</a></li>
-      <li><a href="reporte-asistencia.html">Asistencias</a></li>
-      <li><a href="reporte-ingresos.html">Ingresos</a></li>
-      </ul>
-    </aside>
+    <div id="aside-placeholder"></div>
 
     <!-- ================= OVERLAY ================= -->
     <div id="overlay" class="overlay"></div>
@@ -212,27 +184,13 @@
     </main>
     
     <!-- ================= FOOTER ================= -->
-    <footer>
-      <div class="footer-container">
-        <div class="footer-left">
-          <img src="../ASSETS/img/logo-unaj-2016-01.jpg" alt="icono UNAJ" class="unaj-icon" />
-        </div>
-        <div class="footer-center">
-          <h2>Ingeniería de Software I - UNAJ</h2>
-        </div>
-        <div class="footer-right">
-          <h2>CuerpoSano</h2>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2025 CuerpoSano. Todos los derechos reservados.</p>
-      </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
     <!-- ================= SCRIPTS ================= -->
     <script src="../HTML/JS/index.js"></script>
     <script src="../HTML/JS/utils.js"></script>
     <script src="../HTML/JS/membresias.js"></script>
+    <script src="../HTML/JS/loadComponents.js"></script>
     <!-- Importo todos los íconos -->
     <object type="image/svg+xml" data="assets/icons/icons.svg" style="display:none;"></object>
   </body>

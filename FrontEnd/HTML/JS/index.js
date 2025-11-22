@@ -1,94 +1,119 @@
-// Usamos la misma URL que definiste en miembros.js
+// === CONSTANTES DE LA API ===
 const API_BASE_MIEMBRO_INDEX = "https://localhost:7271/api/Miembro"; 
-// === CONSTANTE PARA ENTRENADORES ===
 const API_BASE_ENTRENADOR_INDEX = "https://localhost:7271/api/Entrenador"; 
-// === CONSTANTE PARA MEMBRESÍAS ===
 const API_BASE_MEMBRESIA = "https://localhost:7271/api/TipoMembresia"; 
 
-document.addEventListener("DOMContentLoaded", () => {
-    // === LÓGICA DE NAVEGACIÓN Y SLIDER (EXISTENTE) ===
+// =========================================================
+// === FUNCIÓN CENTRAL DE INTERACTIVIDAD (NUEVA) ===
+// Contiene toda la lógica que depende de los elementos inyectados por loadComponents.js
+// =========================================================
+function initializeComponentInteractivity() {
+    
+    // --- LÓGICA DE NAVEGACIÓN Y SIDEBAR ---
     const sidebar = document.getElementById("sidebar");
-    const navLinks = document.querySelector(".nav-links");
-    const menuBtn = document.getElementById("menu-btn");        
-    const menuBtnRight = document.getElementById("menu-btn-right"); 
+    const menuBtn = document.getElementById("menu-btn");        
     const closeBtn = document.getElementById("close-btn");
     const overlay = document.getElementById("overlay");
-    const closeBtnRight = document.getElementById("close-btn-right");
+    
+    // Lógica del Scroll (Header Transparente)
+    const header = document.querySelector('.navbar');
+    const heroHeight = 600; 
 
-    // Abrir sidebar izquierdo
-    menuBtn.addEventListener("click", () => {
-        sidebar.classList.add("active");
-        overlay.classList.add("active");
-    });
-
-    // Abrir sidebar derecho
-    menuBtnRight.addEventListener("click", () => {
-        navLinks.classList.add("active");
-        overlay.classList.add("active");
-    });
-
-    // Cerrar sidebar izquierdo
-    closeBtn.addEventListener("click", () => {
-        sidebar.classList.remove("active");
-        overlay.classList.remove("active");
-    });
-
-    // Cerrar sidebar derecho
-    closeBtnRight.addEventListener("click", () => {
-        navLinks.classList.remove("active");
-        overlay.classList.remove("active");
-    });
-
-    // Cerrar ambos sidebars con overlay
-    overlay.addEventListener("click", () => {
-        sidebar.classList.remove("active");
-        navLinks.classList.remove("active");
-        overlay.classList.remove("active");
-    });
-
-    // ===== SLIDER HERO (EXISTENTE) =====
-    let slides = document.querySelectorAll(".hero-slide");
-    let currentSlide = 0;
-
-    function changeSlide() {
-        slides[currentSlide].classList.remove("active");
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add("active");
+    function handleScroll() {
+        if (header) { 
+             if (window.scrollY > heroHeight) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
     }
 
-    setInterval(changeSlide, 6000); // cambia cada 6 segundos
+    // LÓGICA DE EVENT LISTENERS para Sidebar
+    if (menuBtn && sidebar && closeBtn && overlay) { 
+        menuBtn.addEventListener("click", () => {
+            sidebar.classList.add("active");
+            overlay.classList.add("active");
+        });
 
-    // === INICIALIZACIÓN DE LAS FUNCIONES DINÁMICAS ===
+        closeBtn.addEventListener("click", () => {
+            sidebar.classList.remove("active");
+            overlay.classList.remove("active");
+        });
+
+        overlay.addEventListener("click", () => {
+            sidebar.classList.remove("active");
+            overlay.classList.remove("active");
+        });
+    }
+
+    // Inicializar Scroll
+    if (header) {
+        handleScroll();
+        window.addEventListener('scroll', handleScroll);
+    }
+    
+    // ===== SLIDER HERO (Depende del contenido estático de la página, pero lo inicializamos aquí) =====
+    let slides = document.querySelectorAll(".hero-slide");
+    if (slides.length > 0) {
+        let currentSlide = 0;
+        // Asegura que el primero esté activo al inicio (si no lo está en el HTML)
+        if (!slides[currentSlide].classList.contains("active")) { 
+            slides[currentSlide].classList.add("active");
+        }
+
+        function changeSlide() {
+            slides[currentSlide].classList.remove("active");
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add("active");
+        }
+        setInterval(changeSlide, 6000); 
+    }
+    
+    // ===== Modo Nocturno (MOVIDO Y AJUSTADO AQUÍ) =====
+    const btnNocturno = document.getElementById("modoNocturnoBtn");
+
+    if (btnNocturno) { 
+        const isNocturno = localStorage.getItem("modoNocturno") === "true";
+        const iconOn = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-toggle-right-icon lucide-toggle-right"><circle cx="15" cy="12" r="3"/><rect width="20" height="14" x="2" y="5" rx="7"/></svg>`;
+        const iconOff = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-toggle-left-icon lucide-toggle-left"><circle cx="9" cy="12" r="3"/><rect width="20" height="14" x="2" y="5" rx="7"/></svg>`;
+        
+        // Inicializar el estado y el icono
+        if (isNocturno) {
+            document.documentElement.setAttribute("data-paleta", "Nocturno");
+            btnNocturno.innerHTML = iconOn;
+        } else {
+             document.documentElement.removeAttribute("data-paleta");
+             btnNocturno.innerHTML = iconOff;
+        }
+        
+        btnNocturno.addEventListener("click", () => {
+            const currentlyNocturno = document.documentElement.getAttribute("data-paleta") === "Nocturno";
+
+            if (currentlyNocturno) {
+                document.documentElement.removeAttribute("data-paleta");
+                btnNocturno.innerHTML = iconOff;
+                localStorage.setItem("modoNocturno", "false");
+            } else {
+                document.documentElement.setAttribute("data-paleta", "Nocturno");
+                btnNocturno.innerHTML = iconOn;
+                localStorage.setItem("modoNocturno", "true");
+            }
+        });
+    }
+}
+
+// =========================================================
+// === FIN DE FUNCIÓN CENTRAL DE INTERACTIVIDAD ===
+// =========================================================
+document.addEventListener("DOMContentLoaded", () => {
+    // === LÓGICA DE OBTENCIÓN DE DATOS (NO AFECTADA) ===
+    // Estas funciones no dependen de que el header o aside se carguen.
     actualizarContadorMiembros(); 
     actualizarContadorEntrenadores(); 
     renderizarEntrenadores();
     renderizarPlanes(); 
 });
-
-
-// ===== Modo Nocturno (EXISTENTE) =====
-const btnNocturno = document.getElementById("modoNocturnoBtn");
-
-// Comprobar si ya estaba activado
-if (localStorage.getItem("modoNocturno") === "true") {
-    document.documentElement.setAttribute("data-paleta", "Nocturno");
-    btnNocturno.textContent = "☀️";
-}
-
-btnNocturno.addEventListener("click", () => {
-    const isNocturno = document.documentElement.getAttribute("data-paleta") === "Nocturno";
-
-    if (isNocturno) {
-        document.documentElement.removeAttribute("data-paleta");
-        btnNocturno.textContent = "🌙";
-        localStorage.setItem("modoNocturno", "false");
-    } else {
-        document.documentElement.setAttribute("data-paleta", "Nocturno");
-        btnNocturno.textContent = "☀️";
-        localStorage.setItem("modoNocturno", "true");
-    }
-});
-
 
 // =========================================================
 // === LÓGICA DE OBTENCIÓN DE DATOS DE MIEMBROS DINÁMICA ===
@@ -173,7 +198,7 @@ async function renderizarEntrenadores() {
             <div class="trainer-card">
                 <div class="trainer-photo" style="background-image: url('${urlFoto}');"></div>
                 <h3>${entrenador.nombre || ''} ${entrenador.apellido || ''}</h3>
-                <p>${especialidad}</p>
+                <p1>${especialidad}</p1>
             </div>
         `;
         
@@ -226,11 +251,11 @@ async function renderizarPlanes() {
             let tagHTML = "";
             
             // 1. Asignar clases y tags basados en las propiedades booleanas (si existen en la DB)
-            if (plan.esPopular) {
+            if (plan.duracionDias == 90) {
                 cardClass += " popular"; 
                 tagHTML = '<h4 class="tag">Más Popular</h4>'; 
             }
-            if (plan.esPremium) {
+            if (plan.duracionDias >= 365) {
                 cardClass += " premium"; 
                 tagHTML = tagHTML || '<h4 class="tag-1">Premium</h4>'; 
             }
@@ -242,7 +267,6 @@ async function renderizarPlanes() {
             // 2. LÓGICA DE FORMATO DE PRECIO CORREGIDA
             let formatoPrecio = "";
             const duracionDias = plan.duracionDias; // Viene de la DB: public int DuracionDias { get; set; }
-            
             if (duracionDias >= 365) {
                 formatoPrecio = " ";
             } else if (duracionDias >= 90) {
