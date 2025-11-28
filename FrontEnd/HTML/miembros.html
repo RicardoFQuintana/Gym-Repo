@@ -17,13 +17,16 @@
     <!-- ================= SIDEBAR ================= -->
     <div id="aside-placeholder"></div>
 
-    <main class="main-container">
+    <!-- ================= OVERLAY ================= -->
+    <div id="overlay" class="overlay"></div>
+
+    <main class="main-container content-wrapper">
         <section class="gestor">
 
             <div class="btn-row">
-                <button id="abrirMiembroBtn" class="btn btn-save">Nuevo Miembro</button>
+                <button id="abrirMiembroBtn" class="btn btn-save svg"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>Nuevo Miembro</button>
                 <h1>Gestión de Miembros</h1>
-                <button id="buscarMiembroBtn" class="btn btn-save">Consultar Miembro</button>
+                <button id="buscarMiembroBtn" class="btn btn-save svg"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>Consultar Miembro</button>
             </div>
 
             <div id="modalMiembro" class="modal modal-miembro">
@@ -123,8 +126,8 @@
 
                     <!-- Botones -->
                     <div class="btn-group">
-                        <button type="button" id="cancelarFormBtn" class="btn btn-secondary">Cancelar</button>
-                        <button type="button" id="guardarFormBtn" class="btn btn-save">Guardar</button>
+                        <button type="button" id="cancelarFormBtn" class="btn btn-secondary svg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-delete-icon lucide-delete"><path d="M10 5a2 2 0 0 0-1.344.519l-6.328 5.74a1 1 0 0 0 0 1.481l6.328 5.741A2 2 0 0 0 10 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/><path d="m12 9 6 6"/><path d="m18 9-6 6"/></svg>Cancelar</button>
+                        <button type="button" id="guardarFormBtn" class="btn btn-save svg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>Guardar</button>
                     </div>
 
                 </div>
@@ -135,8 +138,8 @@
                     <h2>Consultar Miembro</h2>
                     <input type="text" id="consultaDni" placeholder="Ingrese DNI del miembro">
                     <div class="btn-group">
-                        <button id="cancelarConsultaBtn" class="btn btn-secondary">Cancelar</button>
-                        <button id="confirmarConsultaBtn" class="btn btn-save">Consultar</button>
+                        <button id="cancelarConsultaBtn" class="btn btn-secondary svg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-delete-icon lucide-delete"><path d="M10 5a2 2 0 0 0-1.344.519l-6.328 5.74a1 1 0 0 0 0 1.481l6.328 5.741A2 2 0 0 0 10 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/><path d="m12 9 6 6"/><path d="m18 9-6 6"/></svg>Cancelar</button>
+                        <button id="confirmarConsultaBtn" class="btn btn-save svg"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>Consultar</button>
                     </div>
                 </div>
             </div>
@@ -145,19 +148,19 @@
                 <div class="modal-content">
                     <div id="detalleContenido" class="detalle-izquierda"></div>
                     <div class="btn-group">
-                        <button id="btnEliminarDetalle" class="btn-small btn btn-delete">
+                        <button id="btnEliminarDetalle" class="btn-small btn btn-delete" data-tooltip="Eliminar Miembro">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                         </button>
-                        <button id="cerrarDetalleBtn" class="btn-small btn btn-secondary">
+                        <button id="cerrarDetalleBtn" class="btn-small btn btn-secondary" data-tooltip="Cerrar">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-delete-icon lucide-delete"><path d="M10 5a2 2 0 0 0-1.344.519l-6.328 5.74a1 1 0 0 0 0 1.481l6.328 5.741A2 2 0 0 0 10 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/><path d="m12 9 6 6"/><path d="m18 9-6 6"/></svg>
                         </button>
-                        <button id="btnEditarDetalle" class="btn-small btn btn-edit">
+                        <button id="btnEditarDetalle" class="btn-small btn btn-edit" data-tooltip="Editar Miembro">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-pen-line-icon lucide-file-pen-line"><path d="m18.226 5.226-2.52-2.52A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.351"/><path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><path d="M8 18h1"/></svg>
                         </button>
-                        <button id="btnCarnetDetalle" class="btn-small btn btn-save">
+                        <button id="btnCarnetDetalle" class="btn-small btn btn-save" data-tooltip="Ver Carnet">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card-icon lucide-credit-card"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
                         </button>
-                        <button id="btnImprimirDetalle" class="btn-small btn btn-save">
+                        <button id="btnImprimirDetalle" class="btn-small btn btn-save" data-tooltip="Imprimir PDF">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
                         </button>
                     </div>
@@ -213,12 +216,9 @@
     </main>
 
     <div id="footer-placeholder"></div>
-
-    <script src="../HTML/JS/utils.js"></script>
     <script src="../HTML/JS/index.js"></script>
-    <script src="../HTML/JS/miembros.js"></script>
     <script src="../HTML/JS/loadComponents.js"></script>
-    <!-- Importo todos los íconos -->
-    <object type="image/svg+xml" data="assets/icons/icons.svg" style="display:none;"></object>
+    <script src="../HTML/JS/utils.js"></script>
+    <script src="../HTML/JS/miembros.js"></script>
 </body>
 </html>

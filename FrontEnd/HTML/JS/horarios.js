@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
           diaToString(c.dia) === dia && timeSpanToString(c.horaInicio) === horaStr
         );
         return clase
-          ? `<td><button class="btn-clase" data-id="${clase.id}">${clase.nombre}</button></td>`
+          ? `<td><button class="btn-clase" data-tooltip="Info" data-id="${clase.id}">${clase.nombre}</button></td>`
           : `<td></td>`;
       }).join("");
       tbody.appendChild(fila);

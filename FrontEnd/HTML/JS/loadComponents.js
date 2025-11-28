@@ -1,3 +1,6 @@
+
+
+
 /**
  * Función para cargar e insertar un componente HTML de forma asíncrona.
  * * @param {string} componentName - El nombre del archivo (e.g., 'header').
@@ -8,7 +11,7 @@ function loadComponent(componentName, targetId, callback) {
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
         // Asumiendo que la estructura de carpetas es: /HTML/componentHTML/
-        fetch(`../HTML/componentHTML/${componentName}.html`)
+        fetch(`/FrontEnd/HTML/componentHTML/${componentName}.html`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Error al cargar el componente ${componentName}. Código: ${response.status}`);
@@ -63,8 +66,9 @@ function loadComponentAsPromise(componentName, targetId) {
 // La carga del aside es crucial para #sidebar y #close-btn, por eso va primero.
 loadComponentAsPromise('aside', 'aside-placeholder')
     .then(() => {
-        // Una vez que el aside está cargado, cargamos el header.
-        // El header es crucial para #menu-btn.
+        return reemplazarIconosDesdeCarpeta();
+    })
+    .then(() => {
         return loadComponentAsPromise('header', 'header-placeholder');
     })
     .then(() => {
@@ -83,3 +87,41 @@ loadComponentAsPromise('aside', 'aside-placeholder')
     .catch(error => {
         console.error("Error crítico: Fallo en la secuencia de carga de componentes.", error);
     });
+
+
+function reemplazarIconosDesdeCarpeta() {
+    const iconMap = {
+        "iconClases": "school.svg",
+        "iconActividades": "shapes.svg",
+        "iconEntrenador": "biceps-flexed.svg",
+        "iconMiembros": "users.svg",
+        "iconMembresias": "id-card.svg",
+        "iconAsistencia": "hand.svg",
+        "iconIngresos": "banknote-arrow-up.svg",
+        "iconCalendar": "calendar.svg",
+        "iconContactos": "contact.svg"
+    };
+
+    const iconFolder = "/FrontEnd/ASSETS/icons/";
+
+    const promises = [];
+
+    Object.keys(iconMap).forEach(tagName => {
+        const elements = document.querySelectorAll(tagName);
+        if (elements.length === 0) return;
+
+        const filePath = iconFolder + iconMap[tagName];
+
+        const p = fetch(filePath)
+            .then(res => res.text())
+            .then(svgContent => {
+                elements.forEach(el => {
+                    el.outerHTML = svgContent;
+                });
+            });
+
+        promises.push(p);
+    });
+
+    return Promise.all(promises);
+}

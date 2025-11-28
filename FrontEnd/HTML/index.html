@@ -18,105 +18,107 @@
   <!-- Overlay del sidebar -->
   <div id="overlay" class="overlay"></div>
 
-  <!-- ================= HERO SLIDER ================= -->
+  <main class="content-wrapper">
+    <!-- ================= HERO SLIDER ================= -->
     <section class="hero-slider">
-    <div class="hero-slide active" style="background-image: url('../ASSETS/img/fondo_1.jpg');">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-        <h1>Entrena tu cuerpo fortalece tu mente</h1>
-        <p>Superá tus límites cada día</p>
+      <div class="hero-slide active" style="background-image: url('../ASSETS/img/fondo_1.jpg');">
+          <div class="hero-overlay"></div>
+          <div class="hero-content">
+          <h1>Entrena tu cuerpo fortalece tu mente</h1>
+          <p>Superá tus límites cada día</p>
+          </div>
+      </div>
+
+    <div class="hero-slide" style="background-image: url('../ASSETS/img/fondo_2.jpg');">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>Entrena con expertos</h1>
+        <p>Nuestros entrenadores certificados te guiarán en cada paso</p>
+      </div>
+    </div>
+
+    <div class="hero-slide" style="background-image: url('../ASSETS/img/fondo_3.jpg');">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>Tu bienestar es nuestra meta</h1>
+        <p>Un cuerpo sano comienza con una mente fuerte</p>
+      </div>
+    </div>
+    </section>
+    <!-- ================= SECCIÓN ESTADÍSTICAS ================= -->
+    <section class="stats">
+      <h2>Números que Hablan</h2>
+      <p>Nuestra comunidad crece cada día y nuestros resultados lo demuestran</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="circle"></span>
+          <h3 id="miembrosActivosContador">0</h3>
+          <p>Miembros Activos</p>
         </div>
-    </div>
-
-  <div class="hero-slide" style="background-image: url('../ASSETS/img/fondo_2.jpg');">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1>Entrena con expertos</h1>
-      <p>Nuestros entrenadores certificados te guiarán en cada paso</p>
-    </div>
-  </div>
-
-  <div class="hero-slide" style="background-image: url('../ASSETS/img/fondo_3.jpg');">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1>Tu bienestar es nuestra meta</h1>
-      <p>Un cuerpo sano comienza con una mente fuerte</p>
-    </div>
-  </div>
-</section>
-  <!-- ================= SECCIÓN ESTADÍSTICAS ================= -->
-  <section class="stats">
-    <h2>Números que Hablan</h2>
-    <p>Nuestra comunidad crece cada día y nuestros resultados lo demuestran</p>
-
-    <div class="stats-grid">
-      <div class="stat-card">
-        <span class="circle"></span>
-        <h3 id="miembrosActivosContador">0</h3>
-        <p>Miembros Activos</p>
+        <div class="stat-card">
+          <span class="circle"></span>
+          <h3 id="entrenadoresContador">0</h3>
+          <p>Entrenadores Certificados</p>
+        </div>
+        <div class="stat-card">
+          <span class="circle"></span>
+          <h3>100%</h3>
+          <p>Clientes Satisfechos</p>
+        </div>
       </div>
-      <div class="stat-card">
-        <span class="circle"></span>
-        <h3 id="entrenadoresContador">0</h3>
-        <p>Entrenadores Certificados</p>
-      </div>
-      <div class="stat-card">
-        <span class="circle"></span>
-        <h3>100%</h3>
-        <p>Clientes Satisfechos</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= SECCIÓN ENTRENADORES ================= -->
-  <section class="trainers" id="entrenadores">
-    <h2>Nuestros Entrenadores</h2>
-    <p>Conoce a nuestro equipo de profesionales certificados</p>
-
-    <div class="trainer-cards" id="trainer-cards-container"></div>
-  </section>
-
-  <!-- ================= SECCIÓN CLASES ================= --> 
-  <section class="class" id="clases">
-    <div class="container_Class">
-        <h2>Nuestras Clases Más Populares</h2>
-        <p>Descubre la variedad de clases que ofrecemos para todos los niveles</p> 
-    </div> 
-    <div class="cards-container" id="clases-container">
-        <div class="card"> 
-            <img src="../ASSETS/img/clase_crossfit.jpg" alt="Crossfit"> 
-            <div class="card-content"> 
-                <h3>Crossfit Intenso</h3>
-                 <p>Entrenamiento funcional de alta intensidad.</p> 
-                </div> </div> <div class="card"> 
-                    <img src="../ASSETS/img/clase_zumba.jpg" alt="Zumba"> 
-                    <div class="card-content"> 
-                        <h3>Zumba</h3> 
-                        <p>Baile fitness lleno de energía y diversión.</p> 
-                    </div> </div> <div class="card"> 
-                        <img src="../ASSETS/img/clase_yoga.jpg" alt="Yoga"> 
-                        <div class="card-content"> 
-                            <h3>Yoga Flow</h3> 
-                            <p>Secuencias fluidas para flexibilidad y relajación.</p> 
-                    </div> 
-            </div> 
-        </div> 
     </section>
 
-  <!-- ================= SECCIÓN PLANES ================= -->
-  <section class="plans" id="planes">
-    <h2>Elige Tu Plan Perfecto</h2>
-    <p>Tenemos el plan ideal para cada objetivo y presupuesto</p>
+    <!-- ================= SECCIÓN ENTRENADORES ================= -->
+    <section class="trainers" id="entrenadores">
+      <h2>Nuestros Entrenadores</h2>
+      <p>Conoce a nuestro equipo de profesionales certificados</p>
 
-    <div class="plans-grid" id="plans-container"></div>
-  </section>
+      <div class="trainer-cards" id="trainer-cards-container"></div>
+    </section>
 
+    <!-- ================= SECCIÓN CLASES ================= --> 
+    <section class="class" id="clases">
+      <div class="container_Class">
+          <h2>Nuestras Clases Más Populares</h2>
+          <p>Descubre la variedad de clases que ofrecemos para todos los niveles</p> 
+      </div> 
+      <div class="cards-container" id="clases-container">
+          <div class="card"> 
+              <img src="../ASSETS/img/clase_crossfit.jpg" alt="Crossfit"> 
+              <div class="card-content"> 
+                  <h3>Crossfit Intenso</h3>
+                  <p>Entrenamiento funcional de alta intensidad.</p> 
+                  </div> </div> <div class="card"> 
+                      <img src="../ASSETS/img/clase_zumba.jpg" alt="Zumba"> 
+                      <div class="card-content"> 
+                          <h3>Zumba</h3> 
+                          <p>Baile fitness lleno de energía y diversión.</p> 
+                      </div> </div> <div class="card"> 
+                          <img src="../ASSETS/img/clase_yoga.jpg" alt="Yoga"> 
+                          <div class="card-content"> 
+                              <h3>Yoga Flow</h3> 
+                              <p>Secuencias fluidas para flexibilidad y relajación.</p> 
+                      </div> 
+              </div> 
+          </div> 
+    </section>
+
+    <!-- ================= SECCIÓN PLANES ================= -->
+    <section class="plans" id="planes">
+      <h2>Elige Tu Plan Perfecto</h2>
+      <p>Tenemos el plan ideal para cada objetivo y presupuesto</p>
+
+      <div class="plans-grid" id="plans-container"></div>
+    </section>
+
+  </main>
   <!-- ================= FOOTER ================= -->
   <div id="footer-placeholder"></div>
 
   <!-- ================= SCRIPT ================= -->
-  <script src="../HTML/JS/index.js"></script>
-  <script src="../HTML/JS/utils.js"></script>
   <script src="../HTML/JS/loadComponents.js"></script>
+  <script src="../HTML/JS/utils.js"></script>
+  <script src="../HTML/JS/index.js"></script>
 </body>
 </html>

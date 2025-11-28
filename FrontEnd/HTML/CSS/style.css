@@ -95,7 +95,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 40px;
+  padding: 15px 20px;
   color: #fff;
   z-index: 1000;
   background-color: black;
@@ -224,54 +224,83 @@ body {
    SIDEBAR
 ========================================================= */
 .sidebar {
-  position: fixed;
-  top: 0;
-  left: -250px;
-  width: 250px;
-  height: 100%;
-  background-color: #000000;
-  color: #ffffff;
-  padding: 20px;
-  box-shadow: 2px 0 5px var(--overlay);
-  transition: left 0.3s ease;
-  z-index: 1000;
-  overflow-y: auto;
+    position: fixed;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 20px;
+    box-shadow: 2px 0 5px var(--overlay);
+    z-index: 1000;
+    overflow-y: auto;
+    
+    /* Propiedades de ocultamiento y transición (Método preferido) */
+    transform: translateX(-100%); /* Esconde completamente fuera de la vista */
+    transition: transform 0.3s ease;
+
+    overflow-y: auto;   /* 👉 permite scroll si hay muchos items */
+    overflow-x: hidden;
+      /* o el color que uses */
+    padding-bottom: 2rem;
 }
 
+
 .sidebar.active {
-  left: 0;
+    /* Muestra el sidebar en la posición 0 (visible) */
+    transform: translateX(0);
 }
 
 .sidebar ul {
-  list-style: none;
-  margin-top: 40px;
+    list-style: none;
+    margin-top: 40px;
 }
 
 .sidebar ul li {
-  margin: 20px 0;
+    margin: 20px 0;
 }
 
 .sidebar ul li a {
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 1rem;
-  transition: color 0.2s;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.3rem;
+    transition: color 0.2s;
+    
+    /* Flexbox para alinear el icono y el texto */
+    display: flex; 
+    align-items: center; 
+    gap: 10px; /* Espacio entre el icono y el texto */
 }
 
-.sidebar ul li a:hover {
-  color: var(--highlight);
+.sidebar ul li a svg {   /* o el color que uses */
+    stroke: #ffffff;
+    width: 24px;
+    height: 24px;
+    transition: stroke 0.2s;
 }
+
+.btn.svg {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* separación entre icono y texto */
+}
+
+.sidebar ul li:hover a,
+.sidebar ul li:hover svg {
+    color: var(--highlight) !important;
+    stroke: var(--highlight) !important;
+}
+
 
 .close-btn {
-  background: none;
-  border: none;
-  font-size: 2rem;
-  color: var(--text);
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--text); /* Deberías usar var(--highlight) o #fff si está sobre fondo negro */
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 
@@ -282,6 +311,27 @@ body {
     width: 220px;
   }
 }
+
+/* ---------------------------------------------------------
+   Estilos base del contenedor de contenido
+--------------------------------------------------------- */
+.content-wrapper {
+    /* Esto hace que el contenido ocupe el 100% de la pantalla por defecto */
+    margin-left: 0; 
+    width: 100%;
+    transition: margin-left 0.3s ease, width 0.3s ease; 
+    min-height: 100vh; /* Asegura que el contenido sea al menos de altura de la pantalla */
+}
+
+
+body.sidebar-active .content-wrapper {
+    /* 1. Desplaza el contenido principal a la derecha */
+    margin-left: 250px; /* Igual al ancho del sidebar */
+    
+    /* 2. Hace que el ancho se reduzca para CABER en el espacio restante */
+    width: calc(100% - 250px);
+}
+
 
 /* =========================================================
    OVERLAY
@@ -306,8 +356,8 @@ body {
 ========================================================= */
 .hero-slider {
   position: relative;
-  height: 90vh;
-  overflow: hidden;
+  min-height: 90vh; /* Antes era height */
+  overflow: visible; /* Antes estaba hidden */
 
 }
 
@@ -1547,4 +1597,50 @@ html {
   cursor: not-allowed;
 }
 
+/* Contenedor base */
+[data-tooltip] {
+    position: relative;
+    cursor: pointer;
+}
 
+/* Tooltip oculto */
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 120%;        /* encima del elemento */
+    left: 50%;
+    transform: translateX(-50%);
+    background: #111;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* Flechita opcional */
+[data-tooltip]::before {
+    content: "";
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: #111 transparent transparent transparent;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease;
+}
+
+/* Mostrar tooltip cuando el mouse pasa encima */
+[data-tooltip]:hover::after,
+[data-tooltip]:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
