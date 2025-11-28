@@ -255,88 +255,64 @@ function crearBoton(html, clases) {
     return b;
 }
 
+// =============================
+// LISTAR ENTRENADORES
+// =============================
 function renderizarTabla() {
-    tablaBody.innerHTML = "";
 
-    if (!entrenadores || entrenadores.length === 0) {
-        tablaBody.innerHTML = `<tr><td colspan="10">No hay entrenadores registrados.</td></tr>`;
-        return;
+  const tbody = tablaBody;
+  tbody.innerHTML = "<tr><td colspan='10'>Cargando...</td></tr>";
+
+  if (!entrenadores || entrenadores.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='10'>No hay entrenadores registrados.</td></tr>";
+    return;
+  }
+
+  // ============================
+  // PAGINACIÓN REAL
+  // ============================
+  const inicio = (paginaActual - 1) * filasPorPagina;
+  const fin = inicio + filasPorPagina;
+  const pagina = entrenadores.slice(inicio, fin);
+
+  tbody.innerHTML = pagina.map(ent => `
+    <tr>
+      <td>${ent.id}</td>
+      <td>${ent.nombre}</td>
+      <td>${ent.apellido}</td>
+      <td>${ent.dni}</td>
+      <td>${ent.direccion || ""}</td>
+      <td>${ent.telefono || ""}</td>
+      <td>${ent.fechaNacimiento ? ent.fechaNacimiento.substring(0,10) : ""}</td>
+      <td>${ent.urlFoto ? `<img src="${ent.urlFoto}" width="50">` : ""}</td>
+      <td>${ent.urlCertificado ? `<button class="btn-small btn" onclick="verCertificado('${ent.id}')">Ver</button>` : "N/A"}</td>
+      <td>
+        <button class="btn btn-edit btn-small" onclick="abrirEditarEntrenador(${ent.id})" data-tooltip="Editar Entrenador">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-pen-line-icon lucide-file-pen-line"><path d="m18.226 5.226-2.52-2.52A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.351"/><path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><path d="M8 18h1"/></svg>
+        </button>
+        <button class="btn btn-delete btn-small" onclick="eliminarEntrenadorPorId(${ent.id})" data-tooltip="Eliminar Entrenador">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </button>
+        <button class="btn btn-save btn-small" onclick="imprimirEntrenadorPorId(${ent.id})" data-tooltip="Imprimir PDF">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+        </button>
+      </td>
+    </tr>
+  `).join("");
+
+  // ============================
+  // PAGINACIÓN GENÉRICA
+  // ============================
+  crearPaginacion({
+    contenedor: "#paginacion",
+    totalItems: entrenadores.length,
+    paginaActual,
+    filasPorPagina,
+    onPaginaCambiada: (nuevaPagina) => {
+      paginaActual = nuevaPagina;
+      renderizarTabla();
     }
-
-    // ============================
-    // PAGINACIÓN CORRECTA
-    // ============================
-    const inicio = (paginaActual - 1) * filasPorPagina;
-    const fin = inicio + filasPorPagina;
-    const entrenadoresPagina = entrenadores.slice(inicio, fin);
-
-    entrenadoresPagina.forEach(ent => {
-
-        const tr = document.createElement("tr");
-
-        const btnModificar = crearBoton(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-pen-line-icon lucide-file-pen-line"><path d="m18.226 5.226-2.52-2.52A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.351"/><path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><path d="M8 18h1"/></svg>`, ["btn-small", "btn-edit"]);
-        const btnEliminar = crearBoton(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>`, ["btn-small", "btn-delete"]);
-        const btnImprimir = crearBoton(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>`, ["btn-small", "btn-save"]);
-
-        tr.innerHTML = `
-            <td>${ent.id}</td>
-            <td>${ent.nombre}</td>
-            <td>${ent.apellido}</td>
-            <td>${ent.dni}</td>
-            <td>${ent.direccion || ""}</td>
-            <td>${ent.telefono || ""}</td>
-            <td>${ent.fechaNacimiento ? ent.fechaNacimiento.substring(0,10) : ""}</td>
-            <td>${ent.urlFoto ? `<img src="${ent.urlFoto}" width="50">` : ""}</td>
-            <td>
-                ${
-                    ent.urlCertificado
-                        ? `<button class="btn-small btn" onclick="verCertificado('${ent.id}')">Ver</button>`
-                        : "N/A"
-                }
-            </td>
-            <td></td>
-        `;
-
-        const acciones = tr.querySelector("td:last-child");
-        acciones.appendChild(btnModificar);
-        acciones.appendChild(btnEliminar);
-        acciones.appendChild(btnImprimir);
-
-        btnModificar.addEventListener("click", () => {
-            cargarFormularioParaEdicion(ent);
-            abrirModal(modalForm);
-        });
-
-        btnEliminar.addEventListener("click", async () => {
-            if (!confirm(`¿Eliminar a ${ent.nombre} ${ent.apellido}?`)) return;
-
-            const res = await fetch(`${API_BASE_ENTRENADOR}/${ent.id}`, { method: "DELETE" });
-            if (res.ok || res.status === 204) {
-                alert("Entrenador eliminado.");
-                cargarEntrenadores();
-            } else {
-                alert("Error al eliminar.");
-            }
-        });
-
-        btnImprimir.addEventListener("click", () => imprimirEntrenador(ent));
-
-        tablaBody.appendChild(tr);
-    });
-
-    // ============================
-    // PAGINACIÓN GENÉRICA
-    // ============================
-    crearPaginacion({
-        contenedor: "#paginacion",
-        totalItems: entrenadores.length,    // <-- CORRECTO
-        paginaActual,
-        filasPorPagina,
-        onPaginaCambiada: (nuevaPagina) => {
-            paginaActual = nuevaPagina;
-            renderizarTabla();              // <-- CORRECTO
-        }
-    });
+  });
 }
 
 // =============================
@@ -406,6 +382,51 @@ async function guardarEntrenador() {
     entrenadorSeleccionado = null;
 }
 
+
+// -----------------------------
+// Wrappers para botones (aceptan id)
+// -----------------------------
+
+// Abre el formulario para edición a partir del id
+function abrirEditarEntrenador(id) {
+    const ent = entrenadores.find(e => e.id == id);
+    if (!ent) {
+        alert("Entrenador no encontrado.");
+        return;
+    }
+    cargarFormularioParaEdicion(ent);  
+    abrirModal(modalForm);
+}
+
+// Eliminar por id (wrapper)
+async function eliminarEntrenadorPorId(id) {
+    if (!confirm("¿Seguro que desea eliminar este entrenador?")) return;
+
+    try {
+        const res = await fetch(`${API_BASE_ENTRENADOR}/${id}`, { method: "DELETE" });
+        if (res.ok || res.status === 204) {
+            alert("Entrenador eliminado.");
+            await cargarEntrenadores();
+        } else {
+            const text = await res.text().catch(() => "");
+            console.error("Error eliminar:", res.status, text);
+            alert("Error al eliminar entrenador.");
+        }
+    } catch (err) {
+        console.error("Error eliminar entrenador:", err);
+        alert("Error de conexión al eliminar entrenador.");
+    }
+}
+
+// Imprimir por id 
+function imprimirEntrenadorPorId(id) {
+    const ent = entrenadores.find(e => e.id == id);
+    if (!ent) {
+        alert("Entrenador no encontrado.");
+        return;
+    }
+    imprimirEntrenador(ent); 
+}
 
 // =============================
 // DETALLE / IMPRIMIR
@@ -569,7 +590,7 @@ async function imprimirEntrenador(ent) {
                     <div class="campo"><span>DNI:</span> ${ent.dni}</div>
                     <div class="campo"><span>Teléfono:</span> ${ent.telefono || "N/A"}</div>
                     <div class="campo"><span>Dirección:</span> ${ent.direccion || "N/A"}</div>
-                    <div class="campo"><span>Fecha de Nacimiento:</span> ${ent.fechaNacimiento.substring(0,10)}</div>
+                    <div class="campo"><span>Fecha de Nacimiento:</span> ${ent.fechaNacimiento}</div>
 
                     <div class="foto">
                         

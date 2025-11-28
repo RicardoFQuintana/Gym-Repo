@@ -147,6 +147,15 @@ function inicializarEventos() {
     btnCancelarConsulta.addEventListener("click", () => cerrarModalElement(modalConsulta));
   }
 
+  if (btnCarnetDetalle) {
+    btnCarnetDetalle.addEventListener("click", () => {
+      if (miembroSeleccionado) {
+        mostrarCarnet(miembroSeleccionado.id);
+      } else {
+        alert("No hay ningún miembro seleccionado.");
+      }
+    });
+  }
   // Modal detalle: cerrar / editar / eliminar / imprimir
   if (btnCerrarDetalle) btnCerrarDetalle.addEventListener("click", () => cerrarModalElement(modalDetalle));
   if (btnEditarDetalle) btnEditarDetalle.addEventListener("click", () => {
@@ -349,68 +358,52 @@ async function cargarMiembros() {
   }
 }
 
+// =============================
+// LISTAR MIEMBROS 
+// =============================
 function renderizarTabla() {
-  if (!tablaBody) return;
-  tablaBody.innerHTML = "";
+
+  const tbody = tablaBody;
+  tbody.innerHTML = "<tr><td colspan='9'>Cargando...</td></tr>";
 
   if (!miembros || miembros.length === 0) {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td colspan="9">No hay miembros registrados</td>`;
-    tablaBody.appendChild(tr);
+    tbody.innerHTML = "<tr><td colspan='9'>No hay miembros registrados.</td></tr>";
     return;
   }
 
   // ============================
-  // PAGINACIÓN - CÁLCULO DE RANGO
+  // PAGINACIÓN REAL
   // ============================
   const inicio = (paginaActual - 1) * filasPorPagina;
   const fin = inicio + filasPorPagina;
-  const miembrosPagina = miembros.slice(inicio, fin);
-  // ============================
+  const pagina = miembros.slice(inicio, fin);
 
-  miembrosPagina.forEach(miembro => {
-    const tr = document.createElement("tr");
-
-    tr.innerHTML = `
-      <td>${miembro.id}</td>
-      <td>${escapeHtml(miembro.nombre)}</td>
-      <td>${escapeHtml(miembro.apellido)}</td>
-      <td>${miembro.dni ?? ""}</td>
-      <td>${escapeHtml(miembro.direccion ?? "")}</td>
-      <td>${miembro.telefono ?? ""}</td>
-      <td>${miembro.fechaNacimiento ? miembro.fechaNacimiento.substring(0,10) : ""}</td>
-      <td>${miembro.urlFoto ? `<img src="${miembro.urlFoto}" width="50" height="50">` : ""}</td>
-      <td></td>
-    `;
-
-    const accionesTd = tr.querySelector("td:last-child");
-
-    // Crear botones sin usar onclick inline
-    const btnModificar = crearBoton(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-pen-line-icon lucide-file-pen-line"><path d="m18.226 5.226-2.52-2.52A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.351"/><path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><path d="M8 18h1"/></svg>`, ["btn-small", "btn", "btn-edit"]);
-    const btnEliminar = crearBoton(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>`, ["btn-small", "btn", "btn-delete"]);
-    const btnCarnet = crearBoton(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card-icon lucide-credit-card"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>`, ["btn-small", "btn", "btn-success"]);
-    const btnImprimir = crearBoton(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>`, ["btn-small", "btn-save"]);
-
-    accionesTd.append(btnEliminar);
-    accionesTd.append(btnModificar);
-    accionesTd.append(btnCarnet);
-    accionesTd.append(btnImprimir);
-
-    btnModificar.addEventListener("click", () => {
-      cargarFormularioParaEdicion(miembro);
-      abrirModalElement(modalForm);
-    });
-
-    btnEliminar.addEventListener("click", async () => {
-      if (!confirm(`¿Seguro de eliminar a ${miembro.nombre}?`)) return;
-      await eliminarMiembroAPI(miembro.id);
-      cargarMiembros();
-    });
-
-    btnCarnet.addEventListener("click", () => mostrarCarnet(miembro));
-    btnImprimir.addEventListener("click", () => imprimirMiembro(miembro));
-    tablaBody.appendChild(tr);
-   });
+  tbody.innerHTML = pagina.map(m => `
+    <tr>
+      <td>${m.id}</td>
+      <td>${escapeHtml(m.nombre)}</td>
+      <td>${escapeHtml(m.apellido)}</td>
+      <td>${m.dni || ""}</td>
+      <td>${escapeHtml(m.direccion || "")}</td>
+      <td>${m.telefono || ""}</td>
+      <td>${m.fechaNacimiento ? m.fechaNacimiento.substring(0,10) : ""}</td>
+      <td>${m.urlFoto ? `<img src="${m.urlFoto}" width="50">` : ""}</td>
+      <td>
+        <button class="btn btn-edit btn-small" onclick="abrirEditarMiembro(${m.id})" data-tooltip="Editar Miembro">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-pen-line-icon lucide-file-pen-line"><path d="m18.226 5.226-2.52-2.52A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.351"/><path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><path d="M8 18h1"/></svg>
+        </button>
+        <button class="btn btn-delete btn-small" onclick="eliminarMiembroPorId(${m.id})" data-tooltip="Eliminar Miembro">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </button>
+        <button class="btn btn-success btn-small" onclick="mostrarCarnet(${m.id})" data-tooltip="Ver Carnet">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card-icon lucide-credit-card"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+        </button>
+        <button class="btn btn-save btn-small" onclick="imprimirMiembroPorId(${m.id})" data-tooltip="Imprimir PDF">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+        </button>
+      </td>
+    </tr>
+  `).join("");
 
   // ============================
   // PAGINACIÓN GENÉRICA
@@ -426,7 +419,6 @@ function renderizarTabla() {
     }
   });
 }
-
 
 function crearBoton(html, clases) {
     const b = document.createElement("button");
@@ -611,6 +603,52 @@ function cargarFormularioParaEdicion(miembro) {
   if (inputCampos.descuentoSelect) inputCampos.descuentoSelect.value = miembro.descuentoId ?? "";
   miembroSeleccionado = miembro;
 }
+
+// -----------------------------
+// Wrappers para botones (aceptan id)
+// -----------------------------
+
+// Abre el formulario para edición a partir del id
+function abrirEditarMiembro(id) {
+    const mi = miembros.find(m => m.id == id);
+    if (!mi) {
+        alert("Miembro no encontrado.");
+        return;
+    }
+    cargarFormularioParaEdicion(mi);  
+    abrirModalElement(modalForm);
+}
+
+// Eliminar por id (wrapper)
+async function eliminarMiembroPorId(id) {
+    if (!confirm("¿Seguro que desea eliminar este Miembro?")) return;
+
+    try {
+        const res = await fetch(`${API_BASE_MIEMBRO}/${id}`, { method: "DELETE" });
+        if (res.ok || res.status === 204) {
+            alert("Miembro eliminado.");
+            await cargarMiembros();
+        } else {
+            const text = await res.text().catch(() => "");
+            console.error("Error eliminar:", res.status, text);
+            alert("Error al eliminar Miembro.");
+        }
+    } catch (err) {
+        console.error("Error eliminar Miembro:", err);
+        alert("Error de conexión al eliminar Miembro.");
+    }
+}
+
+// Imprimir por id 
+function imprimirMiembroPorId(id) {
+    const ent = miembros.find(e => e.id == id);
+    if (!ent) {
+        alert("Miembro no encontrado.");
+        return;
+    }
+    imprimirMiembro(ent); 
+}
+
 
 // =============================
 // Detalle / Imprimir / Carnet
@@ -814,34 +852,72 @@ async function imprimirMiembro(mi) {
     alert("No se pudo imprimir la ficha del miembro.");
   }
 }
-function mostrarCarnet(miembro) {
-  // preparar datos
-  const idParaBarcode = String(miembro.id ?? "").padStart(8, "0");
-  carnetNombre.textContent = `${miembro.nombre} ${miembro.apellido}`;
-  carnetDni.textContent = miembro.dni ?? "";
-  carnetId.textContent = miembro.id ?? "";
-  carnetFoto.src = miembro.urlFoto || "../ASSETS/img/default-user.png";
 
-  // Generar codigo de barras (JsBarcode debe estar cargado)
+// Mostrar carnet — acepta tanto objeto miembro como id
+function mostrarCarnet(miembroOrId) {
+  // Si recibimos un id, buscamos el miembro en el array
+  let miembro = null;
+  if (typeof miembroOrId === "number" || typeof miembroOrId === "string") {
+    miembro = miembros.find(m => String(m.id) === String(miembroOrId));
+  } else {
+    miembro = miembroOrId;
+  }
+
+  if (!miembro) {
+    alert("Miembro no encontrado para mostrar el carnet.");
+    return;
+  }
+
+  // preparar datos al modal (asegurarnos que los nodos están definidos)
+  const idParaBarcode = String(miembro.id ?? "").padStart(8, "0");
+  if (carnetNombre) carnetNombre.textContent = `${miembro.nombre || ""} ${miembro.apellido || ""}`;
+  if (carnetDni) carnetDni.textContent = miembro.dni ?? "";
+  if (carnetId) carnetId.textContent = miembro.id ?? "";
+  if (carnetFoto) carnetFoto.src = miembro.urlFoto || "../ASSETS/img/default-user.png";
+
+  // Generar codigo de barras
   try {
-    if (typeof JsBarcode === "function") {
-      JsBarcode("#barcodeCanvas", idParaBarcode, {
-        format: "CODE128",
-        displayValue: true,
-        text: idParaBarcode,
-        margin: 6,
-        width: 2,
-        height: 50
-      });
+    // Si JsBarcode está disponible
+    if (typeof JsBarcode !== "undefined" && typeof JsBarcode === "function") {
+      // Si tenemos la referencia al canvas/elemento, pasamos el elemento; si no, pasamos selector
+      if (barcodeCanvas) {
+        // barcodeCanvas puede ser <canvas> o <img> segun tu HTML
+        JsBarcode(barcodeCanvas, idParaBarcode, {
+          format: "CODE128",
+          displayValue: true,
+          text: idParaBarcode,
+          margin: 6,
+          width: 2,
+          height: 50
+        });
+      } else {
+        // intenta por selector, por compatibilidad con tu código anterior
+        JsBarcode("#barcodeCanvas", idParaBarcode, {
+          format: "CODE128",
+          displayValue: true,
+          text: idParaBarcode,
+          margin: 6,
+          width: 2,
+          height: 50
+        });
+      }
     } else {
-      // si no está JsBarcode, limpiamos canvas
       console.warn("JsBarcode no disponible - no se generará código de barras.");
-      if (barcodeCanvas) barcodeCanvas.innerHTML = "";
+      if (barcodeCanvas) {
+        // limpiar contenido si existe el nodo
+        if ("getContext" in barcodeCanvas) {
+          const ctx = barcodeCanvas.getContext("2d");
+          ctx.clearRect(0, 0, barcodeCanvas.width, barcodeCanvas.height);
+        } else {
+          barcodeCanvas.innerHTML = "";
+        }
+      }
     }
   } catch (err) {
     console.error("Error al generar barcode:", err);
   }
 
+  // Abrir modal (usa la función que ya tienes)
   abrirModalElement(modalCarnet);
 }
 

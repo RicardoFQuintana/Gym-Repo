@@ -33,12 +33,12 @@ function initializeComponentInteractivity() {
     if (menuBtn && sidebar && closeBtn && overlay) { 
         menuBtn.addEventListener("click", () => {
             sidebar.classList.add("active");
-            overlay.classList.add("active");
+            document.body.classList.add("sidebar-active");
         });
 
         closeBtn.addEventListener("click", () => {
             sidebar.classList.remove("active");
-            overlay.classList.remove("active");
+            document.body.classList.remove("sidebar-active");
         });
 
         overlay.addEventListener("click", () => {

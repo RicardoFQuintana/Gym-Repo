@@ -19,12 +19,12 @@
     <div id="overlay" class="overlay"></div>
 
     <!-- ========== CONTENIDO PRINCIPAL ========== -->
-    <main class="main-container">
+    <main class="main-container content-wrapper">
       <section class="gestor">
 
         <!-- ===== BOTONES SUPERIORES ===== -->
         <div class="btn-row">
-          <button id="imprimirBtn" class="btn-small btn btn-save">
+          <button id="imprimirBtn" class="btn-small btn btn-save" data-tooltip="Imprimir PDF">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
           </button>
           <h1>Horarios de Clases</h1>
@@ -35,7 +35,7 @@
             <div class="modal-content">
                 <p id="detalleClase" class="detalle-izquierda"></p>
                 <div class="btn-group">
-                    <button class="btn btn-secondary" onclick="cerrarModal('modalDetalle')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-delete-icon lucide-delete"><path d="M10 5a2 2 0 0 0-1.344.519l-6.328 5.74a1 1 0 0 0 0 1.481l6.328 5.741A2 2 0 0 0 10 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/><path d="m12 9 6 6"/><path d="m18 9-6 6"/></svg></button>
+                    <button class="btn btn-secondary" data-tooltip="Cerrar" onclick="cerrarModal('modalDetalle')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-delete-icon lucide-delete"><path d="M10 5a2 2 0 0 0-1.344.519l-6.328 5.74a1 1 0 0 0 0 1.481l6.328 5.741A2 2 0 0 0 10 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/><path d="m12 9 6 6"/><path d="m18 9-6 6"/></svg></button>
                 </div>
             </div>
         </div>
@@ -79,7 +79,5 @@
     <script src="../HTML/JS/utils.js"></script>
     <script src="../HTML/JS/horarios.js"></script>
     <script src="../HTML/JS/loadComponents.js"></script>
-    <!-- Importo todos los íconos -->
-    <object type="image/svg+xml" data="assets/icons/icons.svg" style="display:none;"></object>
   </body>
 </html>
