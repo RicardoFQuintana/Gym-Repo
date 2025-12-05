@@ -1,405 +1,464 @@
+// reporte-asistencia.js (FINAL)
+// Usa la plantilla del reporte de ingresos: paginación, estado global y print via window.open
+
+// ==================== CONFIG ====================
 const API_BASE = "https://localhost:7271/api";
+const EP_ASISTENCIAS = `${API_BASE}/Asistencia`;
+const EP_MIEMBROS = `${API_BASE}/Miembro`;
+const EP_CLASES = `${API_BASE}/Clase`;
 
-// Función para generar PDF (versión modular)
-function generatePDF(reportData) {
-    // Verificar que las librerías estén cargadas
-    if (typeof jspdf === 'undefined') {
-        console.error('jsPDF no está cargado');
-        return;
-    }
+// ==================== ESTADO GLOBAL ====================
+const estado = {
+  paginaActual: 1,
+  registrosPorPagina: 6,
 
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+  asistenciasOriginales: [],
+  asistenciasFiltradas: [],
 
-    // Título principal
-    doc.setFontSize(18);
-    doc.text("Reporte de Asistencias por Clase", 14, 20);
+  miembros: [],
+  clases: [],
 
-    // Fecha de generación
-    doc.setFontSize(10);
-    doc.text(`Generado el: ${new Date().toLocaleDateString('es-ES')}`, 14, 30);
+  filtros: {
+    clase: "todas",
+    periodo: "mensual",
+    desde: null,
+    hasta: null
+  }
+};
 
-    // Estadísticas generales
-    const totalClases = reportData.length;
-    const totalAsistencias = reportData.reduce((sum, clase) => sum + clase.asistenciasCount, 0);
-    const promedioAsistenciaPorClase = totalAsistencias / totalClases;
+// ==================== DOM ====================
+const filtroClase = document.getElementById("filtro-clase");
+const filtroPeriodo = document.getElementById("filtro-periodo");
+const fechaDesde = document.getElementById("fecha-desde");
+const fechaHasta = document.getElementById("fecha-hasta");
+const btnAplicar = document.getElementById("btn-aplicar-filtros");
+const btnExportar = document.getElementById("btnExportarPDF");
 
-    doc.setFontSize(14);
-    doc.text("Resumen General", 14, 45);
-    doc.setFontSize(10);
-    doc.text(`Total de Clases: ${totalClases}`, 14, 53);
-    doc.text(`Total de Asistencias: ${totalAsistencias}`, 14, 60);
-    doc.text(`Promedio por Clase: ${promedioAsistenciaPorClase.toFixed(1)}`, 14, 67);
+const tablaBody = document.getElementById("tabla-body");
+const paginacionCont = "#paginacion";
 
-    // Tabla principal de clases
+const metricDia = document.getElementById("metric-dia");
+const metricMes = document.getElementById("metric-mes");
+const metricTri = document.getElementById("metric-tri");
+const metricAnio = document.getElementById("metric-anio");
 
-    doc.text("Detalle de Clases", 14, 72);
-    doc.autoTable({
-        startY: 75,
-        head: [["Clase", "Entrenador", "Cupo", "Inscriptos", "Asistencias", "% Asistencia", "Día", "Horario"]],
-        body: reportData.map((clase) => [
-            clase.claseNombre || "N/A",
-            clase.entrenador || "N/A",
-            clase.cupo?.toString() || "0",
-            clase.inscriptosCount?.toString() || "0",
-            clase.asistenciasCount?.toString() || "0",
-            clase.porcentajeAsistencia || "0%",
-            getDiaSemana(clase.dia),
-            clase.horario ? clase.horario.substring(0, 5) : "N/A"
-        ]),
-        headStyles: {
-            fillColor: [13, 110, 253],
-            textColor: 255,
-            fontStyle: 'bold'
-        },
-        styles: {
-            fontSize: 8,
-            cellPadding: 2
-        },
-        columnStyles: {
-            0: { cellWidth: 25 },
-            1: { cellWidth: 25 },
-            2: { cellWidth: 15 },
-            3: { cellWidth: 15 },
-            4: { cellWidth: 15 },
-            5: { cellWidth: 15 },
-            6: { cellWidth: 15 },
-            7: { cellWidth: 25 }
-        }
-    });
+// modal
+const modal = document.getElementById("modalAsistencia");
+const btnAbrirModal = document.getElementById("btnRegistrar");
+const btnCerrarModal = document.getElementById("cancelarAsistenciaBtn");
+const btnGuardar = document.getElementById("guardarAsistenciaBtn");
+const inputDni = document.getElementById("modal-dni");
+const inputNombre = document.getElementById("modal-nombre");
+const inputClase = document.getElementById("modal-clase");
+const inputMetodo = document.getElementById("modal-metodo");
 
-    // Detalle de asistencias por clase
-    reportData.forEach((clase, index) => {
-        if (clase.asistencias && clase.asistencias.length > 0) {
-            if (index > 0) {
-                doc.addPage();
-            }
+// overlay (opcional, si existe)
+const overlay = document.getElementById("overlay");
 
-            const startY = index === 0 ? doc.lastAutoTable.finalY + 15 : 20;
-
-            doc.setFontSize(14);
-            doc.text(`Clase: ${clase.claseNombre || "N/A"}`, 14, startY - 5);
-
-            doc.autoTable({
-                startY: startY,
-                head: [["Miembro", "Fecha de Asistencia"]],
-                body: clase.asistencias.map((asistencia) => [
-                    `${asistencia.miembroNombre} ${asistencia.miembroApellido}`,
-                    new Date(asistencia.fecha).toLocaleDateString('es-ES')
-                ]),
-                headStyles: {
-                    fillColor: [40, 167, 69],
-                    textColor: 255,
-                    fontStyle: 'bold'
-                },
-                styles: {
-                    fontSize: 8,
-                    cellPadding: 2
-                }
-            });
-
-            const finalY = doc.lastAutoTable.finalY + 10;
-            doc.setFontSize(10);
-            doc.text(`Resumen de la clase:`, 14, finalY);
-            doc.text(`- Total de asistencias: ${clase.asistenciasCount}`, 14, finalY + 7);
-            doc.text(`- Porcentaje de asistencia: ${clase.porcentajeAsistencia || '0%'}`, 14, finalY + 14);
-            doc.text(`- Cupo utilizado: ${clase.inscriptosCount || 0}/${clase.cupo || 0}`, 14, finalY + 21);
-        }
-    });
-
-    // Pie de página
-    const pageCount = doc.getNumberOfPages();
-    for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        doc.setFontSize(8);
-        doc.text(
-            `Página ${i} de ${pageCount} - Centro Deportivo`,
-            doc.internal.pageSize.width / 2,
-            doc.internal.pageSize.height - 10,
-            { align: 'center' }
-        );
-    }
-
-    // Guardar el PDF
-    const fecha = new Date().toISOString().split('T')[0];
-    doc.save(`reporte-asistencias-clases-${fecha}.pdf`);
+// ==================== UTILIDADES ====================
+function formatearFechaHora(d) {
+  if (!d) return "";
+  try { return new Date(d).toLocaleString(); } catch { return String(d); }
 }
 
-// Función auxiliar para obtener el nombre del día
-function getDiaSemana(diaNumero) {
-    const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-    return dias[diaNumero] || `Día ${diaNumero}`;
+async function fetchJSON(url) {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    console.error("fetchJSON:", err);
+    return [];
+  }
 }
 
-async function getAttendanceByClasse(from, to) {
-    try {
-        // Obtener todas las clases
-        const resp = await fetch(`${API_BASE}/Clase`);
-        if (!resp.ok) {
-            throw new Error(`Error al obtener clases: ${resp.status}`);
-        }
-        const classesData = await resp.json();
-
-        // Crear array de promesas para obtener asistencias de cada clase
-        const attendancePromises = classesData.map(async (classe) => {
-            try {
-                const attendanceResp = await fetch(
-                    `${API_BASE}/Asistencia/by-clase?id=${classe.id}`
-                );
-
-                if (!attendanceResp.ok) {
-                    console.warn(`Error al obtener asistencias para clase ${classe.id}: ${attendanceResp.status}`);
-                    return {
-                        clase: classe,
-                        asistencias: [],
-                        error: true
-                    };
-                }
-
-                const asistencias = await attendanceResp.json();
-
-                // Filtrar asistencias por fecha del lado del cliente
-                const asistenciasFiltradas = asistencias.filter((asistencia) => {
-                    const fechaAsistencia = new Date(asistencia.fecha);
-                    // Ajustar horas para comparar solo la fecha
-                    const fechaFrom = new Date(from);
-                    fechaFrom.setHours(0, 0, 0, 0);
-                    const fechaTo = new Date(to);
-                    fechaTo.setHours(23, 59, 59, 999);
-
-                    return fechaAsistencia >= fechaFrom && fechaAsistencia <= fechaTo;
-                });
-
-                return {
-                    clase: classe,
-                    asistencias: asistenciasFiltradas,
-                    error: false
-                };
-            } catch (error) {
-                console.error(`Error en fetch para clase ${classe.id}:`, error);
-                return {
-                    clase: classe,
-                    asistencias: [],
-                    error: true
-                };
-            }
-        });
-
-        // Esperar a que todas las promesas se resuelvan
-        const results = await Promise.all(attendancePromises);
-
-        // Procesar resultados para el reporte
-        const reporte = results.map(result => {
-            const porcentajeAsistencia = result.clase.cupo > 0 ?
-                (result.asistencias.length / result.clase.cupo) * 100 : 0;
-
-            return {
-                claseId: result.clase.id,
-                claseNombre: result.clase.nombre,
-                entrenador: `${result.clase.entrenadorNombre} ${result.clase.entrenadorApellido}`,
-                cupo: result.clase.cupo,
-                inscriptosCount: result.clase.inscriptosCount,
-                asistenciasCount: result.asistencias.length,
-                porcentajeAsistencia: porcentajeAsistencia.toFixed(2) + '%',
-                horario: `${result.clase.horaInicio} - ${result.clase.horaFin}`,
-                dia: result.clase.dia,
-                asistencias: result.asistencias,
-                error: result.error,
-                periodo: {
-                    from: from.toISOString().split('T')[0],
-                    to: to.toISOString().split('T')[0]
-                }
-            };
-        });
-
-        console.log('Reporte generado para el período:', from.toLocaleDateString(), 'a', to.toLocaleDateString());
-        console.log('Total de clases procesadas:', reporte.length);
-        console.log('Total de asistencias en el período:', reporte.reduce((sum, clase) => sum + clase.asistenciasCount, 0));
-
-        return reporte;
-
-    } catch (error) {
-        console.error('Error general en getAttendanceByClasse:', error);
-        throw error;
-    }
+function parseISOToDate(iso) {
+  if (!iso) return null;
+  return new Date(iso);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function obtenerRangoPorPeriodo(periodo) {
+  const hoy = new Date();
+  const copia = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  let desde = null, hasta = null;
 
+  switch (periodo) {
+    case "diario":
+      desde = copia(hoy);
+      hasta = new Date(desde.getFullYear(), desde.getMonth(), desde.getDate(), 23, 59, 59);
+      break;
+    case "semanal": {
+      const dia = hoy.getDay();
+      const diff = dia === 0 ? 6 : dia - 1;
+      desde = copia(hoy);
+      desde.setDate(desde.getDate() - diff);
+      hasta = new Date(desde);
+      hasta.setDate(desde.getDate() + 6);
+      hasta.setHours(23,59,59);
+      break;
+    }
+    case "mensual":
+      desde = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+      hasta = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0, 23, 59, 59);
+      break;
+    case "trimestral": {
+      const qStart = Math.floor(hoy.getMonth() / 3) * 3;
+      desde = new Date(hoy.getFullYear(), qStart, 1);
+      hasta = new Date(hoy.getFullYear(), qStart + 3, 0, 23, 59, 59);
+      break;
+    }
+    case "anual":
+      desde = new Date(hoy.getFullYear(), 0, 1);
+      hasta = new Date(hoy.getFullYear(), 11, 31, 23, 59, 59);
+      break;
+    default:
+      desde = hasta = null;
+  }
+  return { desde, hasta };
+}
 
-    const form = document.getElementById("asistenciaForm");
-    const inputDNI = document.getElementById("miembroDNI");
-    const selectClase = document.getElementById("claseId");
-    const inputNombre = document.getElementById("miembroNombre");
-    const miembroId = document.getElementById("miembroId");
-    const btnExportarPdf = document.getElementById("exportarPdf");
-    const dateFrom = document.getElementById("dateFrom");
-    const dateTo = document.getElementById("dateTo");
-    let todosLosMiembros = [];
+// ==================== CARGA INICIAL ====================
+async function cargarMiembros() {
+  estado.miembros = await fetchJSON(EP_MIEMBROS);
+}
 
-    btnExportarPdf.addEventListener("click", async () => {
-        const fromDate = new Date(dateFrom.value);
-        const toDate = new Date(dateTo.value);
+async function cargarClases() {
+  estado.clases = await fetchJSON(EP_CLASES);
+  // popular selects de clase (filtro + modal)
+  if (filtroClase) {
+    filtroClase.innerHTML = `<option value="todas">Todas</option>`;
+    estado.clases.forEach(c => {
+      const o = document.createElement("option");
+      o.value = c.id;
+      o.textContent = c.nombre;
+      filtroClase.appendChild(o);
+    });
+  }
+  if (inputClase) {
+    inputClase.innerHTML = `<option value="">-- Ninguna --</option>`;
+    estado.clases.forEach(c => {
+      const o = document.createElement("option");
+      o.value = c.id;
+      o.textContent = c.nombre;
+      inputClase.appendChild(o);
+    });
+  }
+}
 
-        if (isNaN(fromDate) || isNaN(toDate)) {
-            alert("Por favor, ingrese fechas válidas para el rango.");
-            return;
-        }
+async function cargarAsistencias() {
+  const data = await fetchJSON(EP_ASISTENCIAS);
+  // normalizar: esperamos datos con campos: miembroNombre, miembroApellido, miembroDni, claseId, claseNombre, fecha, metodo
+  estado.asistenciasOriginales = (data || []).map(a => ({
+    miembroNombre: a.miembroNombre ?? a.nombre ?? "",
+    miembroApellido: a.miembroApellido ?? a.apellido ?? "",
+    miembroDni: a.miembroDni ?? a.dni ?? a.dniMiembro ?? "",
+    claseId: a.claseId ?? a.clase?.id ?? null,
+    claseNombre: a.claseNombre ?? a.clase?.nombre ?? a.clase ?? "",
+    fecha: parseISOToDate(a.fecha),
+    metodo: a.metodo ?? a.metodoRegistro ?? ""
+  }));
 
-        getAttendanceByClasse(fromDate, toDate)
-            .then(reportData => {
-                generatePDF(reportData);
-            })
-            .catch(error => {
-                console.error("Error al generar el reporte de asistencias:", error);
-                alert("Hubo un error al generar el reporte de asistencias.");
-            });
+  aplicarFiltros(); // inicial
+}
+
+// ==================== FILTROS / EVENTOS ====================
+function configurarEventos() {
+  // mostrar/ocultar rango
+  filtroPeriodo.addEventListener("change", () => {
+    const mostrar = filtroPeriodo.value === "rango";
+    document.getElementById("rango-fechas-inicio").classList.toggle("oculto", !mostrar);
+    document.getElementById("rango-fechas-fin").classList.toggle("oculto", !mostrar);
+
+    estado.filtros.periodo = filtroPeriodo.value;
+  });
+
+  filtroClase.addEventListener("change", () => {
+    estado.filtros.clase = filtroClase.value;
+  });
+
+  fechaDesde.addEventListener("change", () => {
+    estado.filtros.desde = fechaDesde.value ? new Date(fechaDesde.value + "T00:00:00") : null;
+  });
+
+  fechaHasta.addEventListener("change", () => {
+    estado.filtros.hasta = fechaHasta.value ? new Date(fechaHasta.value + "T23:59:59") : null;
+  });
+
+  if (btnAplicar) btnAplicar.addEventListener("click", () => {
+    aplicarFiltros();
+  });
+
+  if (btnExportar) btnExportar.addEventListener("click", imprimirAsistencias); // usar plantilla print
+
+  // modal open/close
+  if (btnAbrirModal) btnAbrirModal.addEventListener("click", abrirModal);
+  if (btnCerrarModal) btnCerrarModal.addEventListener("click", cerrarModal);
+  if (overlay) overlay.addEventListener("click", cerrarModal);
+
+  // autocomplete dni -> nombre
+  if (inputDni) {
+    inputDni.addEventListener("input", () => {
+      // limpiar no numéricos
+      inputDni.value = inputDni.value.replace(/\D/g, "");
+      const m = estado.miembros.find(x => String(x.dni) === String(inputDni.value));
+      inputNombre.value = m ? `${m.nombre} ${m.apellido}` : "";
+      // si presionan Enter en dni, intentar guardar
     });
 
+    inputDni.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        registrarAsistencia();
+      }
+    });
+  }
 
+  // guardar asistencia
+  if (btnGuardar) btnGuardar.addEventListener("click", registrarAsistencia);
 
-    // Cargar todos los miembros al inicio
-    async function cargarMiembros() {
-        try {
-            const resp = await fetch(`${API_BASE}/Miembro`);
-            if (!resp.ok) throw new Error(`Error: ${resp.status}`);
-            todosLosMiembros = await resp.json();
-        } catch (error) {
-            console.error('Error al cargar miembros:', error);
-        }
+  // cerrar modal con ESC
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") cerrarModal();
+  });
+}
+
+function abrirModal() {
+  if (!modal) return;
+  modal.style.display = "flex";
+  if (overlay) overlay.classList.add("active");
+}
+
+function cerrarModal() {
+  if (!modal) return;
+  modal.style.display = "none";
+  if (overlay) overlay.classList.remove("active");
+}
+
+// ==================== FILTRAR ====================
+function aplicarFiltros() {
+  let lista = [...estado.asistenciasOriginales];
+
+  // filtro por clase
+  if (estado.filtros.clase && estado.filtros.clase !== "todas") {
+    lista = lista.filter(a => String(a.claseId) === String(estado.filtros.clase));
+  }
+
+  // rango por periodo
+  let rango = null;
+  if (estado.filtros.periodo === "rango") {
+    rango = {
+      desde: estado.filtros.desde ? new Date(estado.filtros.desde) : null,
+      hasta: estado.filtros.hasta ? new Date(estado.filtros.hasta) : null
+    };
+  } else {
+    rango = obtenerRangoPorPeriodo(estado.filtros.periodo);
+  }
+
+  if (rango?.desde) lista = lista.filter(a => a.fecha && a.fecha >= rango.desde);
+  if (rango?.hasta) lista = lista.filter(a => a.fecha && a.fecha <= rango.hasta);
+
+  // ordenar desc por fecha
+  lista.sort((x, y) => (y.fecha?.getTime() || 0) - (x.fecha?.getTime() || 0));
+
+  estado.asistenciasFiltradas = lista;
+  estado.paginaActual = 1;
+
+  recalcularMetricas();
+  renderTabla();
+  renderPaginacion();
+}
+
+// ==================== MÉTRICAS ====================
+function recalcularMetricas() {
+  const lista = estado.asistenciasOriginales || [];
+  const hoy = new Date();
+
+  const hoyIni = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+  const hoyFin = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate(), 23, 59, 59);
+
+  const mesIni = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+  const mesFin = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0, 23, 59, 59);
+
+  const tri = obtenerRangoPorPeriodo("trimestral");
+  const triIni = tri.desde;
+  const triFin = tri.hasta;
+
+  const anioIni = new Date(hoy.getFullYear(), 0, 1);
+  const anioFin = new Date(hoy.getFullYear(), 11, 31, 23, 59, 59);
+
+  metricDia.textContent = lista.filter(a => a.fecha && a.fecha >= hoyIni && a.fecha <= hoyFin).length;
+  metricMes.textContent = lista.filter(a => a.fecha && a.fecha >= mesIni && a.fecha <= mesFin).length;
+  metricTri.textContent = lista.filter(a => a.fecha && a.fecha >= triIni && a.fecha <= triFin).length;
+  metricAnio.textContent = lista.filter(a => a.fecha && a.fecha >= anioIni && a.fecha <= anioFin).length;
+}
+
+// ==================== RENDER TABLA (PAGINACIÓN REAL) ====================
+function renderTabla() {
+  const tbody = tablaBody;
+  const lista = estado.asistenciasFiltradas || [];
+
+  tbody.innerHTML = "<tr><td colspan='5'>Cargando...</td></tr>";
+
+  if (!lista.length) {
+    tbody.innerHTML = "<tr><td colspan='5'>No hay registros</td></tr>";
+    return;
+  }
+
+  const inicio = (estado.paginaActual - 1) * estado.registrosPorPagina;
+  const fin = inicio + estado.registrosPorPagina;
+  const pagina = lista.slice(inicio, fin);
+
+  tbody.innerHTML = pagina.map(a => `
+    <tr>
+      <td>${a.miembroNombre || ""} ${a.miembroApellido || ""}</td>
+      <td>${a.miembroDni || ""}</td>
+      <td>${a.claseNombre || ""}</td>
+      <td>${formatearFechaHora(a.fecha)}</td>
+      <td>${a.metodo || ""}</td>
+    </tr>
+  `).join("");
+}
+
+function renderPaginacion() {
+  crearPaginacion({
+    contenedor: paginacionCont,
+    totalItems: estado.asistenciasFiltradas.length,
+    paginaActual: estado.paginaActual,
+    filasPorPagina: estado.registrosPorPagina,
+    onPaginaCambiada: (nueva) => {
+      estado.paginaActual = nueva;
+      renderTabla();
     }
+  });
+}
 
-    function filtrarMiembrosPorDNI(inputDNI) {
-        // Si el input está vacío, limpiar el datalist
-        if (!inputDNI || inputDNI.length < 2) {
-            const dataList = document.getElementById("miembrosDatalist");
-            dataList.innerHTML = "";
-            return;
-        }
+// ==================== REGISTRAR ASISTENCIA (POST) ====================
+async function registrarAsistencia() {
+  const dni = (inputDni?.value || "").trim();
+  if (!dni) return alert("Ingrese DNI");
 
-        // Filtrar localmente
-        const miembrosFiltrados = todosLosMiembros
-            .filter(miembro => String(miembro.dni).includes(inputDNI))
-            .slice(0, 5);
+  const miembro = estado.miembros.find(m => String(m.dni) === String(dni));
+  const claseId = inputClase.value || null;
+  const metodo = inputMetodo.value || "manual";
 
-        const dataList = document.getElementById("miembrosDatalist");
-        dataList.innerHTML = "";
+  const payload = {
+    miembroId: miembro?.id ?? null,
+    dni: dni,
+    claseId: claseId ? parseInt(claseId, 10) : null,
+    metodo: metodo,
+    fecha: new Date().toISOString()
+  };
 
-        miembrosFiltrados.forEach(miembro => {
-            const option = document.createElement("option");
-            option.value = miembro.dni;
-            dataList.appendChild(option);
-        });
-    }
-
-    inputDNI.addEventListener("input", (event) => {
-        filtrarMiembrosPorDNI(event.target.value);
+  try {
+    const res = await fetch(EP_ASISTENCIAS, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
     });
 
-    inputDNI.addEventListener("change", (event) => {
-        const dniSeleccionado = event.target.value;
-
-        const miembroSeleccionado = todosLosMiembros.find(miembro => String(miembro.dni) === dniSeleccionado);
-        if (miembroSeleccionado) {
-            inputNombre.value = `${miembroSeleccionado.nombre} ${miembroSeleccionado.apellido}`;
-            miembroId.value = miembroSeleccionado.id;
-        } else {
-            inputNombre.value = "";
-        }
-    });
-
-    const selectActividad = document.getElementById("actividadId");
-    async function cargarActividad() {
-        try {
-            const resp = await fetch(`${API_BASE}/Actividad`);
-            if (!resp.ok) {
-                throw new Error(`Error al obtener clases: ${resp.status}`);
-            }
-            const classesData = await resp.json();
-
-            classesData.forEach(actividad => {
-                const option = document.createElement("option");
-                option.value = actividad.id;
-                option.text = actividad.nombre;
-                selectActividad.appendChild(option);
-            });
-
-        } catch (error) {
-            console.error('Error al cargar actividades:', error);
-        }
+    if (!res.ok) {
+      console.error("Error al registrar:", res.status, await res.text().catch(()=>""));
+      return alert("No se pudo registrar la asistencia");
     }
 
-    selectActividad.addEventListener("change", (event) => {
-        const actividadId = event.target.value;
-        cargarClasesPorActividad(actividadId);
-    });
+    // éxito
+    alert("Asistencia registrada correctamente");
+    cerrarModal();
 
+    // limpiar inputs
+    inputDni.value = "";
+    inputNombre.value = "";
 
-    async function cargarClasesPorActividad(actividadId) {
-        try {
-            const resp = await fetch(`${API_BASE}/Clase`);
-            if (!resp.ok) {
-                throw new Error(`Error al obtener clases: ${resp.status}`);
-            }
-            const classesData = await resp.json();
+    // recargar
+    await cargarAsistencias();
+  } catch (err) {
+    console.error(err);
+    alert("Error registrando asistencia");
+  }
+}
 
-            const clasesFiltradas = classesData.filter(clase => String(clase.id) == actividadId);
+// ==================== IMPRIMIR (USANDO PLANTILLA HTML - window.print) ====================
+function imprimirAsistencias() {
+  const lista = estado.asistenciasFiltradas || [];
 
-            // Limpiar opciones anteriores
-            selectClase.innerHTML = '<option value="">-- Seleccione una clase --</option>';
-            clasesFiltradas.forEach(clase => {
-                const option = document.createElement("option");
-                option.value = clase.id;
-                option.text = clase.nombre;
-                selectClase.appendChild(option);
-            }
-            );
+  if (!lista.length) {
+    alert("No hay registros para imprimir");
+    return;
+  }
 
-        } catch (error) {
-            console.error('Error al cargar clases por actividad:', error);
-        }
-    }
+  const filasHtml = lista.map(a => `
+    <tr>
+      <td>${escapeHtml(a.miembroNombre || "")} ${escapeHtml(a.miembroApellido || "")}</td>
+      <td>${escapeHtml(a.miembroDni || "")}</td>
+      <td>${escapeHtml(a.claseNombre || "")}</td>
+      <td>${escapeHtml(formatearFechaHora(a.fecha))}</td>
+      <td>${escapeHtml(a.metodo || "")}</td>
+    </tr>
+  `).join("");
 
+  const contenido = `
+    <div style="font-family: Arial, sans-serif; padding:20px;">
+      <h2 style="margin:0 0 8px 0;">Reporte de Asistencia</h2>
+      <p style="margin:0 0 12px 0;">Generado: ${new Date().toLocaleString()}</p>
 
-    function crearAsistencia(formData) {
-        console.log("Enviando datos de asistencia:", formData);
-        return fetch(`${API_BASE}/Asistencia`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-        })
-    }
+      <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; font-size:12px;">
+        <thead>
+          <tr style="background:#eee;">
+            <th>Miembro</th>
+            <th>DNI</th>
+            <th>Clase</th>
+            <th>Fecha / Hora</th>
+            <th>Método</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${filasHtml}
+        </tbody>
+      </table>
+    </div>
+  `;
 
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
+  const win = window.open("", "_blank");
+  win.document.write(`
+    <html>
+      <head>
+        <title>Reporte de Asistencia</title>
+        <style>
+          @media print {
+            table { font-size: 11px; }
+            th, td { border: 1px solid #999; padding:6px; }
+          }
+          body { font-family: Arial, sans-serif; margin:0; }
+        </style>
+      </head>
+      <body>${contenido}</body>
+    </html>
+  `);
+  win.document.close();
+  win.focus();
+  // Esperar poco para que el nuevo documento renderice y lanzar impresión
+  setTimeout(() => {
+    win.print();
+    // no cerramos la ventana automáticamente para que el usuario pueda revisar
+  }, 300);
+}
 
-        if (!form.miembroId.value) {
-            alert("Por favor, seleccione un miembro válido.");
-            return;
-        }
-        
+// ==================== ESCAPE HTML (seguridad mínima) ====================
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
 
-        const toSend = {
-            miembroId: Number(form.miembroId.value),
-            claseId: Number(form.claseId.value) || null,
-            fecha: new Date().toISOString()
-        }
-        try {
-            const response = await crearAsistencia(toSend);
-            if (response.ok) {
-                alert("Asistencia registrada con éxito.");
-                form.reset();
-            } else {
-                alert("Error al registrar la asistencia.");
-            }
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Error al registrar la asistencia.");
-        }
-    });
+// ==================== INIT ====================
+async function init() {
+  await cargarMiembros();
+  await cargarClases();
+  await cargarAsistencias();
+  configurarEventos();
+}
 
-    cargarMiembros();
-    cargarActividad();
-});
+init();
