@@ -59,8 +59,6 @@
   background: none;
 }
 
-
-
 /* =========================================================
    RESET Y CONFIGURACIÓN GENERAL
 ========================================================= */
@@ -131,8 +129,13 @@ body {
 .menu-btn {
   background: none;
   border: none;
+  padding: 2%;
+  border-radius: 30px;
   color:  #fff;
   cursor: pointer;
+}
+.menu-btn:hover{
+  background-color: #333;
 }
 
 .nav-links {
@@ -219,6 +222,56 @@ body {
   }
 }
 
+/* Contenedor del menú */
+.user-menu {
+  position: relative;
+  display: inline-block;
+}
+
+/* Botón del icono */
+.user-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+}
+
+/* Dropdown */
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  background: var(--bg-alt);
+  border-radius: 8px;
+  padding: 10px 0;
+  width: 150px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  z-index: 2001;
+}
+
+.dropdown a {
+  padding: 10px 15px;
+  text-decoration: none;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dropdown a:hover {
+  background: var(--highlight);
+  color: white;
+}
+
+/* Ocultar por defecto */
+.hidden {
+  display: none;
+}
+
+
 
 /* =========================================================
    SIDEBAR
@@ -279,6 +332,14 @@ body {
     transition: stroke 0.2s;
 }
 
+.sidebar ul li.divider {
+  border-bottom: 1px solid #aaa5;
+  margin: 8px 0;
+  height: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .btn.svg {
   display: inline-flex;
   align-items: center;
@@ -320,7 +381,7 @@ body {
     margin-left: 0; 
     width: 100%;
     transition: margin-left 0.3s ease, width 0.3s ease; 
-    min-height: 100vh; /* Asegura que el contenido sea al menos de altura de la pantalla */
+    min-height: 83vh; /* Asegura que el contenido sea al menos de altura de la pantalla */
 }
 
 
@@ -1643,4 +1704,97 @@ html {
 [data-tooltip]:hover::before {
     opacity: 1;
     visibility: visible;
+}
+
+/* =========================
+   REPORTES — NORMALIZADO
+========================= */
+.btn-row, .reporte {
+  margin: 30px 5% !important ;
+}
+
+/* === CONTENEDOR DE FILTROS === */
+.filtros-contenedor {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-top: 1rem;
+}
+
+/* === CARD DE FILTROS === */
+
+
+.card-filtro label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);                            /* Texto estándar */
+  margin-bottom: 0.3rem;
+}
+
+.card-filtro select,
+.card-filtro input {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--bg-alt);                         /* Color uniforme de inputs */
+  color: var(--text);
+}
+
+/* === BOTÓN APLICAR === */
+.btn-aplicar {
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background: var(--highlight);                  /* Color principal */
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-aplicar:hover {
+  background: var(--highlight-hover);            /* Hover principal */
+}
+
+/* === MÉTRICAS === */
+.metricas-contenedor {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  margin-left: 5%;
+  width: 90%;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+/* === CARDS DE MÉTRICAS === */
+.card-metrica {
+  background: var(--bg-alt);                      /* Fondo estándar */
+  border: 1px solid var(--border);
+  padding: 1.2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 4px var(--card-shadow);
+  transition: box-shadow 0.2s ease;
+}
+
+.card-metrica:hover {
+  box-shadow: 0 4px 12px var(--card-shadow);      /* Hover estándar */
+}
+
+.card-metrica h2 {
+  margin: 15px !important;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.card-metrica p {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* === Hover tabla normalizado === */
+.tabla-gestion tbody tr:hover {
+  background-color: var(--hover-bg);
 }

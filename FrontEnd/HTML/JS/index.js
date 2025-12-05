@@ -101,6 +101,40 @@ function initializeComponentInteractivity() {
             }
         });
     }
+
+    // =========================================================
+    // === MENÚ DE USUARIO (ICONO + DESPLEGABLE) ===
+    // =========================================================
+    const userBtn = document.getElementById("userBtn");
+    const userDropdown = document.getElementById("userDropdown");
+
+    if (userBtn && userDropdown) {
+
+        // Abrir/cerrar menú al hacer clic en el icono de usuario
+        userBtn.addEventListener("click", (e) => {
+            e.stopPropagation(); 
+            userDropdown.classList.toggle("hidden");
+        });
+
+        // Cerrar menú si se hace clic fuera
+        document.addEventListener("click", (e) => {
+            if (
+                !userDropdown.contains(e.target) &&
+                !userBtn.contains(e.target)
+            ) {
+                userDropdown.classList.add("hidden");
+            }
+        });
+
+        // Botón de cerrar sesión (si lo necesitás)
+        const logoutBtn = document.getElementById("logoutBtn");
+        if (logoutBtn) {
+            logoutBtn.addEventListener("click", () => {
+                console.log("Cerrar sesión...");
+                // Aquí podés limpiar tokens, localStorage, etc.
+            });
+        }
+    }
 }
 
 // =========================================================

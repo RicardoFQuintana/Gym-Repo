@@ -1,6 +1,3 @@
-
-
-
 /**
  * Función para cargar e insertar un componente HTML de forma asíncrona.
  * * @param {string} componentName - El nombre del archivo (e.g., 'header').
