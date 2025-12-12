@@ -1,5 +1,7 @@
-// reporte-asistencia.js (FINAL)
-// Usa la plantilla del reporte de ingresos: paginación, estado global y print via window.open
+// reporte-asistencia.js (FINAL) - INTEGRADO CON GRÁFICOS
+// Requiere en el HTML:
+// <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+// <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix"></script>
 
 // ==================== CONFIG ====================
 const API_BASE = "https://localhost:7271/api";
@@ -20,13 +22,15 @@ const estado = {
 
   filtros: {
     clase: "todas",
-    periodo: "mensual",
+    miembro: "todos",
+    periodo: "todos",
     desde: null,
     hasta: null
   }
 };
 
 // ==================== DOM ====================
+const filtroMiembro = document.getElementById("filtro-miembro");
 const filtroClase = document.getElementById("filtro-clase");
 const filtroPeriodo = document.getElementById("filtro-periodo");
 const fechaDesde = document.getElementById("fecha-desde");
@@ -117,9 +121,33 @@ function obtenerRangoPorPeriodo(periodo) {
   return { desde, hasta };
 }
 
+// ==================== CHARTS - INSTANCIAS ====================
+const chartRefs = {
+  barrasClases: null,
+  lineaTendencia: null,
+  donutClases: null,
+  lineaMiembro: null,
+  barrasMiembro: null,
+  barrasRanking: null,
+};
+
+// helper: safe text
+function safeText(s){ return s ?? ""; }
+
 // ==================== CARGA INICIAL ====================
 async function cargarMiembros() {
   estado.miembros = await fetchJSON(EP_MIEMBROS);
+
+  // llenar select de filtro por miembro
+  if (filtroMiembro) {
+    filtroMiembro.innerHTML = `<option value="todos">Todos</option>`;
+    estado.miembros.forEach(m => {
+      const o = document.createElement("option");
+      o.value = m.id;
+      o.textContent = `${m.nombre} ${m.apellido}`
+      filtroMiembro.appendChild(o);
+    });
+  }
 }
 
 async function cargarClases() {
@@ -149,9 +177,10 @@ async function cargarAsistencias() {
   const data = await fetchJSON(EP_ASISTENCIAS);
   // normalizar: esperamos datos con campos: miembroNombre, miembroApellido, miembroDni, claseId, claseNombre, fecha, metodo
   estado.asistenciasOriginales = (data || []).map(a => ({
+    miembroId: a.miembroId ?? a.miembro?.id ?? null,
     miembroNombre: a.miembroNombre ?? a.nombre ?? "",
     miembroApellido: a.miembroApellido ?? a.apellido ?? "",
-    miembroDni: a.miembroDni ?? a.dni ?? a.dniMiembro ?? "",
+    miembroDni: a.miembroDni ?? a.miembro?.dni ?? "",
     claseId: a.claseId ?? a.clase?.id ?? null,
     claseNombre: a.claseNombre ?? a.clase?.nombre ?? a.clase ?? "",
     fecha: parseISOToDate(a.fecha),
@@ -170,6 +199,10 @@ function configurarEventos() {
     document.getElementById("rango-fechas-fin").classList.toggle("oculto", !mostrar);
 
     estado.filtros.periodo = filtroPeriodo.value;
+  });
+
+  filtroMiembro.addEventListener("change", () => {
+    estado.filtros.miembro = filtroMiembro.value;
   });
 
   filtroClase.addEventListener("change", () => {
@@ -202,7 +235,6 @@ function configurarEventos() {
       inputDni.value = inputDni.value.replace(/\D/g, "");
       const m = estado.miembros.find(x => String(x.dni) === String(inputDni.value));
       inputNombre.value = m ? `${m.nombre} ${m.apellido}` : "";
-      // si presionan Enter en dni, intentar guardar
     });
 
     inputDni.addEventListener("keydown", (e) => {
@@ -238,9 +270,14 @@ function cerrarModal() {
 function aplicarFiltros() {
   let lista = [...estado.asistenciasOriginales];
 
-  // filtro por clase
+  // filtro por clase (claseId)
   if (estado.filtros.clase && estado.filtros.clase !== "todas") {
     lista = lista.filter(a => String(a.claseId) === String(estado.filtros.clase));
+  }
+
+  // filtro por miembro
+  if (estado.filtros.miembro && estado.filtros.miembro !== "todos") {
+    lista = lista.filter(a => String(a.miembroId) === String(estado.filtros.miembro));
   }
 
   // rango por periodo
@@ -266,6 +303,9 @@ function aplicarFiltros() {
   recalcularMetricas();
   renderTabla();
   renderPaginacion();
+
+  // actualizar gráficos con la lista resultante
+  actualizarGraficos();
 }
 
 // ==================== MÉTRICAS ====================
@@ -310,11 +350,11 @@ function renderTabla() {
 
   tbody.innerHTML = pagina.map(a => `
     <tr>
-      <td>${a.miembroNombre || ""} ${a.miembroApellido || ""}</td>
-      <td>${a.miembroDni || ""}</td>
-      <td>${a.claseNombre || ""}</td>
-      <td>${formatearFechaHora(a.fecha)}</td>
-      <td>${a.metodo || ""}</td>
+      <td>${escapeHtml(a.miembroNombre || "")} ${escapeHtml(a.miembroApellido || "")}</td>
+      <td>${escapeHtml(a.miembroDni|| "")}</td>
+      <td>${escapeHtml(a.claseNombre || "")}</td>
+      <td>${escapeHtml(formatearFechaHora(a.fecha))}</td>
+      <td>${escapeHtml(a.metodo || "")}</td>
     </tr>
   `).join("");
 }
@@ -377,6 +417,36 @@ async function registrarAsistencia() {
   }
 }
 
+const nombresBonitosCharts = {
+  barrasClases: "Asistencias por clase (Barras)",
+  lineaTendencia: "Tendencia de asistencia (Línea)",
+  donutClases: "Distribución de asistencia por clase (Donut)",
+  lineaMiembro: "Asistencia de miembro en el tiempo (Línea)",
+  barrasMiembro: "Asistencia de miembro (Barras)",
+  barrasRanking: "Ranking de asistencia por miembro (Barras)"
+};
+
+function obtenerImagenesCharts() {
+  const imagenes = [];
+
+  // chartRefs es el objeto donde guardás los gráficos
+  for (const [key, chart] of Object.entries(chartRefs)) {
+    if (chart && typeof chart.toBase64Image === "function") {
+      try {
+        const img = chart.toBase64Image();
+        imagenes.push({
+          nombre: nombresBonitosCharts[key] ?? key,
+          src: img
+        });
+      } catch (err) {
+        console.error("Error exportando gráfico", key, err);
+      }
+    }
+  }
+
+  return imagenes;
+}
+
 // ==================== IMPRIMIR (USANDO PLANTILLA HTML - window.print) ====================
 function imprimirAsistencias() {
   const lista = estado.asistenciasFiltradas || [];
@@ -394,6 +464,16 @@ function imprimirAsistencias() {
       <td>${escapeHtml(formatearFechaHora(a.fecha))}</td>
       <td>${escapeHtml(a.metodo || "")}</td>
     </tr>
+  `).join("");
+
+  // --- Obtener imágenes de gráficos ---
+  const imagenesCharts = obtenerImagenesCharts();
+
+  const htmlGraficos = imagenesCharts.map(img => `
+    <div style="margin-top:20px;">
+      <h3 style="margin-bottom:6px;">${img.nombre}</h3>
+      <img src="${img.src}" style="width:100%; max-width:700px;">
+    </div>
   `).join("");
 
   const contenido = `
@@ -415,6 +495,11 @@ function imprimirAsistencias() {
           ${filasHtml}
         </tbody>
       </table>
+
+      <h2 style="margin-top:30px;">Gráficos</h2>
+
+      ${htmlGraficos}
+
     </div>
   `;
 
@@ -453,12 +538,324 @@ function escapeHtml(str) {
     .replaceAll("'", "&#039;");
 }
 
+// ==================== GRAFICOS / UTILIDADES ====================
+function actualizarGraficos() {
+  const lista = estado.asistenciasFiltradas || [];
+
+  graficoBarrasClases(lista);
+  graficoLineaTendencia(lista);
+  graficoDonutClases(lista);
+
+  // Si hay un miembro seleccionado distinto de "todos", mostrar charts por miembro
+  if (estado.filtros.miembro && estado.filtros.miembro !== "todos") {
+    const miembroId = String(estado.filtros.miembro);
+    const listaMiembro = lista.filter(a => String(a.miembroId) === miembroId);
+    graficoLineaMiembro(listaMiembro);
+    graficoBarrasMiembro(listaMiembro);
+  } else {
+    // limpiar/actualizar a vacío
+    graficoLineaMiembro([]);
+    graficoBarrasMiembro([]);
+  }
+
+  // Si hay clase seleccionada distinta de "todas", mostrar charts por clase
+  if (estado.filtros.clase && estado.filtros.clase !== "todas") {
+    const claseId = String(estado.filtros.clase);
+    const listaClase = lista.filter(a => String(a.claseId) === claseId);
+    graficoBarrasRanking(listaClase);
+  } else {
+    graficoBarrasRanking(lista);
+  }
+}
+
+// Helper: agrupador por clave
+function agruparContar(arr, keyFn) {
+  const map = new Map();
+  arr.forEach(item => {
+    const k = keyFn(item) ?? "";
+    map.set(k, (map.get(k) || 0) + 1);
+  });
+  return Array.from(map.entries()); // [ [key, count], ... ]
+}
+
+// --- 1. Barras: Asistencias por clase (general)
+function graficoBarrasClases(data) {
+  const pares = agruparContar(data, a => a.claseNombre);
+  pares.sort((a,b) => b[1]-a[1]);
+  const labels = pares.map(p => p[0] || "(Sin clase)");
+  const valores = pares.map(p => p[1]);
+
+  const ctx = document.getElementById("chartBarrasClases");
+  if (!ctx) return;
+
+  if (chartRefs.barrasClases) {
+    chartRefs.barrasClases.data.labels = labels;
+    chartRefs.barrasClases.data.datasets[0].data = valores;
+    chartRefs.barrasClases.update();
+    return;
+  }
+
+  chartRefs.barrasClases = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [{
+        label: "Asistencias",
+        data: valores,
+        pointRadius: window.innerWidth < 600 ? 2 : 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,   // <--- RESPONSIVE REAL
+      scales: {
+        x: {
+          ticks: {
+            maxRotation: 0,
+            minRotation: 0,
+            autoSkip: true,
+            autoSkipPadding: 10
+          }
+        }
+      },
+      plugins: {
+        legend: { display: false }
+      }
+    }
+  });
+}
+
+
+
+// --- 2. Línea: Tendencia por día
+function graficoLineaTendencia(data) {
+  const porDia = {};
+  data.forEach(a => {
+    if (!a.fecha) return;
+    const f = a.fecha.toISOString().slice(0,10);
+    porDia[f] = (porDia[f] || 0) + 1;
+  });
+
+  const labels = Object.keys(porDia).sort();
+  const valores = labels.map(l => porDia[l]);
+
+  const ctx = document.getElementById("chartLineaTendencia");
+  if (!ctx) return;
+
+  if (chartRefs.lineaTendencia) {
+    chartRefs.lineaTendencia.data.labels = labels;
+    chartRefs.lineaTendencia.data.datasets[0].data = valores;
+    chartRefs.lineaTendencia.update();
+    return;
+  }
+
+  chartRefs.lineaTendencia = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [{
+        label: "Asistencias por día",
+        data: valores,
+        fill: false,
+        borderWidth: 2,
+        pointRadius: window.innerWidth < 600 ? 2 : 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          ticks: {
+            maxRotation: 0,
+            minRotation: 0,
+            autoSkip: true,
+            autoSkipPadding: 10
+          }
+        }
+      }
+    }
+  });
+}
+
+
+
+// --- 3. Donut: Distribución por clase
+function graficoDonutClases(data) {
+  const pares = agruparContar(data, a => a.claseNombre);
+  pares.sort((a,b) => b[1]-a[1]);
+
+  const labels = pares.map(p => p[0] || "(Sin clase)");
+  const valores = pares.map(p => p[1]);
+
+  const ctx = document.getElementById("chartDonutClases");
+  if (!ctx) return;
+
+  if (chartRefs.donutClases) {
+    chartRefs.donutClases.data.labels = labels;
+    chartRefs.donutClases.data.datasets[0].data = valores;
+    chartRefs.donutClases.update();
+    return;
+  }
+
+  chartRefs.donutClases = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels,
+      datasets: [{
+        data: valores,
+        borderWidth: 1,
+        pointRadius: window.innerWidth < 600 ? 2 : 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: "bottom",
+          labels: { padding: 20 }
+        }
+      }
+    }
+  });
+}
+
+
+
+// ================= VISTA POR MIEMBRO ===================
+
+// --- Línea: evolución del miembro
+function graficoLineaMiembro(data) {
+  const porDia = {};
+  data.forEach(a => {
+    if (!a.fecha) return;
+    const f = a.fecha.toISOString().slice(0,10);
+    porDia[f] = (porDia[f] || 0) + 1;
+  });
+
+  const labels = Object.keys(porDia).sort();
+  const valores = labels.map(l => porDia[l]);
+
+  const ctx = document.getElementById("chartLineaMiembro");
+  if (!ctx) return;
+
+  if (chartRefs.lineaMiembro) {
+    chartRefs.lineaMiembro.data.labels = labels;
+    chartRefs.lineaMiembro.data.datasets[0].data = valores;
+    chartRefs.lineaMiembro.update();
+    return;
+  }
+
+  chartRefs.lineaMiembro = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [{
+        label: "Asistencias",
+        data: valores,
+        fill: false,
+        borderWidth: 2,
+        pointRadius: window.innerWidth < 600 ? 2 : 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+}
+
+
+
+// --- Barras: asistencias por clase del miembro
+function graficoBarrasMiembro(data) {
+  const pares = agruparContar(data, a => a.claseNombre);
+  pares.sort((a,b) => b[1]-a[1]);
+
+  const labels = pares.map(p => p[0] || "(Sin clase)");
+  const valores = pares.map(p => p[1]);
+
+  const ctx = document.getElementById("chartBarrasMiembro");
+  if (!ctx) return;
+
+  if (chartRefs.barrasMiembro) {
+    chartRefs.barrasMiembro.data.labels = labels;
+    chartRefs.barrasMiembro.data.datasets[0].data = valores;
+    chartRefs.barrasMiembro.update();
+    return;
+  }
+
+  chartRefs.barrasMiembro = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [{
+        label: "Asistencias por clase",
+        data: valores,
+        pointRadius: window.innerWidth < 600 ? 2 : 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } }
+    }
+  });
+}
+
+
+
+// ================= VISTA POR CLASE ===================
+
+// --- Barras horizontales: ranking por clase
+function graficoBarrasRanking(data) {
+  const pares = agruparContar(data, a => a.claseNombre);
+  pares.sort((a,b) => b[1]-a[1]);
+
+  const labels = pares.map(p => p[0] || "(Sin clase)");
+  const valores = pares.map(p => p[1]);
+
+  const ctx = document.getElementById("chartBarrasRanking");
+  if (!ctx) return;
+
+  if (chartRefs.barrasRanking) {
+    chartRefs.barrasRanking.data.labels = labels;
+    chartRefs.barrasRanking.data.datasets[0].data = valores;
+    chartRefs.barrasRanking.update();
+    return;
+  }
+
+  chartRefs.barrasRanking = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [{
+        label: "Asistencias",
+        data: valores,
+        pointRadius: window.innerWidth < 600 ? 2 : 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } }
+    }
+  });
+}
 // ==================== INIT ====================
 async function init() {
   await cargarMiembros();
   await cargarClases();
   await cargarAsistencias();
   configurarEventos();
+  // Nota: cargarAsistencias() ya llama aplicarFiltros() que a su vez llama actualizarGraficos()
 }
 
 init();
+
+window.addEventListener("resize", () => {
+  Object.values(chartRefs).forEach(chart => {
+    if (chart) chart.resize();
+  });
+});

@@ -8,7 +8,7 @@ const estado = {
   pagosOriginales: [],
   pagosFiltrados: [],
   filtros: {
-    periodo: "mensual",
+    periodo: "todos",
     membresia: "todas",
     desde: null,
     hasta: null
@@ -20,7 +20,7 @@ const estado = {
 document.addEventListener("DOMContentLoaded", async () => {
   await cargarPagos();
   await cargarTiposMembresia();
-  await cargarIngresos();
+  aplicarFiltros(); 
   configurarEventos();
 });
 
@@ -90,6 +90,16 @@ function obtenerRangoPorPeriodo(periodo) {
   }
   return { desde, hasta };
 }
+
+// ==================== CHARTS - INSTANCIAS ====================
+const chartRefsFin = {
+  ingresosLinea: null,
+  ingresosMensualesBarra: null,
+  ingresosAcumulados: null,
+  periodoPorMembresia: null,
+  composicionIngresos: null,
+  proporcionMembresias: null
+};
 
 // === CARGA DE DATOS ===
 async function cargarPagos() {
@@ -266,31 +276,36 @@ function aplicarFiltros() {
   recalcularMetricas();
   renderTabla();
   renderPaginacion();
+  actualizarGraficosFinancieros()
 }
 
 // === MÉTRICAS ===
 function recalcularMetricas() {
   const lista = estado.pagosFiltrados;
+
+  // Helper para mostrar valor o ****
+  const mostrar = (valor) => (lista.length === 0 ? "****" : formatearMoneda(valor));
+
   const hoy = new Date();
   const hoyStr = hoy.toISOString().split("T")[0];
 
   const ingresoDiario = lista.filter(p => p.fecha === hoyStr).reduce((s, p) => s + p.monto, 0);
-  document.getElementById("daily-income").textContent = formatearMoneda(ingresoDiario);
+  document.getElementById("daily-income").textContent = mostrar(ingresoDiario);
 
   const rangoMensual = obtenerRangoPorPeriodo("mensual");
   const ingresoMensual = lista.filter(p => p.fechaObj >= rangoMensual.desde && p.fechaObj <= rangoMensual.hasta)
                               .reduce((s, p) => s + p.monto, 0);
-  document.getElementById("monthly-income").textContent = formatearMoneda(ingresoMensual);
+  document.getElementById("monthly-income").textContent = mostrar(ingresoMensual);
 
   const rangoTri = obtenerRangoPorPeriodo("trimestral");
   const ingresoTri = lista.filter(p => p.fechaObj >= rangoTri.desde && p.fechaObj <= rangoTri.hasta)
                           .reduce((s, p) => s + p.monto, 0);
-  document.getElementById("quarterly-income").textContent = formatearMoneda(ingresoTri);
+  document.getElementById("quarterly-income").textContent = mostrar(ingresoTri);
 
   const rangoAnual = obtenerRangoPorPeriodo("anual");
   const ingresoAnual = lista.filter(p => p.fechaObj >= rangoAnual.desde && p.fechaObj <= rangoAnual.hasta)
                             .reduce((s, p) => s + p.monto, 0);
-  document.getElementById("annual-income").textContent = formatearMoneda(ingresoAnual);
+  document.getElementById("annual-income").textContent = mostrar(ingresoAnual);
 }
 
 // =============================
@@ -354,6 +369,36 @@ function renderPaginacion() {
   });
 }
 
+const nombresBonitosCharts = {
+  ingresosLinea: "Ingresos diarios (Línea)",
+  ingresosMensualesBarra: "Ingresos por mes (Barras)",
+  ingresosAcumulados: "Ingresos acumulados (Área)",
+  periodoPorMembresia: "Ingresos por membresía por período (Barras agrupadas)",
+  composicionIngresos: "Composición del total por membresía (Barras apiladas)",
+  proporcionMembresias: "Distribución por membresía (Donut)"
+};
+
+function obtenerImagenesCharts() {
+  const imagenes = [];
+
+  // chartRefsFin ES el objeto real donde guardás los gráficos financieros
+  for (const [key, chart] of Object.entries(chartRefsFin)) {
+    if (chart && typeof chart.toBase64Image === "function") {
+      try {
+        const img = chart.toBase64Image();
+        imagenes.push({
+          nombre: nombresBonitosCharts[key] ?? key,
+          src: img
+        });
+      } catch (err) {
+        console.error("Error exportando gráfico", key, err);
+      }
+    }
+  }
+
+  return imagenes;
+}
+
 // =============================
 // IMPRIMIR REPORTE DE INGRESOS
 // =============================
@@ -395,6 +440,15 @@ async function imprimirIngresos() {
     const trimestral = document.getElementById("quarterly-income").textContent;
     const anual = document.getElementById("annual-income").textContent;
 
+    // --- Obtener imágenes de gráficos ---
+    const imagenesCharts = obtenerImagenesCharts();
+    const htmlGraficos = imagenesCharts.map(img => `
+      <div style="margin-top:20px;">
+        <h3 style="margin-bottom:6px;">${img.nombre}</h3>
+        <img src="${img.src}" style="width:100%; max-width:700px;">
+      </div>
+    `).join("");
+
     // 6️⃣ Armar contenido HTML
     const contenido = `
       <h2>Reporte de Ingresos</h2>
@@ -422,14 +476,16 @@ async function imprimirIngresos() {
             <th>Monto</th>
           </tr>
         </thead>
-        <tbody>
-          ${filas}
-        </tbody>
+        <tbody>${filas}</tbody>
       </table>
+
+      <h2 style="margin-top:30px;">Gráficos</h2>
+      ${htmlGraficos}
     `;
 
-    // 7️⃣ Abrir ventana e imprimir
+    // 7️⃣ Abrir ventana e imprimir cuando las imágenes estén listas
     const ventana = window.open("", "_blank");
+
     ventana.document.write(`
       <html>
         <head>
@@ -447,7 +503,24 @@ async function imprimirIngresos() {
     `);
 
     ventana.document.close();
-    ventana.print();
+
+    // Esperar a que todas las imágenes carguen
+    const imgs = ventana.document.images;
+    if (imgs.length > 0) {
+      let loaded = 0;
+      for (let img of imgs) {
+        img.onload = () => {
+          loaded++;
+          if (loaded === imgs.length) ventana.print();
+        };
+        img.onerror = () => {
+          loaded++;
+          if (loaded === imgs.length) ventana.print();
+        };
+      }
+    } else {
+      ventana.print();
+    }
 
   } catch (err) {
     console.error(err);
@@ -577,3 +650,330 @@ async function confirmarNuevoPago() {
     alert("Error al registrar el pago");
   }
 }
+
+// ==================== HELPERS ====================
+function agruparSumar(arr, keyFn, valueFn) {
+  const map = new Map();
+  arr.forEach(item => {
+    const k = keyFn(item) ?? "";
+    const v = valueFn(item) ?? 0;
+    map.set(k, (map.get(k) || 0) + v);
+  });
+  return Array.from(map.entries());
+}
+
+function obtenerMes(fecha) {
+  if (!fecha) return "";
+
+  // Normalizar a Date si es string
+  let d = fecha instanceof Date ? fecha : (typeof fecha === "string" ? new Date(fecha) : null);
+
+  // Fecha inválida
+  if (!d || isNaN(d.getTime())) return "";
+
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  return `${yyyy}-${mm}`; // "yyyy-mm"
+}
+
+// ==================== ACTUALIZAR GRAFICOS ====================
+function actualizarGraficosFinancieros() {
+  const lista = estado.pagosFiltrados || [];
+
+  graficoIngresosLinea(lista);
+  graficoIngresosMensualesBarra(lista);
+  graficoIngresosAcumulados(lista);
+
+  graficoPeriodoPorMembresia(lista);
+  graficoComposicionIngresos(lista);
+
+  graficoProporcionMembresias(lista);
+}
+
+// =============================================================
+// =============== 1. LINEA: INGRESOS EN EL TIEMPO =============
+// =============================================================
+function graficoIngresosLinea(data) {
+  const pares = agruparSumar(
+    data,
+    a => a.fecha,
+    a => a.monto
+  );
+
+  pares.sort((a,b) => a[0].localeCompare(b[0]));
+
+  const labels = pares.map(p => p[0]);
+  const valores = pares.map(p => p[1]);
+
+  const ctx = document.getElementById("graficoIngresosLinea");
+  if (!ctx) return;
+
+  if (chartRefsFin.ingresosLinea) {
+    chartRefsFin.ingresosLinea.data.labels = labels;
+    chartRefsFin.ingresosLinea.data.datasets[0].data = valores;
+    chartRefsFin.ingresosLinea.update();
+    return;
+  }
+
+  chartRefsFin.ingresosLinea = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [{
+        label: "Ingresos diarios",
+        data: valores,
+        borderWidth: 2,
+        fill: false,
+        pointRadius: window.innerWidth < 600 ? 2 : 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+}
+
+// =============================================================
+// =========== 2. BARRAS: COMPARACIÓN MENSUAL ===================
+// =============================================================
+function graficoIngresosMensualesBarra(data) {
+  const pares = agruparSumar(
+    data,
+    a => obtenerMes(a.fecha),
+    a => a.monto
+  );
+
+  pares.sort((a,b) => a[0].localeCompare(b[0]));
+
+  const labels = pares.map(p => p[0]);
+  const valores = pares.map(p => p[1]);
+
+  const ctx = document.getElementById("graficoIngresosMensualesBarra");
+  if (!ctx) return;
+
+  if (chartRefsFin.ingresosMensualesBarra) {
+    chartRefsFin.ingresosMensualesBarra.data.labels = labels;
+    chartRefsFin.ingresosMensualesBarra.data.datasets[0].data = valores;
+    chartRefsFin.ingresosMensualesBarra.update();
+    return;
+  }
+
+  chartRefsFin.ingresosMensualesBarra = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [{
+        label: "Ingresos por mes",
+        data: valores,
+        pointRadius: window.innerWidth < 600 ? 2 : 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+}
+
+// =============================================================
+// =========== 3. AREA: INGRESOS ACUMULADOS ====================
+// =============================================================
+function graficoIngresosAcumulados(data) {
+  const pares = agruparSumar(
+    data,
+    a => a.fecha,
+    a => a.monto
+  );
+
+  pares.sort((a,b) => a[0].localeCompare(b[0]));
+
+  let acumulado = 0;
+  const labels = [];
+  const valores = [];
+
+  pares.forEach(([fecha, monto]) => {
+    acumulado += monto;
+    labels.push(fecha);
+    valores.push(acumulado);
+  });
+
+  const ctx = document.getElementById("graficoIngresosAcumulados");
+  if (!ctx) return;
+
+  if (chartRefsFin.ingresosAcumulados) {
+    chartRefsFin.ingresosAcumulados.data.labels = labels;
+    chartRefsFin.ingresosAcumulados.data.datasets[0].data = valores;
+    chartRefsFin.ingresosAcumulados.update();
+    return;
+  }
+
+  chartRefsFin.ingresosAcumulados = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [{
+        label: "Ingresos acumulados",
+        data: valores,
+        borderWidth: 2,
+        fill: true,
+        tension: 0.3,
+        pointRadius: window.innerWidth < 600 ? 2 : 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+}
+
+// =============================================================
+// === 4. BARRAS AGRUPADAS: TIPO DE MEMBRESÍA POR PERIODO =====
+// =============================================================
+function graficoPeriodoPorMembresia(data) {
+  const grupos = new Map();
+
+  data.forEach(a => {
+    const periodo = obtenerMes(a.fecha);
+    const memb = a.membresia ?? "N/A";
+    const monto = a.monto;
+
+    if (!grupos.has(periodo)) grupos.set(periodo, new Map());
+    const gm = grupos.get(periodo);
+    gm.set(memb, (gm.get(memb) || 0) + monto);
+  });
+
+  const periodos = [...grupos.keys()].sort();
+  const membresiasSet = new Set();
+
+  periodos.forEach(p => {
+    grupos.get(p).forEach((_, memb) => membresiasSet.add(memb));
+  });
+
+  const membresias = [...membresiasSet];
+
+  const datasets = membresias.map(m => ({
+    label: m,
+    data: periodos.map(p => grupos.get(p).get(m) || 0)
+  }));
+
+  const ctx = document.getElementById("graficoPeriodoPorMembresia");
+  if (!ctx) return;
+
+  if (chartRefsFin.periodoPorMembresia) {
+    chartRefsFin.periodoPorMembresia.data.labels = periodos;
+    chartRefsFin.periodoPorMembresia.data.datasets = datasets;
+    chartRefsFin.periodoPorMembresia.update();
+    return;
+  }
+
+  chartRefsFin.periodoPorMembresia = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: periodos,
+      datasets
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+}
+
+// =============================================================
+// === 5. BARRAS APILADAS: COMPOSICIÓN DEL TOTAL ===============
+// =============================================================
+function graficoComposicionIngresos(data) {
+  const pares = agruparSumar(
+    data,
+    a => a.membresia ?? "N/A",
+    a => a.monto
+  );
+
+  const labels = pares.map(p => p[0]);
+  const valores = pares.map(p => p[1]);
+
+  const ctx = document.getElementById("graficoComposicionIngresos");
+  if (!ctx) return;
+
+  if (chartRefsFin.composicionIngresos) {
+    chartRefsFin.composicionIngresos.data.labels = labels;
+    chartRefsFin.composicionIngresos.data.datasets[0].data = valores;
+    chartRefsFin.composicionIngresos.update();
+    return;
+  }
+
+  chartRefsFin.composicionIngresos = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [{
+        label: "Total por membresía",
+        data: valores
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { stacked: true },
+        y: { stacked: true }
+      }
+    }
+  });
+}
+
+// =============================================================
+// === 6. DONUT: PROPORCIÓN POR MEMBRESÍA =======================
+// =============================================================
+function graficoProporcionMembresias(data) {
+  const pares = agruparSumar(
+    data,
+    a => a.membresia ?? "N/A",
+    a => a.monto
+  );
+
+  const labels = pares.map(p => p[0]);
+  const valores = pares.map(p => p[1]);
+
+  const ctx = document.getElementById("graficoProporcionMembresias");
+  if (!ctx) return;
+
+  if (chartRefsFin.proporcionMembresias) {
+    chartRefsFin.proporcionMembresias.data.labels = labels;
+    chartRefsFin.proporcionMembresias.data.datasets[0].data = valores;
+    chartRefsFin.proporcionMembresias.update();
+    return;
+  }
+
+  chartRefsFin.proporcionMembresias = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels,
+      datasets: [{
+        data: valores,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: "bottom",
+          labels: { padding: 20 }
+        }
+      }
+    }
+  });
+}
+
+// =============================================================
+// ==================== RESIZE GLOBAL ===========================
+// =============================================================
+window.addEventListener("resize", () => {
+  Object.values(chartRefsFin).forEach(chart => {
+    if (chart) chart.resize();
+  });
+});

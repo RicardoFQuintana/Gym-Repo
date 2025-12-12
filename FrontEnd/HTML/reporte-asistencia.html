@@ -19,13 +19,23 @@
 
   <!-- ===================== CONTENIDO PRINCIPAL ===================== -->
   <main class="main-container content-wrapper">
+
     <section class="gestor">
 
       <!-- ===================== FILTROS + BOTONES ===================== -->
       <div class="btn-row Reporte">
         <h1>Reporte de Asistencia</h1>
 
-        <!-- FILTRO CLASE -->
+
+        <!-- FILTRO MIEMBRO -->
+        <div class="card-filtro">
+          <label>Miembro</label>
+          <select id="filtro-miembro">
+            <option value="todos">Todos</option>
+          </select>
+        </div>
+
+        <!-- FILTRO CLASE -->       
         <div class="card-filtro">
           <label>Clase</label>
           <select id="filtro-clase">
@@ -37,9 +47,10 @@
         <div class="card-filtro">
           <label>Período</label>
           <select id="filtro-periodo">
+            <option value="todos" selected>-----</option>
             <option value="diario">Diario</option>
             <option value="semanal">Semanal</option>
-            <option value="mensual" selected>Mensual</option>
+            <option value="mensual">Mensual</option>
             <option value="trimestral">Trimestral</option>
             <option value="anual">Anual</option>
             <option value="rango">Rango Personalizado</option>
@@ -176,6 +187,53 @@
         <div id="paginacion" class="pagination"></div>
       </div>
     </section>
+
+    <section id="graficosAsistencia" class="graficos-container">
+
+      <!-- VISTA GENERAL -->
+      <h2>Vista General</h2>
+      <div class="grafico-card">
+        <div class="grafico-wrapper">
+          <canvas id="chartBarrasClases"></canvas>
+        </div>
+      </div>
+
+      <div class="grafico-card">
+        <div class="grafico-wrapper">
+          <canvas id="chartLineaTendencia"></canvas>
+        </div>
+      </div>
+
+      <div class="grafico-card">
+        <div class="grafico-wrapper">
+          <canvas id="chartDonutClases"></canvas>
+        </div>
+      </div>
+
+      <!-- VISTA POR MIEMBRO -->
+      <h2>Vista por Miembro</h2>
+      <div class="grafico-card">
+        <div class="grafico-wrapper">
+          <canvas id="chartLineaMiembro"></canvas>
+        </div>
+      </div>
+
+      <div class="grafico-card">
+        <div class="grafico-wrapper">
+          <canvas id="chartBarrasMiembro"></canvas>
+        </div>
+      </div>
+
+      <!-- VISTA POR CLASE -->
+      <h2>Vista por Clase</h2>
+      <div class="grafico-card">
+        <div class="grafico-wrapper">
+          <canvas id="chartBarrasRanking"></canvas>
+        </div>
+      </div>
+
+    </section>
+
   </main>
 
   <!-- FOOTER -->
@@ -185,6 +243,8 @@
   <script src="../HTML/JS/index.js"></script>
   <script src="../HTML/JS/utils.js"></script>
   <script src="../HTML/JS/loadComponents.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix"></script>
   <script src="../HTML/JS/reporte-asistencia.js"></script>
 </body>
 </html>

@@ -19,134 +19,190 @@
 
      <!-- ===================== CONTENIDO PRINCIPAL ===================== -->
     <main class="main-container content-wrapper">
-      <section class="gestor">
+        <section class="gestor">
 
-        <!-- TÍTULO + BOTÓN -->
-        <div class="btn-row Reporte">
-            <h1>Reporte de Ingresos</h1>
+            <!-- TÍTULO + BOTÓN -->
+            <div class="btn-row Reporte">
+                <h1>Reporte de Ingresos</h1>
 
-            <div class="card-filtro">
-                <label>Membresía</label>
-                <select id="filtro-membresia">
-                    <option value="todas">Todas</option>
-                </select>
+                <div class="card-filtro">
+                    <label>Membresía</label>
+                    <select id="filtro-membresia">
+                        <option value="todas">Todas</option>
+                    </select>
+                </div>
+
+                <div class="card-filtro">
+                    <label>Período</label>
+                    <select id="filtro-periodo">
+                        <option value="todos" selected>------</option>
+                        <option value="diario">Diario</option>
+                        <option value="semanal">Semanal</option>
+                        <option value="mensual">Mensual</option>
+                        <option value="trimestral">Trimestral</option>
+                        <option value="anual">Anual</option>
+                        <option value="anual">Rango Personalizado</option>
+                    </select>
+                </div>
+
+                <div id="rango-fechas-inicio" class="card-filtro">
+                    <label>Desde</label>
+                    <input type="date" id="fecha-desde">
+                </div>
+                <div id="rango-fechas-fin" class="card-filtro">
+                    <label>Hasta</label>
+                    <input type="date" id="fecha-hasta">
+                </div>
+
+                <button id="btn-aplicar-filtros" class="btn btn-save svg" data-tooltip="Aplicar Filtros">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+                </button>
+
+                <button id="btnNuevoPago" class="btn btn-save svg" data-tooltip="Nuevo Pago">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+
+                <button id="btnExportarPDF" class="btn btn-save svg" data-tooltip="Exportar PDF">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>          
+                </button>
             </div>
 
-            <div class="card-filtro">
-                <label>Período</label>
-                <select id="filtro-periodo">
-                    <option value="diario">Diario</option>
-                    <option value="semanal">Semanal</option>
-                    <option value="mensual" selected>Mensual</option>
-                    <option value="trimestral">Trimestral</option>
-                    <option value="anual">Anual</option>
-                    <option value="anual">Rango Personalizado</option>
-                </select>
+            <!-- ============================= -->
+            <!-- MODAL: NUEVO PAGO -->
+            <!-- ============================= -->
+            <div id="modalNuevoPago" class="modal">
+                <div class="modal-content">
+
+                    <span class="modal-close" id="cerrarNuevoPago">&times;</span>
+                    <h2>Registrar Nuevo Pago</h2>
+
+                    <label>Miembro:</label>
+                    <select id="np-miembro"></select>
+
+                    <label>Membresía:</label>
+                    <input type="text" id="np-membresia" disabled>
+
+                    <label>Monto base:</label>
+                    <input type="text" id="np-monto-base" disabled>
+
+                    <label>Descuento (%):</label>
+                    <input type="number" id="np-descuento" disabled>
+
+                    <label>Total a pagar:</label>
+                    <input type="text" id="np-total" disabled>
+
+                    <label>Método de pago:</label>
+                    <select id="np-metodo">
+                    <option value="Efectivo">Efectivo</option>
+                    <option value="Tarjeta">Tarjeta</option>
+                    <option value="Transferencia">Transferencia</option>
+                    </select>
+
+                    <button class="btn btn-primary" id="btnConfirmarPago">Registrar Pago</button>
+                </div>
             </div>
 
-            <div id="rango-fechas-inicio" class="card-filtro">
-                <label>Desde</label>
-                <input type="date" id="fecha-desde">
-            </div>
-            <div id="rango-fechas-fin" class="card-filtro">
-                <label>Hasta</label>
-                <input type="date" id="fecha-hasta">
-            </div>
+            <!-- ===================== MÉTRICAS ===================== -->
+            <div class="metricas-contenedor">
+                <div class="card-metrica">
+                    <h2>Ingreso Diario</h2>
+                    <p id="daily-income">****</p>
+                </div>
 
-            <button id="btn-aplicar-filtros" class="btn btn-save svg" data-tooltip="Aplicar Filtros">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
-            </button>
+                <div class="card-metrica">
+                    <h2>Ingreso Mensual</h2>
+                    <p id="monthly-income">****</p>
+                </div>
 
-            <button id="btnNuevoPago" class="btn btn-save svg" data-tooltip="Nuevo Pago">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
-            </button>
+                <div class="card-metrica">
+                    <h2>Ingreso Trimestral</h2>
+                    <p id="quarterly-income">****</p>
+                </div>
 
-            <button id="btnExportarPDF" class="btn btn-save svg" data-tooltip="Exportar PDF">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>          
-            </button>
-        </div>
-
-        <!-- ============================= -->
-        <!-- MODAL: NUEVO PAGO -->
-        <!-- ============================= -->
-        <div id="modalNuevoPago" class="modal">
-            <div class="modal-content">
-
-                <span class="modal-close" id="cerrarNuevoPago">&times;</span>
-                <h2>Registrar Nuevo Pago</h2>
-
-                <label>Miembro:</label>
-                <select id="np-miembro"></select>
-
-                <label>Membresía:</label>
-                <input type="text" id="np-membresia" disabled>
-
-                <label>Monto base:</label>
-                <input type="text" id="np-monto-base" disabled>
-
-                <label>Descuento (%):</label>
-                <input type="number" id="np-descuento" disabled>
-
-                <label>Total a pagar:</label>
-                <input type="text" id="np-total" disabled>
-
-                <label>Método de pago:</label>
-                <select id="np-metodo">
-                <option value="Efectivo">Efectivo</option>
-                <option value="Tarjeta">Tarjeta</option>
-                <option value="Transferencia">Transferencia</option>
-                </select>
-
-                <button class="btn btn-primary" id="btnConfirmarPago">Registrar Pago</button>
-            </div>
-        </div>
-
-        <!-- ===================== MÉTRICAS ===================== -->
-        <div class="metricas-contenedor">
-            <div class="card-metrica">
-                <h2>Ingreso Diario</h2>
-                <p id="daily-income">****</p>
+                <div class="card-metrica">
+                    <h2>Ingreso Anual</h2>
+                    <p id="annual-income">****</p>
+                </div>
             </div>
 
-            <div class="card-metrica">
-                <h2>Ingreso Mensual</h2>
-                <p id="monthly-income">****</p>
+            <!-- ===================== TABLA ===================== -->
+            <div class="tabla-wrapper">
+                <table class="tabla-gestion">
+                    <thead>
+                        <tr>
+                            <th>Miembro</th>
+                            <th>Membresía</th>
+                            <th>Fecha</th>
+                            <th>Método</th>
+                            <th>Monto</th>
+                        </tr>
+                    </thead>
+                    <tbody id="payments-table-body"></tbody>
+                </table>
+                <div id="paginacion" class="pagination"></div>
             </div>
-
-            <div class="card-metrica">
-                <h2>Ingreso Trimestral</h2>
-                <p id="quarterly-income">****</p>
-            </div>
-
-            <div class="card-metrica">
-                <h2>Ingreso Anual</h2>
-                <p id="annual-income">****</p>
-            </div>
-        </div>
-
-        <!-- ===================== TABLA ===================== -->
-        <div class="tabla-wrapper">
-            <table class="tabla-gestion">
-                <thead>
-                    <tr>
-                        <th>Miembro</th>
-                        <th>Membresía</th>
-                        <th>Fecha</th>
-                        <th>Método</th>
-                        <th>Monto</th>
-                    </tr>
-                </thead>
-                <tbody id="payments-table-body"></tbody>
-            </table>
-            <div id="paginacion" class="pagination"></div>
-        </div>
                 
 
-      </section>
+        </section>
+
+        <section id="graficosFinancieros" class="graficos-container">
+
+            <!-- ===================== VISTA GENERAL ===================== -->
+            <h2>Vista General</h2>
+
+            <!-- Gráfico 1: Ingresos en el tiempo (línea) -->
+            <div class="grafico-card">
+                <div class="grafico-wrapper">
+                    <canvas id="graficoIngresosLinea"></canvas>
+                </div>
+            </div>
+
+            <!-- Gráfico 2: Comparación mensual (barras) -->
+            <div class="grafico-card">
+                <div class="grafico-wrapper">
+                    <canvas id="graficoIngresosMensualesBarra"></canvas>
+                </div>
+            </div>
+
+            <!-- Gráfico 3: Ingresos acumulados (área) -->
+            <div class="grafico-card">
+                <div class="grafico-wrapper">
+                    <canvas id="graficoIngresosAcumulados"></canvas>
+                </div>
+            </div>
+
+            <!-- ===================== VISTA POR PERIODO ===================== -->
+            <h2>Vista por Periodo</h2>
+
+            <!-- Gráfico 4: Barras agrupadas (tipo de membresía por período) -->
+            <div class="grafico-card">
+                <div class="grafico-wrapper">
+                    <canvas id="graficoPeriodoPorMembresia"></canvas>
+                </div>
+            </div>
+
+            <!-- Gráfico 5: Barras apiladas (composición del total) -->
+            <div class="grafico-card">
+                <div class="grafico-wrapper">
+                    <canvas id="graficoComposicionIngresos"></canvas>
+                </div>
+            </div>
+
+            <!-- ===================== VISTA POR MEMBRESIA ===================== -->
+            <h2>Vista por Membresia</h2>
+
+            <!-- Gráfico 6: Donut (proporción por membresía) -->
+            <div class="grafico-card">
+                <div class="grafico-wrapper">
+                    <canvas id="graficoProporcionMembresias"></canvas>
+                </div>
+            </div>
+
+        </section>
     </main>
 
     <!-- FOOTER -->
@@ -156,6 +212,8 @@
     <script src="../HTML/JS/index.js"></script>
     <script src="../HTML/JS/utils.js"></script>
     <script src="../HTML/JS/loadComponents.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix"></script>
     <script src="../HTML/JS/reporte-ingresos.js"></script>
   </body>
 </html>
