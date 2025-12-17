@@ -60,29 +60,22 @@ function loadComponentAsPromise(componentName, targetId) {
 
 
 // === NUEVA LÓGICA DE CARGA SECUENCIAL Y ASÍNCRONA ===
-// La carga del aside es crucial para #sidebar y #close-btn, por eso va primero.
 loadComponentAsPromise('aside', 'aside-placeholder')
+    .then(() => loadComponentAsPromise('header', 'header-placeholder'))
+    .then(() => loadComponentAsPromise('auth', 'auth-placeholder'))
+    .then(() => loadComponentAsPromise('footer', 'footer-placeholder'))
     .then(() => {
         return reemplazarIconosDesdeCarpeta();
     })
     .then(() => {
-        return loadComponentAsPromise('header', 'header-placeholder');
-    })
-    .then(() => {
-        // Una vez que el header está cargado, cargamos el footer.
-        return loadComponentAsPromise('footer', 'footer-placeholder');
-    })
-    .then(() => {
-        // Finalmente, una vez que TODOS los componentes interactivos están en el DOM,
-        // ejecutamos la lógica de eventos.
         if (typeof initializeComponentInteractivity === 'function') {
             initializeComponentInteractivity();
         } else {
-            console.error("Error: initializeComponentInteractivity no está definida o no es una función.");
+            console.error("initializeComponentInteractivity no está definida");
         }
     })
     .catch(error => {
-        console.error("Error crítico: Fallo en la secuencia de carga de componentes.", error);
+        console.error("Error crítico en la carga de componentes", error);
     });
 
 
@@ -96,7 +89,9 @@ function reemplazarIconosDesdeCarpeta() {
         "iconAsistencia": "hand.svg",
         "iconIngresos": "banknote-arrow-up.svg",
         "iconCalendar": "calendar.svg",
-        "iconContactos": "contact.svg"
+        "iconContactos": "contact.svg",
+        "iconModo": "modo-left.svg",
+        "iconUser": "user.svg",
     };
 
     const iconFolder = "/FrontEnd/ASSETS/icons/";

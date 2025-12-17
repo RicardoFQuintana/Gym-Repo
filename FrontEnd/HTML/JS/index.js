@@ -101,40 +101,103 @@ function initializeComponentInteractivity() {
             }
         });
     }
-
-    // =========================================================
-    // === MENÚ DE USUARIO (ICONO + DESPLEGABLE) ===
-    // =========================================================
-    const userBtn = document.getElementById("userBtn");
-    const userDropdown = document.getElementById("userDropdown");
-
-    if (userBtn && userDropdown) {
-
-        // Abrir/cerrar menú al hacer clic en el icono de usuario
-        userBtn.addEventListener("click", (e) => {
-            e.stopPropagation(); 
-            userDropdown.classList.toggle("hidden");
-        });
-
-        // Cerrar menú si se hace clic fuera
-        document.addEventListener("click", (e) => {
-            if (
-                !userDropdown.contains(e.target) &&
-                !userBtn.contains(e.target)
-            ) {
-                userDropdown.classList.add("hidden");
-            }
-        });
-
-        // Botón de cerrar sesión (si lo necesitás)
-        const logoutBtn = document.getElementById("logoutBtn");
-        if (logoutBtn) {
-            logoutBtn.addEventListener("click", () => {
-                console.log("Cerrar sesión...");
-                // Aquí podés limpiar tokens, localStorage, etc.
-            });
-        }
+    
+    // ===== USUARIO ADMIN INICIAL =====
+    if (!localStorage.getItem("users")) {
+    const users = [
+        { username: "admin", password: "admin123", role: "admin" }
+    ];
+    localStorage.setItem("users", JSON.stringify(users));
     }
+
+    // ===== ELEMENTOS =====
+    const modalLogin = document.getElementById("modalLogin");
+    const loginBtn = modalLogin.querySelector(".btn-save");
+    const closeLogin = document.getElementById("closeLogin");
+
+    const usernameInput = modalLogin.querySelector('input[type="text"]');
+    const passwordInput = modalLogin.querySelector('input[type="password"]');
+
+    const userBtn = document.getElementById("userBtn");
+    const dropdown = document.getElementById("userDropdown");
+    const loginMenuBtn = document.getElementById("btnLogin");
+    const logoutMenuBtn = document.getElementById("btnLogout");
+
+    // ===== UTILIDADES =====
+    function isLogged() {
+    return !!localStorage.getItem("currentUser");
+    }
+
+    function openLogin(force = false) {
+    modalLogin.classList.add("show");
+    modalLogin.style.display = "flex";
+    if (force && closeLogin) closeLogin.style.display = "none";
+    }
+
+    function closeLoginModal() {
+    modalLogin.classList.remove("show");
+    modalLogin.style.display = "none";
+    if (closeLogin) closeLogin.style.display = "inline-block";
+    }
+
+    function updateUserMenu() {
+    if (isLogged()) {
+        loginMenuBtn.style.display = "none";
+        logoutMenuBtn.style.display = "block";
+    } else {
+        loginMenuBtn.style.display = "block";
+        logoutMenuBtn.style.display = "block"; // opcional ocultarlo si querés
+    }
+    }
+
+    // ===== FORZAR LOGIN =====
+    if (!isLogged()) {
+    openLogin(true);
+    }
+
+    // ===== BOTÓN USER =====
+    userBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle("hidden");
+    updateUserMenu();
+    });
+
+    // cerrar dropdown al click afuera
+    document.addEventListener("click", () => {
+    dropdown.classList.add("hidden");
+    });
+
+    // ===== LOGIN =====
+    loginBtn.addEventListener("click", () => {
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const user = users.find(
+        u => u.username === username && u.password === password
+    );
+
+    if (!user) {
+        alert("Usuario o contraseña incorrectos");
+        return;
+    }
+
+    localStorage.setItem("currentUser", JSON.stringify(user));
+    closeLoginModal();
+    location.reload();
+    });
+
+    // ===== LOGOUT =====
+    logoutMenuBtn.addEventListener("click", () => {
+    localStorage.removeItem("currentUser");
+    location.reload();
+    });
+
+    // ===== LOGIN DESDE MENÚ =====
+    loginMenuBtn.addEventListener("click", () => {
+    dropdown.classList.add("hidden");
+    openLogin(true);
+    });
 }
 
 // =========================================================
@@ -210,37 +273,61 @@ async function actualizarContadorEntrenadores() {
 }
 
 async function renderizarEntrenadores() {
-    const contenedor = document.getElementById("trainer-cards-container"); 
-    if (!contenedor) return; 
+  const contenedor = document.getElementById("trainer-cards-container");
+  if (!contenedor) return;
 
-    contenedor.innerHTML = '<p>Cargando entrenadores...</p>'; 
+  contenedor.innerHTML = '<p>Cargando entrenadores...</p>';
 
-    const entrenadores = await obtenerTodosLosEntrenadores();
-    
-    if (entrenadores.length === 0) {
-        contenedor.innerHTML = '<p>No hay entrenadores disponibles en este momento.</p>';
-        return;
-    }
-    
-    contenedor.innerHTML = ''; 
+  const entrenadores = await obtenerTodosLosEntrenadores();
 
-    entrenadores.forEach(entrenador => {
-        const especialidad = entrenador.especialidad || 'Fitness General'; 
-        const urlFoto = entrenador.urlFoto || '../ASSETS/img/default-trainer.jpg'; 
+  if (!entrenadores || entrenadores.length === 0) {
+    contenedor.innerHTML = '<p>No hay entrenadores disponibles.</p>';
+    return;
+  }
 
-        const cardHTML = `
-            <div class="trainer-card">
-                <div class="trainer-photo" style="background-image: url('${urlFoto}');"></div>
-                <h3>${entrenador.nombre || ''} ${entrenador.apellido || ''}</h3>
-                <p1>${especialidad}</p1>
-            </div>
-        `;
-        
-        contenedor.insertAdjacentHTML('beforeend', cardHTML);
-    });
+  contenedor.innerHTML = '';
+
+  entrenadores.forEach(entrenador => {
+    const especialidad = entrenador.especialidad || 'Fitness General';
+    const urlFoto = entrenador.urlFoto || '../ASSETS/img/default-trainer.jpg';
+
+    const cardHTML = `
+      <div class="trainer-card">
+        <div class="trainer-photo" style="background-image:url('${urlFoto}')"></div>
+        <div class="trainer-info">
+          <h3>${entrenador.nombre || ''} ${entrenador.apellido || ''}</h3>
+          <p>${especialidad}</p>
+        </div>
+      </div>
+    `;
+
+    contenedor.insertAdjacentHTML("beforeend", cardHTML);
+  });
 }
 
+let trainerIndex = 0;
 
+function setupTrainerCarousel() {
+  const container = document.getElementById("trainer-cards-container");
+  const prev = document.getElementById("trainerPrev");
+  const next = document.getElementById("trainerNext");
+
+  const cardWidth = 236; // ancho + gap
+  const visibleCards = 3;
+
+  prev.addEventListener("click", () => {
+    trainerIndex = Math.max(trainerIndex - 1, 0);
+    container.style.transform = `translateX(-${trainerIndex * cardWidth}px)`;
+  });
+
+  next.addEventListener("click", () => {
+    const maxIndex = container.children.length - visibleCards;
+    trainerIndex = Math.min(trainerIndex + 1, maxIndex);
+    container.style.transform = `translateX(-${trainerIndex * cardWidth}px)`;
+  });
+}
+
+renderizarEntrenadores().then(setupTrainerCarousel);
 // =============================================================
 // === LÓGICA DE GENERACIÓN COMPLETA DE PLANES DINÁMICA (FINAL) ===
 // =============================================================
@@ -332,3 +419,113 @@ async function renderizarPlanes() {
         contenedor.innerHTML = '<p>Error al cargar los planes. Intente más tarde.</p>';
     }
 }
+
+let planIndex = 0;
+
+function setupPlansCarousel() {
+  const container = document.getElementById("plans-container");
+  const prev = document.getElementById("plansPrev");
+  const next = document.getElementById("plansNext");
+
+  if (!container || !prev || !next) return;
+
+  const cards = container.children;
+  const visibleCards = 3;
+  const cardWidth = 285; // ancho aprox plan-card + gap
+
+  // 🔹 Ocultar flechas si no hay más de 3
+  if (cards.length <= visibleCards) {
+    prev.style.display = "none";
+    next.style.display = "none";
+    return;
+  }
+
+  prev.addEventListener("click", () => {
+    planIndex = Math.max(planIndex - 1, 0);
+    container.style.transform = `translateX(-${planIndex * cardWidth}px)`;
+  });
+
+  next.addEventListener("click", () => {
+    const maxIndex = cards.length - visibleCards;
+    planIndex = Math.min(planIndex + 1, maxIndex);
+    container.style.transform = `translateX(-${planIndex * cardWidth}px)`;
+  });
+}
+
+renderizarPlanes().then(setupPlansCarousel);
+
+
+// =============================================================
+// === CLASES MÁS POPULARES (TOP 3 POR INSCRIPTOS) ===
+// =============================================================
+
+const API_BASE_CLASES = "https://localhost:7271/api/Clase";
+
+// Imágenes fijas (las que ya usabas)
+const imagenesClases = {
+  "CrossFit": "../ASSETS/img/clase_crossfit.jpg",
+  "Zumba": "../ASSETS/img/clase_zumba.jpg",
+  "Yoga": "../ASSETS/img/clase_yoga.jpg"
+};
+
+// Imagen por defecto si no coincide
+const imagenDefault = "../ASSETS/img/clase_zumba.jpg";
+
+async function obtenerClases() {
+  try {
+    const response = await fetch(API_BASE_CLASES);
+    if (!response.ok) {
+      console.error("Error al obtener clases:", response.status);
+      return [];
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error de conexión al obtener clases:", error);
+    return [];
+  }
+}
+
+async function renderizarClasesPopulares() {
+  const contenedor = document.getElementById("clases-container");
+  if (!contenedor) return;
+
+  contenedor.innerHTML = "<p>Cargando clases populares...</p>";
+
+  const clases = await obtenerClases();
+
+  if (!clases || clases.length === 0) {
+    contenedor.innerHTML = "<p>No hay clases disponibles.</p>";
+    return;
+  }
+
+  // 🔥 Ordenar por cantidad de inscriptos (descendente)
+  const clasesPopulares = clases
+    .sort((a, b) => b.inscriptosCount - a.inscriptosCount)
+    .slice(0, 3);
+
+  contenedor.innerHTML = "";
+
+  clasesPopulares.forEach(clase => {
+    const actividad = clase.actividadNombre || "Clase";
+    const imagen =
+      imagenesClases[actividad] || imagenDefault;
+
+    const cardHTML = `
+      <div class="card">
+        <img src="${imagen}" alt="${actividad}">
+        <div class="card-content">
+          <h3>${clase.nombre}</h3>
+          <p>
+            ${actividad} · ${clase.inscriptosCount} inscriptos<br>
+            Entrenador: ${clase.entrenadorNombre} ${clase.entrenadorApellido}
+          </p>
+        </div>
+      </div>
+    `;
+
+    contenedor.insertAdjacentHTML("beforeend", cardHTML);
+  });
+}
+
+// 🚀 Ejecutar al cargar
+renderizarClasesPopulares();
