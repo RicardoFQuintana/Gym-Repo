@@ -22,6 +22,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   await cargarTiposMembresia();
   aplicarFiltros(); 
   configurarEventos();
+
+  const btnNuevoPago = document.getElementById("btnNuevoPago");
+  if (btnNuevoPago) {
+    btnNuevoPago.addEventListener("click", abrirModalNuevoPago);
+  }
+
+  // 🔥 CERRAR MODAL
+  document.getElementById("cerrarNuevoPago")
+    ?.addEventListener("click", cerrarModalNuevoPago);
+
+  // 🔥 CONFIRMAR
+  document.getElementById("btnConfirmarPago")
+    ?.addEventListener("click", confirmarNuevoPago);
+
+  // 🔥 CAMBIO DE MIEMBRO
+  document.getElementById("np-miembro")
+    ?.addEventListener("change", actualizarDatosPago);
 });
 
 // === UTILIDADES ===
@@ -537,33 +554,52 @@ async function abrirModalNuevoPago() {
   try {
     const res = await fetch(`${API_BASE}/Miembro`);
     if (!res.ok) throw new Error("Error al cargar miembros");
+
     const miembros = await res.json();
-
     const select = document.getElementById("np-miembro");
-    if (!select) return;
 
-    // rellenar opciones con atributos útiles
     select.innerHTML = miembros.map(m => {
-      const tipo = m.membresia ? getTipoMembresia(m.membresia.fechaInicio, m.membresia.fechaVencimiento) : "Mensual";
+      const tipo = m.membresia
+        ? getTipoMembresia(m.membresia.fechaInicio, m.membresia.fechaVencimiento)
+        : "Mensual";
+
       const descuento = m.membresia?.descuento ?? m.descuento ?? 0;
-      return `<option value="${m.id}"
-                data-membresia="${tipo}"
-                data-descuento="${descuento}"
-                data-nombre="${(m.nombre || '') + ' ' + (m.apellido || '')}">
-                ${m.nombre || ''} ${m.apellido || ''}
-              </option>`;
+
+      return `
+        <option value="${m.id}"
+          data-membresia="${tipo}"
+          data-descuento="${descuento}">
+          ${m.nombre} ${m.apellido}
+        </option>`;
     }).join("");
 
-    // forzar actualizar datos al abrir
     actualizarDatosPago();
+    document.getElementById("modalNuevoPago").classList.add("active");
 
-    document.getElementById("modalNuevoPago").style.display = "block";
   } catch (err) {
-    console.error("abrirModalNuevoPago:", err);
+    console.error(err);
     alert("No se pudo abrir el modal de nuevo pago");
   }
 }
 
+function cerrarModalNuevoPago() {
+  const modal = document.getElementById("modalNuevoPago");
+  if (!modal) return;
+
+  modal.classList.remove("active");
+
+  // limpiar campos
+  document.getElementById("np-membresia").value = "";
+  document.getElementById("np-monto-base").value = "";
+  document.getElementById("np-descuento").value = "";
+  document.getElementById("np-total").value = "";
+
+  // limpiar select SIN romper
+  const select = document.getElementById("np-miembro");
+  if (select) {
+    select.innerHTML = ""; // se vuelve a cargar al abrir
+  }
+}
 // Actualiza campos del modal según miembro seleccionado
 async function actualizarDatosPago() {
   const select = document.getElementById("np-miembro");
@@ -639,7 +675,7 @@ async function confirmarNuevoPago() {
     }
 
     alert("Pago registrado correctamente ✔");
-    document.getElementById("modalNuevoPago").style.display = "none";
+    document.getElementById("modalNuevoPago").classList.remove("active");
 
     // recargar pagos y mantener filtros (refrescamos todo)
     await cargarPagos();

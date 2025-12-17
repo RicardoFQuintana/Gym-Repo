@@ -74,7 +74,15 @@
       <h2>Nuestros Entrenadores</h2>
       <p>Conoce a nuestro equipo de profesionales certificados</p>
 
-      <div class="trainer-cards" id="trainer-cards-container"></div>
+      <div class="trainer-wrapper">
+        <button class="trainer-arrow left" id="trainerPrev">‹</button>
+
+        <div class="trainer-viewport">
+          <div class="trainer-cards" id="trainer-cards-container"></div>
+        </div>
+
+        <button class="trainer-arrow right" id="trainerNext">›</button>
+      </div>
     </section>
 
     <!-- ================= SECCIÓN CLASES ================= --> 
@@ -84,24 +92,8 @@
           <p>Descubre la variedad de clases que ofrecemos para todos los niveles</p> 
       </div> 
       <div class="cards-container" id="clases-container">
-          <div class="card"> 
-              <img src="../ASSETS/img/clase_crossfit.jpg" alt="Crossfit"> 
-              <div class="card-content"> 
-                  <h3>Crossfit Intenso</h3>
-                  <p>Entrenamiento funcional de alta intensidad.</p> 
-                  </div> </div> <div class="card"> 
-                      <img src="../ASSETS/img/clase_zumba.jpg" alt="Zumba"> 
-                      <div class="card-content"> 
-                          <h3>Zumba</h3> 
-                          <p>Baile fitness lleno de energía y diversión.</p> 
-                      </div> </div> <div class="card"> 
-                          <img src="../ASSETS/img/clase_yoga.jpg" alt="Yoga"> 
-                          <div class="card-content"> 
-                              <h3>Yoga Flow</h3> 
-                              <p>Secuencias fluidas para flexibilidad y relajación.</p> 
-                      </div> 
-              </div> 
-          </div> 
+        <!-- Las cards se generan dinámicamente desde JS -->
+      </div>
     </section>
 
     <!-- ================= SECCIÓN PLANES ================= -->
@@ -109,8 +101,17 @@
       <h2>Elige Tu Plan Perfecto</h2>
       <p>Tenemos el plan ideal para cada objetivo y presupuesto</p>
 
-      <div class="plans-grid" id="plans-container"></div>
+      <div class="plans-wrapper">
+        <button class="trainer-arrow left" id="plansPrev">‹</button>
+
+        <div class="plans-grid" id="plans-container"></div>
+
+        <button class="trainer-arrow right" id="plansNext">›</button>
+      </div>
     </section>
+
+    <!-- ================= HEADER ================= -->
+    <div id="auth-placeholder"></div>
 
   </main>
   <!-- ================= FOOTER ================= -->

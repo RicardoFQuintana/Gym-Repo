@@ -130,3 +130,4 @@ function crearPaginacion({
         btn("Siguiente »", paginaActual + 1, paginaActual === totalPaginas)
     );
 }
+

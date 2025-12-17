@@ -7,21 +7,18 @@
   </div>
 
   <nav class="nav-links">
-    <button id="modoNocturnoBtn" class="modo-btn">
-       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-toggle-left-icon lucide-toggle-left"><circle cx="9" cy="12" r="3"/><rect width="20" height="14" x="2" y="5" rx="7"/></svg>
-    </button>
-    <button id="userBtn" class="user-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-round-icon lucide-circle-user-round"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
-      </button>
-    <!-- Nuevo botón de Usuario -->
-    <div class="user-menu">
-      
 
-      <!-- Menú desplegable -->
-      <div id="userDropdown" class="dropdown hidden">
-        <a href="login.html">Iniciar sesión</a>
-        <a href="#" id="logoutBtn">Cerrar sesión</a>
+    <button id="modoNocturnoBtn" class="modo-btn"><iconModo></iconModo></button>
+
+    <div class="user-menu">
+      <button id="userBtn" class="user-btn">
+        <iconUser></iconUser>
+      </button>
+
+      <div id="userDropdown" class="user-dropdown hidden">
+        <button id="btnLogout">Cerrar Sesion</button>
       </div>
     </div>
   </nav>
+
 </header>
