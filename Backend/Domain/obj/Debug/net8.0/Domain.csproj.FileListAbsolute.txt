@@ -10,3 +10,15 @@ E:\UNAJ\Ingenieria de Software I\integrador_GRUPAL\Gimnasio\Backend\Domain\obj\D
 E:\UNAJ\Ingenieria de Software I\integrador_GRUPAL\Gimnasio\Backend\Domain\obj\Debug\net8.0\refint\Domain.dll
 E:\UNAJ\Ingenieria de Software I\integrador_GRUPAL\Gimnasio\Backend\Domain\obj\Debug\net8.0\Domain.pdb
 E:\UNAJ\Ingenieria de Software I\integrador_GRUPAL\Gimnasio\Backend\Domain\obj\Debug\net8.0\ref\Domain.dll
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Domain\bin\Debug\net8.0\Domain.deps.json
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Domain\bin\Debug\net8.0\Domain.dll
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Domain\bin\Debug\net8.0\Domain.pdb
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Domain\obj\Debug\net8.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Domain\obj\Debug\net8.0\Domain.AssemblyInfoInputs.cache
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.cs
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Domain\obj\Debug\net8.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Domain\obj\Debug\net8.0\Domain.sourcelink.json
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Domain\obj\Debug\net8.0\Domain.dll
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Domain\obj\Debug\net8.0\refint\Domain.dll
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Domain\obj\Debug\net8.0\Domain.pdb
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Domain\obj\Debug\net8.0\ref\Domain.dll

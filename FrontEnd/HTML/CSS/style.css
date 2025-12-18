@@ -1809,6 +1809,32 @@ html {
 
 }
 
+.pago select,
+.pago input[type="number"]{
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.pago label{
+  display: block;
+  color: var(--highlight);
+  font-weight: 600;
+  text-align: left;
+}
+
+.pago h2{
+  text-align: left;
+  color: var(--highlight);
+  font-size: 1.6rem;
+  margin: 0px 0px 15px 0px;
+}
+
 /* === CONTENEDOR DE FILTROS === */
 .filtros-contenedor {
   display: grid;

@@ -170,51 +170,82 @@ async function cargarTiposMembresia() {
   const select = document.getElementById("filtro-membresia");
   select.innerHTML = `<option value="todas">Todas</option>`;
 
-  // valores por defecto si el backend no provee precios
-  const defaults = {
-    "Mensual": { nombre: "Mensual", precio: 5000 },
-    "Básica": { nombre: "Básica", precio: 12000 },
-    "Premium": { nombre: "Premium", precio: 20000 }
-  };
-
   try {
     const res = await fetch(`${API_BASE}/TipoMembresia`);
     if (!res.ok) throw new Error("No se pudo obtener tipos de membresía");
+
     const tipos = await res.json();
 
-    // Tipos pueden venir como objetos o string; normalizamos y guardamos en el estado
     tipos.forEach(t => {
-      const nom = t.nombre || t.tipo || String(t);
-      const precio = t.precio ?? t.monto ?? defaults[nom]?.precio ?? null;
-      estado.tiposMembresiaMap[nom] = { nombre: nom, precio };
       const opt = document.createElement("option");
-      opt.value = nom;
-      opt.textContent = nom;
+      opt.value = t.id;          // ✅ ID real
+      opt.textContent = t.nombre; // ✅ Nombre visible
       select.appendChild(opt);
-    });
-
-    // si el backend no entrega precio, rellenamos con defaults
-    Object.keys(defaults).forEach(k => {
-      if (!estado.tiposMembresiaMap[k]) estado.tiposMembresiaMap[k] = defaults[k];
     });
 
   } catch (err) {
-    console.warn("cargarTiposMembresia: fallback", err);
-    // fallback a los tipos detectados en los pagos
-    const tiposFallback = [...new Set(estado.pagosOriginales.map(p => p.membresia))];
-    tiposFallback.forEach(t => {
-      estado.tiposMembresiaMap[t] = { nombre: t, precio: defaults[t]?.precio ?? 0 };
-      const opt = document.createElement("option");
-      opt.value = t;
-      opt.textContent = t;
-      select.appendChild(opt);
-    });
-
-    // asegurar defaults
-    Object.keys(defaults).forEach(k => {
-      if (!estado.tiposMembresiaMap[k]) estado.tiposMembresiaMap[k] = defaults[k];
-    });
+    console.error("Error cargando tipos de membresía", err);
   }
+}
+
+async function cargarTipoMembresia(id) {
+  const res = await fetch(`${API_BASE}/TipoMembresia/${id}`);
+  if (!res.ok) return;
+
+  tipoMembresiaActual = await res.json();
+
+  document.getElementById("np-membresia").value =
+    tipoMembresiaActual.nombre;
+
+  document.getElementById("np-monto-base").value =
+    `$${tipoMembresiaActual.costo.toLocaleString()}`;
+}
+
+async function cargarDescuento(id) {
+  if (!id) {
+    descuentoActual = 0;
+    document.getElementById("np-descuento").value = "0%";
+    return;
+  }
+
+  const res = await fetch(`${API_BASE}/Descuento/${id}`);
+  if (!res.ok) return;
+
+  const data = await res.json();
+  descuentoActual = data.porcentaje;
+
+  document.getElementById("np-descuento").value =
+    `${Math.round(descuentoActual * 100)}%`;
+}
+
+function calcularTotal() {
+  if (!tipoMembresiaActual) return;
+
+  const base = tipoMembresiaActual.costo;
+  const descuento = descuentoActual || 0;
+
+  const total = base - (base * descuento);
+
+  document.getElementById("np-total").value =
+    `$${Math.round(total).toLocaleString()}`;
+}
+
+async function buscarMiembroPorDni() {
+  const dni = document.getElementById("np-dni").value.trim();
+  if (!dni) return alert("Ingresá un DNI");
+
+  const res = await fetch(`${API_BASE}/Miembro/DNI/${dni}`);
+  if (!res.ok) return alert("Miembro no encontrado");
+
+  miembroActual = await res.json();
+
+  document.getElementById("np-miembro").value =
+    `${miembroActual.nombre} ${miembroActual.apellido}`;
+
+  await cargarTipoMembresia(miembroActual.membresia.tipoMembresiaId);
+  await cargarDescuento(miembroActual.descuento);
+
+  calcularTotal();
 }
 
 // === FILTROS ===
@@ -239,21 +270,19 @@ function configurarEventos() {
 
   // Cerrar modal y confirmar (delegamos listeners que pueden no existir al inicio)
   const cerrar = document.getElementById("cerrarNuevoPago");
-  if (cerrar) cerrar.addEventListener("click", () => {
-    document.getElementById("modalNuevoPago").style.display = "none";
-  });
+  if (cerrar) document.getElementById("cerrarNuevoPago")
+  ?.addEventListener("click", cerrarModalNuevoPago);
 
-  window.addEventListener("click", e => {
-    const modal = document.getElementById("modalNuevoPago");
-    if (modal && e.target === modal) modal.style.display = "none";
-  });
+window.addEventListener("click", e => {
+  const modal = document.getElementById("modalNuevoPago");
+  if (modal && e.target === modal) cerrarModalNuevoPago();
+});
 
   const btnConfirmar = document.getElementById("btnConfirmarPago");
-  if (btnConfirmar) btnConfirmar.addEventListener("click", confirmarNuevoPago);
+  if (btnConfirmar) btnConfirmar.addEventListener("click", confirmarPago);
 
-  // listener para cuando cambie el miembro en el modal
-  const selectMiembro = document.getElementById("np-miembro");
-  if (selectMiembro) selectMiembro.addEventListener("change", actualizarDatosPago);
+  document.getElementById("btnBuscarMiembro")?.addEventListener("click", buscarMiembroPorDni);
+
 }
 
 function aplicarFiltros() {
@@ -549,37 +578,20 @@ async function imprimirIngresos() {
    =============== NUEVO PAGO - BOTÓN Y MODAL ==================
    ============================================================ */
 
-// Abre el modal y carga miembros
-async function abrirModalNuevoPago() {
-  try {
-    const res = await fetch(`${API_BASE}/Miembro`);
-    if (!res.ok) throw new Error("Error al cargar miembros");
+function abrirModalNuevoPago() {
+  miembroActual = null;
+  tipoMembresiaActual = null;
+  descuentoActual = 0;
 
-    const miembros = await res.json();
-    const select = document.getElementById("np-miembro");
+  document.getElementById("np-dni").value = "";
+  document.getElementById("np-miembro").value = "";
+  document.getElementById("np-membresia").value = "";
+  document.getElementById("np-monto-base").value = "";
+  document.getElementById("np-descuento").value = "";
+  document.getElementById("np-total").value = "";
+  document.getElementById("np-metodo").value = "";
 
-    select.innerHTML = miembros.map(m => {
-      const tipo = m.membresia
-        ? getTipoMembresia(m.membresia.fechaInicio, m.membresia.fechaVencimiento)
-        : "Mensual";
-
-      const descuento = m.membresia?.descuento ?? m.descuento ?? 0;
-
-      return `
-        <option value="${m.id}"
-          data-membresia="${tipo}"
-          data-descuento="${descuento}">
-          ${m.nombre} ${m.apellido}
-        </option>`;
-    }).join("");
-
-    actualizarDatosPago();
-    document.getElementById("modalNuevoPago").classList.add("active");
-
-  } catch (err) {
-    console.error(err);
-    alert("No se pudo abrir el modal de nuevo pago");
-  }
+  document.getElementById("modalNuevoPago").classList.add("active");
 }
 
 function cerrarModalNuevoPago() {
@@ -588,103 +600,148 @@ function cerrarModalNuevoPago() {
 
   modal.classList.remove("active");
 
-  // limpiar campos
   document.getElementById("np-membresia").value = "";
   document.getElementById("np-monto-base").value = "";
   document.getElementById("np-descuento").value = "";
   document.getElementById("np-total").value = "";
-
-  // limpiar select SIN romper
-  const select = document.getElementById("np-miembro");
-  if (select) {
-    select.innerHTML = ""; // se vuelve a cargar al abrir
-  }
+  document.getElementById("np-miembro").value = "";
 }
-// Actualiza campos del modal según miembro seleccionado
-async function actualizarDatosPago() {
-  const select = document.getElementById("np-miembro");
-  if (!select) return;
-  const opt = select.selectedOptions[0];
-  if (!opt) {
-    document.getElementById("np-membresia").value = "";
-    document.getElementById("np-monto-base").value = "";
-    document.getElementById("np-descuento").value = "";
-    document.getElementById("np-total").value = "";
-    return;
+
+function imprimirTicket(pago) {
+  try {
+    if (!pago || !pago.ticket) {
+      throw new Error("Pago o ticket inexistente");
+    }
+
+    const t = pago.ticket;
+
+    const contenidoHTML = `
+      <!DOCTYPE html>
+      <html lang="es">
+      <head>
+        <meta charset="UTF-8" />
+        <title>Ticket de Pago</title>
+
+        <style>
+          body {
+            font-family: monospace;
+            margin: 30px;
+            background: #f2f2f2;
+          }
+
+          .ticket {
+            background: white;
+            padding: 20px;
+            max-width: 320px;
+            margin: auto;
+            border: 1px dashed #000;
+          }
+
+          h2 {
+            text-align: center;
+            margin-bottom: 10px;
+          }
+
+          .campo {
+            margin: 6px 0;
+            font-size: 14px;
+          }
+
+          .linea {
+            border-top: 1px dashed #000;
+            margin: 12px 0;
+          }
+
+          .footer {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 15px;
+          }
+        </style>
+      </head>
+
+      <body>
+        <div class="ticket">
+          <h2>Gimnasio Cuerpo Sano</h2>
+
+          <div class="campo">Ticket Nº: ${t.id}</div>
+          <div class="campo">Fecha: ${new Date(t.fechaEmision).toLocaleString()}</div>
+
+          <div class="linea"></div>
+
+          <div class="campo">Membresía ID: ${pago.membresiaId}</div>
+          <div class="campo">Monto: $${(pago.monto / 100).toLocaleString()}</div>
+          <div class="campo">Método: ${pago.metodoPago}</div>
+
+          <div class="linea"></div>
+
+          <div class="campo">${t.detalle}</div>
+
+          <div class="footer">
+            Gracias por su pago
+          </div>
+        </div>
+
+        <script>
+          window.onload = () => window.print();
+        </script>
+      </body>
+      </html>
+    `;
+
+    const w = window.open("", "_blank");
+    if (!w) throw new Error("Popup bloqueado");
+
+    w.document.write(contenidoHTML);
+    w.document.close();
+
+  } catch (err) {
+    console.error("Error imprimirTicket:", err);
+    alert("No se pudo imprimir el ticket.");
   }
-
-  const tipo = opt.dataset.membresia || "Mensual";
-  const descuento = parseFloat(opt.dataset.descuento || 0);
-
-  document.getElementById("np-membresia").value = tipo;
-  document.getElementById("np-descuento").value = descuento;
-
-  // obtener precio desde el mapa de tipos, si existe
-  const tipoInfo = estado.tiposMembresiaMap[tipo];
-  let precioBase = tipoInfo?.precio;
-  if (precioBase == null) {
-    // fallback a alguno de los defaults
-    const defaults = { "Mensual": 5000, "Básica": 12000, "Premium": 20000 };
-    precioBase = defaults[tipo] ?? 0;
-  }
-
-  // mostrar precio base y calcular total con descuento
-  document.getElementById("np-monto-base").value = formatearMoneda(precioBase);
-  const total = precioBase - (precioBase * (descuento / 100));
-  document.getElementById("np-total").value = formatearMoneda(total);
-
-  // también guardamos valores numéricos en atributos para usar al enviar
-  document.getElementById("np-monto-base").dataset.raw = precioBase;
-  document.getElementById("np-total").dataset.raw = total;
 }
 
 // Confirmar y POST al backend
-async function confirmarNuevoPago() {
-  try {
-    const select = document.getElementById("np-miembro");
-    if (!select || !select.value) { alert("Seleccione un miembro"); return; }
-
-    const miembroId = select.value;
-    const metodo = document.getElementById("np-metodo").value || "Efectivo";
-
-    // monto en ARS numérico desde dataset.raw (precio ya calculado)
-    const totalRaw = parseFloat(document.getElementById("np-total").dataset.raw || 0);
-    if (isNaN(totalRaw) || totalRaw <= 0) { alert("Monto inválido"); return; }
-
-    // backend en tus datos anteriores espera centavos -> guardamos en entero
-    const montoEnCentavos = Math.round(totalRaw * 100);
-
-    const body = {
-      miembroId: parseInt(miembroId, 10),
-      monto: montoEnCentavos,
-      metodoPago: metodo,
-      fecha: new Date().toISOString()
-    };
-
-    const res = await fetch(`${API_BASE}/Pago`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body)
-    });
-
-    if (!res.ok) {
-      const txt = await res.text().catch(() => "");
-      console.error("Error registrar pago:", res.status, txt);
-      alert("No se pudo registrar el pago");
-      return;
-    }
-
-    alert("Pago registrado correctamente ✔");
-    document.getElementById("modalNuevoPago").classList.remove("active");
-
-    // recargar pagos y mantener filtros (refrescamos todo)
-    await cargarPagos();
-    aplicarFiltros();
-
-  } catch (err) {
-    console.error("confirmarNuevoPago:", err);
-    alert("Error al registrar el pago");
+async function confirmarPago() {
+  if (!miembroActual || !tipoMembresiaActual) {
+    return alert("Faltan datos del pago");
   }
+
+  const metodo = document.getElementById("np-metodo").value
+
+  if (!metodo) {
+    alert("Debe seleccionar un método de pago");
+    return;
+  }
+ 
+
+  const total =
+    tipoMembresiaActual.costo -
+    tipoMembresiaActual.costo * (descuentoActual || 0);
+
+  const payload = {
+    monto: Math.round(total * 100),
+    metodoPagoId: Number(metodo),
+    membresiaId: miembroActual.membresia.id
+  };
+
+  const res = await fetch(`${API_BASE}/Pago`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  if (!res.ok) {
+    alert("Error al registrar el pago");
+    return;
+  }
+
+  const pago = await res.json(); 
+
+  alert("Pago registrado correctamente ✔");
+
+  imprimirTicket(pago); 
+  cerrarModalNuevoPago();
 }
 
 // ==================== HELPERS ====================
