@@ -33,6 +33,20 @@ namespace Infrastructure.Queries
             return miembro;
         }
 
+        public async Task<Miembro> GetByDNI(int DNI)
+        {
+            var miembro = await _context.Miembros
+                .Include(m => m.Membresia)
+                    .ThenInclude(m => m.Pagos)
+                    .ThenInclude(p => p.Ticket)
+                .Include(m => m.Descuento)
+                .Include(m => m.Inscripciones)
+                .Include(m => m.Asistencias)
+                .FirstOrDefaultAsync(m => m.Dni == DNI);
+
+            return miembro;
+        }
+
         public async Task<List<Miembro>> GetAll()
         {
             var miembro = await _context.Miembros

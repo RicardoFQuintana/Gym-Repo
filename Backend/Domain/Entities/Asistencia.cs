@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Enums;
 
 namespace Domain.Entities
 {
     public class Asistencia
     {
         public int Id { get; set; }
+
         public int MiembroId { get; set; }
+        public Miembro? Miembro { get; set; }
+
         public int? ClaseId { get; set; }
+        public Clase? Clase { get; set; }
+
         public DateTime Fecha { get; set; }
 
-        public Miembro Miembro { get; set; }
-        public Clase Clase { get; set; }
+        public MetodoAsistencia Metodo { get; set; }
     }
 }

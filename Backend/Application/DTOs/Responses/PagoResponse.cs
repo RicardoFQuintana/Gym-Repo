@@ -12,7 +12,7 @@ namespace Application.DTOs.Responses
         public int MembresiaId { get; set; }
         public decimal Monto { get; set; }
         public DateTime Fecha { get; set; }
-        public string MetodoPago { get; set; }
-        public TicketResponse Ticket { get; set; }
+        public string? MetodoPago { get; set; }
+        public TicketResponse? Ticket { get; set; }
     }
 }

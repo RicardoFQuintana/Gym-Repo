@@ -14,6 +14,7 @@ namespace Application.Interfaces.IServices
         Task<MiembroResponse> Add(MiembroAddRequest request);
         Task<List<MiembroResponse>> GetAll();
         Task<MiembroResponse> GetById(int id);
+        Task<MiembroResponse> GetByDNI(int DNI);
         Task<MiembroResponse> Update(int id, MiembroUpdateRequest request);
         Task Delete(int id);
         Task AsignarEntrenador(int miembroId, int entrenadorId);

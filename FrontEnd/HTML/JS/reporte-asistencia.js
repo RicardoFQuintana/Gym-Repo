@@ -62,7 +62,7 @@ const overlay = document.getElementById("overlay");
 // ==================== UTILIDADES ====================
 function formatearFechaHora(d) {
   if (!d) return "";
-  try { return new Date(d).toLocaleString(); } catch { return String(d); }
+    try { return new Date(d).toLocaleString(); } catch { return String(d); }
 }
 
 async function fetchJSON(url) {
@@ -357,6 +357,11 @@ function renderTabla() {
       <td>${escapeHtml(a.metodo || "")}</td>
     </tr>
   `).join("");
+
+  // ============================
+  // PAGINACIÓN GENÉRICA
+  // ============================
+  renderPaginacion();
 }
 
 function renderPaginacion() {
@@ -379,14 +384,12 @@ async function registrarAsistencia() {
 
   const miembro = estado.miembros.find(m => String(m.dni) === String(dni));
   const claseId = inputClase.value || null;
-  const metodo = inputMetodo.value || "manual";
+  const metodo = inputMetodo.value || "";
 
   const payload = {
-    miembroId: miembro?.id ?? null,
     dni: dni,
     claseId: claseId ? parseInt(claseId, 10) : null,
-    metodo: metodo,
-    fecha: new Date().toISOString()
+    metodo: metodo
   };
 
   try {
@@ -625,8 +628,6 @@ function graficoBarrasClases(data) {
   });
 }
 
-
-
 // --- 2. Línea: Tendencia por día
 function graficoLineaTendencia(data) {
   const porDia = {};
@@ -678,8 +679,6 @@ function graficoLineaTendencia(data) {
   });
 }
 
-
-
 // --- 3. Donut: Distribución por clase
 function graficoDonutClases(data) {
   const pares = agruparContar(data, a => a.claseNombre);
@@ -720,8 +719,6 @@ function graficoDonutClases(data) {
     }
   });
 }
-
-
 
 // ================= VISTA POR MIEMBRO ===================
 
@@ -766,8 +763,6 @@ function graficoLineaMiembro(data) {
   });
 }
 
-
-
 // --- Barras: asistencias por clase del miembro
 function graficoBarrasMiembro(data) {
   const pares = agruparContar(data, a => a.claseNombre);
@@ -803,8 +798,6 @@ function graficoBarrasMiembro(data) {
     }
   });
 }
-
-
 
 // ================= VISTA POR CLASE ===================
 

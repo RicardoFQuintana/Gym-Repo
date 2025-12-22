@@ -15,7 +15,7 @@ namespace Domain.Entities
         public DateTime Fecha { get; set; }
         public MetodoPago MetodoPago { get; set; }
 
-        public Membresia Membresia { get; set; }
-        public Ticket Ticket { get; set; }
+        public Membresia? Membresia { get; set; }
+        public Ticket? Ticket { get; set; }
     }
 }

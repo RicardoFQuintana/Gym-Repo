@@ -18,6 +18,15 @@ E:\UNAJ\Ingenieria de Software I\integrador_GRUPAL\Gimnasio\Backend\Infrastructu
 E:\UNAJ\Ingenieria de Software I\integrador_GRUPAL\Gimnasio\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
 E:\UNAJ\Ingenieria de Software I\integrador_GRUPAL\Gimnasio\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.genruntimeconfig.cache
 E:\UNAJ\Ingenieria de Software I\integrador_GRUPAL\Gimnasio\Backend\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.AssemblyReference.cache
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfoInputs.cache
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfo.cs
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.sourcelink.json
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.dll
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\refint\Infrastructure.dll
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\bin\Debug\net8.0\Infrastructure.deps.json
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\bin\Debug\net8.0\Infrastructure.runtimeconfig.json
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\bin\Debug\net8.0\Infrastructure.dll
@@ -26,15 +35,6 @@ C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\bin\Debug\ne
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\bin\Debug\net8.0\Domain.dll
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\bin\Debug\net8.0\Application.pdb
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\bin\Debug\net8.0\Domain.pdb
-C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.AssemblyReference.cache
-C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfoInputs.cache
-C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfo.cs
-C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.CoreCompileInputs.cache
-C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.sourcelink.json
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastr.15EFFBFE.Up2Date
-C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.dll
-C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\refint\Infrastructure.dll
-C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\Infrastructure.genruntimeconfig.cache
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll

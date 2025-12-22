@@ -9,8 +9,9 @@ namespace Application.DTOs.Requests
 {
     public class AsistenciaAddRequest
     {
-        public int MiembroId { get; set; }
-        public int ClaseId { get; set; }
-        public DateTime Fecha { get; set; }
+        public int Dni { get; set; }
+        public int? ClaseId { get; set; }
+        public int Metodo { get; set; }
     }
+
 }

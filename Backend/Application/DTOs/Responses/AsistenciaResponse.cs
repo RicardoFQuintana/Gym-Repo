@@ -11,11 +11,12 @@ namespace Application.DTOs.Responses
     {
         public int Id { get; set; }
         public int MiembroId { get; set; }
-        public string MiembroNombre { get; set; }
-        public string MiembroApellido { get; set; }
+        public string? MiembroNombre { get; set; }
+        public string? MiembroApellido { get; set; }
+        public int? MiembroDni { get; set; }
         public int? ClaseId { get; set; }
-        public string ClaseNombre { get; set; }
+        public string? ClaseNombre { get; set; }
         public DateTime Fecha { get; set; }
-
+        public string Metodo { get; set; }
     }
 }

@@ -593,6 +593,8 @@ body.sidebar-active .content-wrapper {
 .trainer-viewport {
   overflow: hidden;
   width: 720px; /* 3 cards */
+  height: 250px;
+  align-content: center;
 }
 
 .trainer-cards {
@@ -981,6 +983,7 @@ body.sidebar-active .content-wrapper {
   border-radius: 10px;
   padding: 30px 30px 90px 30px;
   width: 260px;
+  height: 320px;
   text-align: center;
   position: relative;
   box-shadow: 0 4px 8px var(--card-shadow);
@@ -1043,10 +1046,19 @@ body.sidebar-active .content-wrapper {
   justify-content: center;
 }
 
+.plans-viewport {
+  overflow: hidden;
+  width: 1000px;
+  height: 350px;
+  align-content: center;
+}
+
 /* Carrusel horizontal */
 .plans-grid {
   overflow: hidden;
   transition: transform 0.4s ease;
+  height: 350px;
+  align-content: center;
 }
 
 

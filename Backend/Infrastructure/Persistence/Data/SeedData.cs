@@ -13,6 +13,7 @@ namespace Infrastructure.Persistence.Data
     {
         public static void AplicarDatos(this ModelBuilder modelBuilder)
         {
+
             var miembros = new List<Miembro>();
             var membresias = new List<Membresia>();
             var pagos = new List<Pago>();
@@ -121,7 +122,8 @@ namespace Infrastructure.Persistence.Data
                     Id = idAsistencia,
                     MiembroId = idMiembro,
                     ClaseId = claseId,
-                    Fecha = new DateTime(2025, 2, 5).AddDays(idMiembro % 10)
+                    Fecha = new DateTime(2025, 2, 5).AddDays(idMiembro % 10),
+                    Metodo = (Domain.Enums.MetodoAsistencia)(idMiembro % 3)
                 });
 
                 // incrementar IDs

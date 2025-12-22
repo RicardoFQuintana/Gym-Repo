@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Cambios : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,6 +45,22 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Descuento", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Empleados",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Usuario = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Rol = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Activo = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Empleados", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -151,7 +167,8 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MiembroId = table.Column<int>(type: "int", nullable: false),
                     ClaseId = table.Column<int>(type: "int", nullable: true),
-                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Metodo = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -291,15 +308,20 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Empleados",
+                columns: new[] { "Id", "Activo", "PasswordHash", "Rol", "Usuario" },
+                values: new object[] { 1, true, "$2a$12$DuwymARFebDA7JnbmuknHuxr78z6uUj5cSvtnqfEwo1Ydawp.fgfm", "Admin", "admin" });
+
+            migrationBuilder.InsertData(
                 table: "Entrenador",
                 columns: new[] { "Id", "Apellido", "Direccion", "Dni", "FechaNacimiento", "Nombre", "Telefono", "UrlCertificado", "UrlFoto" },
                 values: new object[,]
                 {
-                    { 1, "Pérez", null, 42151500, null, "Pablo", null, null, null },
-                    { 2, "Fernandez", null, 29525462, null, "María", null, null, null },
-                    { 3, "García", null, 38252551, null, "Lucas", null, null, null },
-                    { 4, "González", null, 38962541, null, "Carla", null, null, null },
-                    { 5, "Martínez", null, 40001555, null, "Diego", null, null, null }
+                    { 1, "Pérez", null, 42151500, null, "Pablo", null, null, "https://randomuser.me/api/portraits/men/30.jpg" },
+                    { 2, "Fernandez", null, 29525462, null, "María", null, null, "https://randomuser.me/api/portraits/women/30.jpg" },
+                    { 3, "García", null, 38252551, null, "Lucas", null, null, "https://randomuser.me/api/portraits/men/31.jpg" },
+                    { 4, "González", null, 38962541, null, "Carla", null, null, "https://randomuser.me/api/portraits/women/31.jpg" },
+                    { 5, "Martínez", null, 40001555, null, "Diego", null, null, "https://randomuser.me/api/portraits/men/32.jpg" }
                 });
 
             migrationBuilder.InsertData(
@@ -330,63 +352,63 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Apellido", "DescuentoId", "Direccion", "Dni", "EntrenadorId", "FechaNacimiento", "Nombre", "Telefono", "UrlFoto" },
                 values: new object[,]
                 {
-                    { 1, "Gómez", 1, "Calle 101", 41000001, null, new DateTime(1991, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Juan", 110000001, null },
-                    { 2, "Ramírez", 2, "Calle 102", 41000002, null, new DateTime(1992, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lucía", 110000002, null },
-                    { 3, "Fernández", 3, "Calle 103", 41000003, null, new DateTime(1992, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Carlos", 110000003, null },
-                    { 4, "López", 1, "Calle 104", 41000004, null, new DateTime(1993, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mariana", 110000004, null },
-                    { 5, "Pérez", 2, "Calle 105", 41000005, null, new DateTime(1994, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Diego", 110000005, null },
-                    { 6, "Martínez", 3, "Calle 106", 41000006, null, new DateTime(1995, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sofía", 110000006, null },
-                    { 7, "García", 1, "Calle 107", 41000007, null, new DateTime(1996, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Martín", 110000007, null },
-                    { 8, "Sosa", 2, "Calle 108", 41000008, null, new DateTime(1997, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Camila", 110000008, null },
-                    { 9, "Vargas", 3, "Calle 109", 41000009, null, new DateTime(1998, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Federico", 110000009, null },
-                    { 10, "Silva", 1, "Calle 110", 41000010, null, new DateTime(1999, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Valentina", 110000010, null },
-                    { 11, "Rodríguez", 2, "Calle 111", 41000011, null, new DateTime(2000, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Gonzalo", 110000011, null },
-                    { 12, "Torres", 3, "Calle 112", 41000012, null, new DateTime(2001, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Carolina", 110000012, null },
-                    { 13, "Alvarez", 1, "Calle 113", 41000013, null, new DateTime(2002, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Andrés", 110000013, null },
-                    { 14, "Molina", 2, "Calle 114", 41000014, null, new DateTime(2003, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Florencia", 110000014, null },
-                    { 15, "Herrera", 3, "Calle 115", 41000015, null, new DateTime(2004, 12, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "Pablo", 110000015, null },
-                    { 16, "Rossi", 1, "Calle 116", 41000016, null, new DateTime(2005, 12, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "Agustina", 110000016, null },
-                    { 17, "Domínguez", 2, "Calle 117", 41000017, null, new DateTime(2006, 12, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sebastián", 110000017, null },
-                    { 18, "Ruiz", 3, "Calle 118", 41000018, null, new DateTime(2007, 12, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ana", 110000018, null },
-                    { 19, "Ortiz", 1, "Calle 119", 41000019, null, new DateTime(2008, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tomás", 110000019, null },
-                    { 20, "Iglesias", 2, "Calle 120", 41000020, null, new DateTime(2009, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), "Laura", 110000020, null },
-                    { 21, "Castro", 3, "Calle 121", 41000021, null, new DateTime(2010, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ricardo", 110000021, null },
-                    { 22, "Díaz", 1, "Calle 122", 41000022, null, new DateTime(2011, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), "Gabriela", 110000022, null },
-                    { 23, "Páez", 2, "Calle 123", 41000023, null, new DateTime(2012, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "Nicolás", 110000023, null },
-                    { 24, "Suárez", 3, "Calle 124", 41000024, null, new DateTime(2013, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sabrina", 110000024, null },
-                    { 25, "Méndez", 1, "Calle 125", 41000025, null, new DateTime(2014, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bruno", 110000025, null }
+                    { 1, "Gómez", 1, "Calle 101", 41000001, null, new DateTime(1991, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Juan", 110000001, "https://randomuser.me/api/portraits/men/0.jpg" },
+                    { 2, "Ramírez", 2, "Calle 102", 41000002, null, new DateTime(1992, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lucía", 110000002, "https://randomuser.me/api/portraits/men/1.jpg" },
+                    { 3, "Fernández", 3, "Calle 103", 41000003, null, new DateTime(1992, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Carlos", 110000003, "https://randomuser.me/api/portraits/men/2.jpg" },
+                    { 4, "López", 1, "Calle 104", 41000004, null, new DateTime(1993, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mariana", 110000004, "https://randomuser.me/api/portraits/men/3.jpg" },
+                    { 5, "Pérez", 2, "Calle 105", 41000005, null, new DateTime(1994, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Diego", 110000005, "https://randomuser.me/api/portraits/men/4.jpg" },
+                    { 6, "Martínez", 3, "Calle 106", 41000006, null, new DateTime(1995, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sofía", 110000006, "https://randomuser.me/api/portraits/men/5.jpg" },
+                    { 7, "García", 1, "Calle 107", 41000007, null, new DateTime(1996, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Martín", 110000007, "https://randomuser.me/api/portraits/men/6.jpg" },
+                    { 8, "Sosa", 2, "Calle 108", 41000008, null, new DateTime(1997, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Camila", 110000008, "https://randomuser.me/api/portraits/men/7.jpg" },
+                    { 9, "Vargas", 3, "Calle 109", 41000009, null, new DateTime(1998, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Federico", 110000009, "https://randomuser.me/api/portraits/men/8.jpg" },
+                    { 10, "Silva", 1, "Calle 110", 41000010, null, new DateTime(1999, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Valentina", 110000010, "https://randomuser.me/api/portraits/men/9.jpg" },
+                    { 11, "Rodríguez", 2, "Calle 111", 41000011, null, new DateTime(2000, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Gonzalo", 110000011, "https://randomuser.me/api/portraits/men/10.jpg" },
+                    { 12, "Torres", 3, "Calle 112", 41000012, null, new DateTime(2001, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Carolina", 110000012, "https://randomuser.me/api/portraits/men/11.jpg" },
+                    { 13, "Alvarez", 1, "Calle 113", 41000013, null, new DateTime(2002, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Andrés", 110000013, "https://randomuser.me/api/portraits/men/12.jpg" },
+                    { 14, "Molina", 2, "Calle 114", 41000014, null, new DateTime(2003, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Florencia", 110000014, "https://randomuser.me/api/portraits/men/13.jpg" },
+                    { 15, "Herrera", 3, "Calle 115", 41000015, null, new DateTime(2004, 12, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "Pablo", 110000015, "https://randomuser.me/api/portraits/men/14.jpg" },
+                    { 16, "Rossi", 1, "Calle 116", 41000016, null, new DateTime(2005, 12, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "Agustina", 110000016, "https://randomuser.me/api/portraits/men/15.jpg" },
+                    { 17, "Domínguez", 2, "Calle 117", 41000017, null, new DateTime(2006, 12, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sebastián", 110000017, "https://randomuser.me/api/portraits/men/16.jpg" },
+                    { 18, "Ruiz", 3, "Calle 118", 41000018, null, new DateTime(2007, 12, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ana", 110000018, "https://randomuser.me/api/portraits/men/17.jpg" },
+                    { 19, "Ortiz", 1, "Calle 119", 41000019, null, new DateTime(2008, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tomás", 110000019, "https://randomuser.me/api/portraits/men/18.jpg" },
+                    { 20, "Iglesias", 2, "Calle 120", 41000020, null, new DateTime(2009, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), "Laura", 110000020, "https://randomuser.me/api/portraits/men/19.jpg" },
+                    { 21, "Castro", 3, "Calle 121", 41000021, null, new DateTime(2010, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ricardo", 110000021, "https://randomuser.me/api/portraits/men/20.jpg" },
+                    { 22, "Díaz", 1, "Calle 122", 41000022, null, new DateTime(2011, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), "Gabriela", 110000022, "https://randomuser.me/api/portraits/men/21.jpg" },
+                    { 23, "Páez", 2, "Calle 123", 41000023, null, new DateTime(2012, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "Nicolás", 110000023, "https://randomuser.me/api/portraits/men/22.jpg" },
+                    { 24, "Suárez", 3, "Calle 124", 41000024, null, new DateTime(2013, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sabrina", 110000024, "https://randomuser.me/api/portraits/men/23.jpg" },
+                    { 25, "Méndez", 1, "Calle 125", 41000025, null, new DateTime(2014, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bruno", 110000025, "https://randomuser.me/api/portraits/men/24.jpg" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Asistencia",
-                columns: new[] { "Id", "ClaseId", "Fecha", "MiembroId" },
+                columns: new[] { "Id", "ClaseId", "Fecha", "Metodo", "MiembroId" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2025, 2, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
-                    { 2, 2, new DateTime(2025, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 },
-                    { 3, 3, new DateTime(2025, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 3 },
-                    { 4, 4, new DateTime(2025, 2, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 4 },
-                    { 5, 5, new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 5 },
-                    { 6, 6, new DateTime(2025, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 6 },
-                    { 7, 1, new DateTime(2025, 2, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 7 },
-                    { 8, 2, new DateTime(2025, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 8 },
-                    { 9, 3, new DateTime(2025, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 9 },
-                    { 10, 4, new DateTime(2025, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 10 },
-                    { 11, 5, new DateTime(2025, 2, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 11 },
-                    { 12, 6, new DateTime(2025, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 12 },
-                    { 13, 1, new DateTime(2025, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 13 },
-                    { 14, 2, new DateTime(2025, 2, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 14 },
-                    { 15, 3, new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 15 },
-                    { 16, 4, new DateTime(2025, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 16 },
-                    { 17, 5, new DateTime(2025, 2, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 17 },
-                    { 18, 6, new DateTime(2025, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 18 },
-                    { 19, 1, new DateTime(2025, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 19 },
-                    { 20, 2, new DateTime(2025, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 20 },
-                    { 21, 3, new DateTime(2025, 2, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 21 },
-                    { 22, 4, new DateTime(2025, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 22 },
-                    { 23, 5, new DateTime(2025, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 23 },
-                    { 24, 6, new DateTime(2025, 2, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 24 },
-                    { 25, 1, new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 25 }
+                    { 1, 1, new DateTime(2025, 2, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
+                    { 2, 2, new DateTime(2025, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 2 },
+                    { 3, 3, new DateTime(2025, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 3 },
+                    { 4, 4, new DateTime(2025, 2, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 4 },
+                    { 5, 5, new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 5 },
+                    { 6, 6, new DateTime(2025, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 6 },
+                    { 7, 1, new DateTime(2025, 2, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 7 },
+                    { 8, 2, new DateTime(2025, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 8 },
+                    { 9, 3, new DateTime(2025, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 9 },
+                    { 10, 4, new DateTime(2025, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 10 },
+                    { 11, 5, new DateTime(2025, 2, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 11 },
+                    { 12, 6, new DateTime(2025, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 12 },
+                    { 13, 1, new DateTime(2025, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 13 },
+                    { 14, 2, new DateTime(2025, 2, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 14 },
+                    { 15, 3, new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 15 },
+                    { 16, 4, new DateTime(2025, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 16 },
+                    { 17, 5, new DateTime(2025, 2, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 17 },
+                    { 18, 6, new DateTime(2025, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 18 },
+                    { 19, 1, new DateTime(2025, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 19 },
+                    { 20, 2, new DateTime(2025, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 20 },
+                    { 21, 3, new DateTime(2025, 2, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 21 },
+                    { 22, 4, new DateTime(2025, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 22 },
+                    { 23, 5, new DateTime(2025, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 23 },
+                    { 24, 6, new DateTime(2025, 2, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 24 },
+                    { 25, 1, new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 25 }
                 });
 
             migrationBuilder.InsertData(
@@ -517,9 +539,6 @@ namespace Infrastructure.Migrations
                     { 25, "Pago registrado el 2025-01-26 por Bruno Méndez. Monto: $15.000. Método: QR.", new DateTime(2025, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 25 }
                 });
 
-            migrationBuilder.Sql("ALTER SEQUENCE [EntrenadorSequence] RESTART WITH 6;");
-            migrationBuilder.Sql("ALTER SEQUENCE [MiembroSequence] RESTART WITH 26;");
-
             migrationBuilder.CreateIndex(
                 name: "IX_Actividad_Nombre",
                 table: "Actividad",
@@ -550,6 +569,12 @@ namespace Infrastructure.Migrations
                 name: "IX_Descuento_Nombre",
                 table: "Descuento",
                 column: "Nombre",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Empleados_Usuario",
+                table: "Empleados",
+                column: "Usuario",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -612,6 +637,9 @@ namespace Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Asistencia");
+
+            migrationBuilder.DropTable(
+                name: "Empleados");
 
             migrationBuilder.DropTable(
                 name: "Inscripcion");

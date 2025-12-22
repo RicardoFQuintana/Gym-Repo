@@ -23,6 +23,7 @@ namespace Infrastructure.Persistence
         public DbSet<Pago> Pagos { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TipoMembresia> TiposMembresia { get; set; }
+        public DbSet<Empleado> Empleados { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {

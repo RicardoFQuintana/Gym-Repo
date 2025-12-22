@@ -14,7 +14,7 @@ namespace Application.DTOs.Responses
         public int TipoMembresiaId { get; set; }
         public DateTime FechaInicio { get; set; }
         public DateTime FechaVencimiento { get; set; }
-        public ICollection<PagoResponse> Pagos { get; set; }
+        public ICollection<PagoResponse>? Pagos { get; set; }
 
     }
 }
