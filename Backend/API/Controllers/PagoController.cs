@@ -19,31 +19,16 @@ namespace API.Controllers
 
         // POST => /api/Pago
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-
-        // POST => /api/Pago
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> RegistrarPago([FromBody] PagoRequest request)
         {
+            if (request == null)
+                return BadRequest(new ApiError { message = "Datos inválidos" });
+
+            if (request.Monto <= 0)
+                return BadRequest(new ApiError { message = "Monto inválido" });
+
             try
             {
-                if (request == null)
-                    return BadRequest(new ApiError{ message = "Los datos del pago no fueron enviados." });
-
-                if (request.MembresiaId <= 0)
-                    return BadRequest(new ApiError { message = "Debe indicar una membresía válida." });
-
-                if (request.Monto <= 0)
-                    return BadRequest(new ApiError { message = "El monto debe ser mayor a cero." });
-
                 var pago = await _service.Add(request);
                 return StatusCode(201, pago);
             }
@@ -51,9 +36,9 @@ namespace API.Controllers
             {
                 return NotFound(new ApiError { message = ex.Message });
             }
-            catch (Exception ex)
+            catch (BadRequestException ex)
             {
-                return StatusCode(500, new ApiError { message = $"Error inesperado al registrar el pago: {ex.Message}" });
+                return BadRequest(new ApiError { message = ex.Message });
             }
         }
 

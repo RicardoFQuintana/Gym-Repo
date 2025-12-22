@@ -37,6 +37,13 @@ namespace API.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var asistencias = await _service.GetAll();
+            return Ok(asistencias);
+        }
+
         [HttpGet("by-miembro")]
         public async Task<IActionResult> GetByMiembro(int id)
         {
@@ -72,8 +79,8 @@ namespace API.Controllers
             }
         }
 
-        [HttpPatch]
-        public async Task<IActionResult> Update(int id, AsistenciaUpdateRequest request)
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] AsistenciaUpdateRequest request)
         {
             try
             {

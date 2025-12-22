@@ -59,6 +59,7 @@ namespace Application.UseCases
             {
                 Id = membresia.Id,
                 MiembroId = membresia.MiembroId,
+                TipoMembresiaId = membresia.TipoMembresiaId,
                 FechaInicio = membresia.FechaInicio,
                 FechaVencimiento = membresia.FechaVencimiento,
                 Pagos = membresia.Pagos.Select(p => new PagoResponse

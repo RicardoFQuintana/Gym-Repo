@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251218140530_ModificacionAsistencia")]
-    partial class ModificacionAsistencia
+    [Migration("20251222122508_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,6 +92,9 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Metodo")
+                        .HasColumnType("int");
+
                     b.Property<int>("MiembroId")
                         .HasColumnType("int");
 
@@ -109,6 +112,7 @@ namespace Infrastructure.Migrations
                             Id = 1,
                             ClaseId = 1,
                             Fecha = new DateTime(2025, 2, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 1,
                             MiembroId = 1
                         },
                         new
@@ -116,6 +120,7 @@ namespace Infrastructure.Migrations
                             Id = 2,
                             ClaseId = 2,
                             Fecha = new DateTime(2025, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 2,
                             MiembroId = 2
                         },
                         new
@@ -123,6 +128,7 @@ namespace Infrastructure.Migrations
                             Id = 3,
                             ClaseId = 3,
                             Fecha = new DateTime(2025, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 0,
                             MiembroId = 3
                         },
                         new
@@ -130,6 +136,7 @@ namespace Infrastructure.Migrations
                             Id = 4,
                             ClaseId = 4,
                             Fecha = new DateTime(2025, 2, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 1,
                             MiembroId = 4
                         },
                         new
@@ -137,6 +144,7 @@ namespace Infrastructure.Migrations
                             Id = 5,
                             ClaseId = 5,
                             Fecha = new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 2,
                             MiembroId = 5
                         },
                         new
@@ -144,6 +152,7 @@ namespace Infrastructure.Migrations
                             Id = 6,
                             ClaseId = 6,
                             Fecha = new DateTime(2025, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 0,
                             MiembroId = 6
                         },
                         new
@@ -151,6 +160,7 @@ namespace Infrastructure.Migrations
                             Id = 7,
                             ClaseId = 1,
                             Fecha = new DateTime(2025, 2, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 1,
                             MiembroId = 7
                         },
                         new
@@ -158,6 +168,7 @@ namespace Infrastructure.Migrations
                             Id = 8,
                             ClaseId = 2,
                             Fecha = new DateTime(2025, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 2,
                             MiembroId = 8
                         },
                         new
@@ -165,6 +176,7 @@ namespace Infrastructure.Migrations
                             Id = 9,
                             ClaseId = 3,
                             Fecha = new DateTime(2025, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 0,
                             MiembroId = 9
                         },
                         new
@@ -172,6 +184,7 @@ namespace Infrastructure.Migrations
                             Id = 10,
                             ClaseId = 4,
                             Fecha = new DateTime(2025, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 1,
                             MiembroId = 10
                         },
                         new
@@ -179,6 +192,7 @@ namespace Infrastructure.Migrations
                             Id = 11,
                             ClaseId = 5,
                             Fecha = new DateTime(2025, 2, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 2,
                             MiembroId = 11
                         },
                         new
@@ -186,6 +200,7 @@ namespace Infrastructure.Migrations
                             Id = 12,
                             ClaseId = 6,
                             Fecha = new DateTime(2025, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 0,
                             MiembroId = 12
                         },
                         new
@@ -193,6 +208,7 @@ namespace Infrastructure.Migrations
                             Id = 13,
                             ClaseId = 1,
                             Fecha = new DateTime(2025, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 1,
                             MiembroId = 13
                         },
                         new
@@ -200,6 +216,7 @@ namespace Infrastructure.Migrations
                             Id = 14,
                             ClaseId = 2,
                             Fecha = new DateTime(2025, 2, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 2,
                             MiembroId = 14
                         },
                         new
@@ -207,6 +224,7 @@ namespace Infrastructure.Migrations
                             Id = 15,
                             ClaseId = 3,
                             Fecha = new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 0,
                             MiembroId = 15
                         },
                         new
@@ -214,6 +232,7 @@ namespace Infrastructure.Migrations
                             Id = 16,
                             ClaseId = 4,
                             Fecha = new DateTime(2025, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 1,
                             MiembroId = 16
                         },
                         new
@@ -221,6 +240,7 @@ namespace Infrastructure.Migrations
                             Id = 17,
                             ClaseId = 5,
                             Fecha = new DateTime(2025, 2, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 2,
                             MiembroId = 17
                         },
                         new
@@ -228,6 +248,7 @@ namespace Infrastructure.Migrations
                             Id = 18,
                             ClaseId = 6,
                             Fecha = new DateTime(2025, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 0,
                             MiembroId = 18
                         },
                         new
@@ -235,6 +256,7 @@ namespace Infrastructure.Migrations
                             Id = 19,
                             ClaseId = 1,
                             Fecha = new DateTime(2025, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 1,
                             MiembroId = 19
                         },
                         new
@@ -242,6 +264,7 @@ namespace Infrastructure.Migrations
                             Id = 20,
                             ClaseId = 2,
                             Fecha = new DateTime(2025, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 2,
                             MiembroId = 20
                         },
                         new
@@ -249,6 +272,7 @@ namespace Infrastructure.Migrations
                             Id = 21,
                             ClaseId = 3,
                             Fecha = new DateTime(2025, 2, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 0,
                             MiembroId = 21
                         },
                         new
@@ -256,6 +280,7 @@ namespace Infrastructure.Migrations
                             Id = 22,
                             ClaseId = 4,
                             Fecha = new DateTime(2025, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 1,
                             MiembroId = 22
                         },
                         new
@@ -263,6 +288,7 @@ namespace Infrastructure.Migrations
                             Id = 23,
                             ClaseId = 5,
                             Fecha = new DateTime(2025, 2, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 2,
                             MiembroId = 23
                         },
                         new
@@ -270,6 +296,7 @@ namespace Infrastructure.Migrations
                             Id = 24,
                             ClaseId = 6,
                             Fecha = new DateTime(2025, 2, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 0,
                             MiembroId = 24
                         },
                         new
@@ -277,6 +304,7 @@ namespace Infrastructure.Migrations
                             Id = 25,
                             ClaseId = 1,
                             Fecha = new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Metodo = 1,
                             MiembroId = 25
                         });
                 });
@@ -428,6 +456,50 @@ namespace Infrastructure.Migrations
                             Id = 3,
                             Nombre = "Grupo Familiar",
                             Porcentaje = 0.20m
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.Empleado", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Activo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Rol")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Usuario")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Usuario")
+                        .IsUnique();
+
+                    b.ToTable("Empleados", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Activo = true,
+                            PasswordHash = "$2a$12$DuwymARFebDA7JnbmuknHuxr78z6uUj5cSvtnqfEwo1Ydawp.fgfm",
+                            Rol = "Admin",
+                            Usuario = "admin"
                         });
                 });
 
@@ -1968,8 +2040,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Pago", b =>
                 {
-                    b.Navigation("Ticket")
-                        .IsRequired();
+                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("Domain.Entities.TipoMembresia", b =>

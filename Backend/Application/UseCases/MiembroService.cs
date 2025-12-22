@@ -93,7 +93,7 @@ namespace Application.UseCases
                 Telefono = miembro.Telefono,
                 FechaNacimiento = miembro.FechaNacimiento,
                 UrlFoto = miembro.UrlFoto,
-                Descuento = miembro.Descuento.Nombre,
+                Descuento = miembro.Descuento.Id,
 
                 Membresia = new MembresiaResponse
                 {
@@ -107,7 +107,7 @@ namespace Application.UseCases
                         Fecha = p.Fecha,
                         MetodoPago = p.MetodoPago.ToString(),
 
-                        Ticket = new TicketResponse
+                        Ticket = p.Ticket == null ? null : new TicketResponse
                         {
                             Id = p.Ticket.Id,
                             FechaEmision = p.Ticket.FechaEmision,
@@ -135,7 +135,7 @@ namespace Application.UseCases
                 Telefono = m.Telefono,
                 FechaNacimiento = m.FechaNacimiento,
                 UrlFoto = m.UrlFoto,
-                Descuento = m.Descuento.Nombre,
+                Descuento = m.Descuento.Id,
 
 
                 Membresia = new MembresiaResponse
@@ -151,14 +151,6 @@ namespace Application.UseCases
                         Monto = p.Monto,
                         Fecha = p.Fecha,
                         MetodoPago = p.MetodoPago.ToString(),
-
-                        Ticket = new TicketResponse
-                        {
-                            Id = p.Ticket.Id,
-                            FechaEmision = p.Ticket.FechaEmision,
-                            Detalle = p.Ticket.Detalle
-                        }
-
                     }).ToList()
                 },
 
@@ -183,7 +175,7 @@ namespace Application.UseCases
                 Telefono = miembro.Telefono,
                 FechaNacimiento = miembro.FechaNacimiento,
                 UrlFoto = miembro.UrlFoto,
-                Descuento = miembro.Descuento.Nombre,
+                Descuento = miembro.Descuento.Id,
 
                 Membresia = new MembresiaResponse
                 {
@@ -199,7 +191,54 @@ namespace Application.UseCases
                         Fecha = p.Fecha,
                         MetodoPago = p.MetodoPago.ToString(),
 
-                        Ticket = new TicketResponse
+                        Ticket = p.Ticket == null ? null : new TicketResponse
+                        {
+                            Id = p.Ticket.Id,
+                            FechaEmision = p.Ticket.FechaEmision,
+                            Detalle = p.Ticket.Detalle
+                        }
+
+                    }).ToList()
+                },
+            };
+
+            return response;
+        }
+
+        public async Task<MiembroResponse> GetByDNI(int DNI)
+        {
+            var miembro = await _query.GetByDNI(DNI);
+
+            if (miembro == null)
+                throw new NotFoundException("Miembro no encontrado");
+
+            var response = new MiembroResponse
+            {
+                Id = miembro.Id,
+                Nombre = miembro.Nombre,
+                Apellido = miembro.Apellido,
+                Dni = miembro.Dni,
+                Direccion = miembro.Direccion,
+                Telefono = miembro.Telefono,
+                FechaNacimiento = miembro.FechaNacimiento,
+                UrlFoto = miembro.UrlFoto,
+                Descuento = miembro.Descuento.Id,
+
+                Membresia = new MembresiaResponse
+                {
+                    Id = miembro.Membresia.Id,
+                    MiembroId = miembro.Membresia.MiembroId,
+                    TipoMembresiaId = miembro.Membresia.TipoMembresiaId,
+                    FechaInicio = miembro.Membresia.FechaInicio,
+                    FechaVencimiento = miembro.Membresia.FechaVencimiento,
+                    Pagos = miembro.Membresia.Pagos.Select(p => new PagoResponse
+                    {
+                        Id = p.Id,
+                        Monto = p.Monto,
+                        Fecha = p.Fecha,
+                        MetodoPago = p.MetodoPago.ToString(),
+
+                        Ticket = p.Ticket == null ? null : new TicketResponse
                         {
                             Id = p.Ticket.Id,
                             FechaEmision = p.Ticket.FechaEmision,
@@ -239,7 +278,7 @@ namespace Application.UseCases
                 Telefono = miembro.Telefono,
                 FechaNacimiento = miembro.FechaNacimiento,
                 UrlFoto = miembro.UrlFoto,
-                Descuento = miembro.Descuento.Nombre,
+                Descuento = miembro.Descuento.Id,
 
                 Membresia = new MembresiaResponse
                 {
@@ -253,9 +292,9 @@ namespace Application.UseCases
                         Fecha = p.Fecha,
                         MetodoPago = p.MetodoPago.ToString(),
 
-                        Ticket = new TicketResponse
+                        Ticket = p.Ticket == null ? null : new TicketResponse
                         {
-                            Id = p.Ticket.Id,
+                            Id = p.Ticket.Id ,
                             FechaEmision = p.Ticket.FechaEmision,
                             Detalle = p.Ticket.Detalle
                         }

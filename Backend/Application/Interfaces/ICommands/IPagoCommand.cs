@@ -1,11 +1,11 @@
-﻿using Application.DTOs.Requests;
-using Application.DTOs.Responses;
+﻿using Application.DTOs.Responses;
+using Domain.Entities;
 using System.Threading.Tasks;
 
 namespace Application.Interfaces.ICommands
 {
     public interface IPagoCommand
     {
-        Task<PagoResponse> AddAsync(PagoRequest request);
+        Task<Pago> AddAsync(Pago pago);
     }
 }

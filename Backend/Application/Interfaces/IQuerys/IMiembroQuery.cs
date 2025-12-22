@@ -12,5 +12,6 @@ namespace Application.Interfaces.IQuerys
         Task<Miembro> GetById(int id);
         Task<List<Miembro>> GetAll();
         Task<bool> ExisteDni(int dni);
+        Task<Miembro> GetByDNI(int DNI);
     }
 }

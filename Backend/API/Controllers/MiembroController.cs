@@ -55,6 +55,21 @@ namespace API.Controllers
 
         }
 
+        [HttpGet("DNI/{DNI}")]
+        public async Task<IActionResult> GetByDNI(int DNI)
+        {
+            try
+            {
+                var miembro = await _service.GetByDNI(DNI);
+                return Ok(miembro);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+
+        }
+
         [HttpPatch("{id}")]
 
         public async Task<IActionResult> Update(int id, [FromBody] MiembroUpdateRequest request)

@@ -13,6 +13,8 @@ namespace Application.Interfaces.IServices
     {
         Task Add(AsistenciaAddRequest request);
         Task<AsistenciaResponse> GetById(int id);
+
+        Task<List<AsistenciaResponse>> GetAll();
         Task<List<AsistenciaResponse>> GetByMiembro(int miembroId);
         Task<List<AsistenciaResponse>> GetByClase(int claseId);
         Task<List<AsistenciaResponse>> GetByClaseYFecha(int claseId, DateTime fecha);

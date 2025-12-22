@@ -21,7 +21,7 @@ namespace Infrastructure.Queries
 
         public async Task<Membresia> GetById(int id)
         {
-            var membresia = await _context.Membresias.FirstOrDefaultAsync(m => m.Id == id);
+            var membresia = await _context.Membresias.Include(m => m.Miembro).FirstOrDefaultAsync(m => m.Id == id);
 
             return membresia;
         }

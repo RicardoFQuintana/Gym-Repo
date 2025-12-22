@@ -101,14 +101,7 @@ function initializeComponentInteractivity() {
             }
         });
     }
-    
-    // ===== USUARIO ADMIN INICIAL =====
-    if (!localStorage.getItem("users")) {
-    const users = [
-        { username: "admin", password: "admin123", role: "admin" }
-    ];
-    localStorage.setItem("users", JSON.stringify(users));
-    }
+
 
     // ===== ELEMENTOS =====
     const modalLogin = document.getElementById("modalLogin");
@@ -125,7 +118,11 @@ function initializeComponentInteractivity() {
 
     // ===== UTILIDADES =====
     function isLogged() {
-    return !!localStorage.getItem("currentUser");
+      return !!localStorage.getItem("currentUser");
+    }
+
+    function getCurrentUser() {
+      return JSON.parse(localStorage.getItem("currentUser"));
     }
 
     function openLogin(force = false) {
@@ -168,21 +165,24 @@ function initializeComponentInteractivity() {
     });
 
     // ===== LOGIN =====
-    loginBtn.addEventListener("click", () => {
-    const username = usernameInput.value.trim();
+    loginBtn.addEventListener("click", async () => {
+    const usuario = usernameInput.value.trim();
     const password = passwordInput.value.trim();
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const user = users.find(
-        u => u.username === username && u.password === password
-    );
+    const res = await fetch("https://localhost:7271/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ usuario, password })
+    });
 
-    if (!user) {
-        alert("Usuario o contraseña incorrectos");
-        return;
+    if (!res.ok) {
+      alert("Usuario o contraseña incorrectos");
+      return;
     }
 
-    localStorage.setItem("currentUser", JSON.stringify(user));
+    const data = await res.json();
+
+    localStorage.setItem("currentUser", JSON.stringify(data));
     closeLoginModal();
     location.reload();
     });

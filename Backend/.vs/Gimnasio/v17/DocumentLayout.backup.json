@@ -1,42 +1,221 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\",
+  "WorkspaceRootPath": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\application\\usecases\\miembroservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\usecases\\miembroservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\persistence\\configurations\\empleadoconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\configurations\\empleadoconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\application\\dtos\\responses\\miembroresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\dtos\\responses\\miembroresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\persistence\\data\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\data\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\application\\dtos\\responses\\membresiaresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\dtos\\responses\\membresiaresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\persistence\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\application\\usecases\\pagoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\usecases\\pagoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\persistence\\configurations\\descuentoconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\configurations\\descuentoconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\application\\usecases\\membresiaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\usecases\\membresiaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\persistence\\configurations\\actividadconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\configurations\\actividadconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\infrastructure\\queries\\miembroquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\queries\\usuarioquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\queries\\usuarioquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\commands\\logincommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\commands\\logincommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\domain\\entities\\empleado.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\empleado.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\dtos\\requests\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\dtos\\requests\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\dtos\\responses\\asistenciaresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\dtos\\responses\\asistenciaresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\usecases\\asistenciaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\usecases\\asistenciaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\usecases\\loginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\usecases\\loginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22B14A6D-C2FD-4FEE-84A7-70FC3841B236}|API\\API.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22B14A6D-C2FD-4FEE-84A7-70FC3841B236}|API\\API.csproj|solutionrelative:api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22B14A6D-C2FD-4FEE-84A7-70FC3841B236}|API\\API.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22B14A6D-C2FD-4FEE-84A7-70FC3841B236}|API\\API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\interfaces\\iquerys\\iusuarioquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\interfaces\\iquerys\\iusuarioquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\interfaces\\iservices\\iloginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\interfaces\\iservices\\iloginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\interfaces\\icommands\\ilogincommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\interfaces\\icommands\\ilogincommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22B14A6D-C2FD-4FEE-84A7-70FC3841B236}|API\\API.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\api\\controllers\\asistenciacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22B14A6D-C2FD-4FEE-84A7-70FC3841B236}|API\\API.csproj|solutionrelative:api\\controllers\\asistenciacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\dtos\\requests\\asistenciaupdaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\dtos\\requests\\asistenciaupdaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\dtos\\requests\\asistenciaaddrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\dtos\\requests\\asistenciaaddrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\domain\\enums\\metodoasistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|solutionrelative:domain\\enums\\metodoasistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\queries\\asistenciaquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\queries\\asistenciaquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\queries\\actividadquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\queries\\actividadquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\domain\\entities\\asistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\asistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\domain\\entities\\pago.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\pago.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\domain\\enums\\metodopago.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|solutionrelative:domain\\enums\\metodopago.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\domain\\enums\\tipodescuento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|solutionrelative:domain\\enums\\tipodescuento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\domain\\entities\\ticket.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\ticket.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\domain\\entities\\clase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\clase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\persistence\\configurations\\asistenciaconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\configurations\\asistenciaconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\persistence\\factory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\factory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\queries\\miembroquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\queries\\miembroquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{22B14A6D-C2FD-4FEE-84A7-70FC3841B236}|API\\API.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\api\\controllers\\miembrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\queries\\clasequery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\queries\\clasequery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\commands\\asistenciacommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\commands\\asistenciacommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\queries\\membresiaquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\queries\\membresiaquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\dtos\\responses\\apierror.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\dtos\\responses\\apierror.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\usecases\\pagoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\usecases\\pagoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22B14A6D-C2FD-4FEE-84A7-70FC3841B236}|API\\API.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\api\\controllers\\pagocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22B14A6D-C2FD-4FEE-84A7-70FC3841B236}|API\\API.csproj|solutionrelative:api\\controllers\\pagocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\dtos\\responses\\pagoresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\dtos\\responses\\pagoresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\usecases\\miembroservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\usecases\\miembroservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\dtos\\responses\\miembroresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\dtos\\responses\\miembroresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\dtos\\responses\\membresiaresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\dtos\\responses\\membresiaresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\dtos\\responses\\ticketresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\dtos\\responses\\ticketresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\usecases\\reporteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\usecases\\reporteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\exceptions\\badrequestexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\exceptions\\badrequestexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\commands\\pagocommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\commands\\pagocommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\interfaces\\icommands\\ipagocommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\interfaces\\icommands\\ipagocommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\infrastructure\\queries\\pagoquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\queries\\pagoquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22B14A6D-C2FD-4FEE-84A7-70FC3841B236}|API\\API.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\api\\controllers\\miembrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{22B14A6D-C2FD-4FEE-84A7-70FC3841B236}|API\\API.csproj|solutionrelative:api\\controllers\\miembrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\domain\\entities\\descuento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\descuento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\usecases\\membresiaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\usecases\\membresiaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|e:\\unaj\\ingenieria de software i\\integrador_grupal\\gimnasio\\backend\\infrastructure\\persistence\\factory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A3D7438D-AC78-4FAD-A323-F71BDB99E697}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\factory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\interfaces\\iservices\\imiembroservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\interfaces\\iservices\\imiembroservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\application\\interfaces\\iquerys\\imiembroquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DB9F9B6-598F-4186-A175-B8F96B699F19}|Application\\Application.csproj|solutionrelative:application\\interfaces\\iquerys\\imiembroquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|c:\\users\\54116\\desktop\\pc\\portfolio\\gym-repo\\backend\\domain\\entities\\descuento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A4FDB418-E1F7-4E31-9C6D-DAA7D67397F8}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\descuento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,116 +225,709 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PagoService.cs",
-              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\UseCases\\PagoService.cs",
-              "RelativeDocumentMoniker": "Application\\UseCases\\PagoService.cs",
-              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\UseCases\\PagoService.cs",
-              "RelativeToolTip": "Application\\UseCases\\PagoService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "LoginCommand.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Commands\\LoginCommand.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Commands\\LoginCommand.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Commands\\LoginCommand.cs",
+              "RelativeToolTip": "Infrastructure\\Commands\\LoginCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-17T04:41:14.838Z"
+              "WhenOpened": "2025-12-22T12:00:43.058Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "MiembroQuery.cs",
-              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Infrastructure\\Queries\\MiembroQuery.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\Queries\\MiembroQuery.cs",
-              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Infrastructure\\Queries\\MiembroQuery.cs",
-              "RelativeToolTip": "Infrastructure\\Queries\\MiembroQuery.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAACAAAAAaAAAAAAAAAA==",
+              "DocumentIndex": 12,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\API\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\API\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "API\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-17T04:39:41.44Z"
+              "WhenOpened": "2025-12-22T10:02:53.09Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MembresiaService.cs",
-              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\UseCases\\MembresiaService.cs",
-              "RelativeDocumentMoniker": "Application\\UseCases\\MembresiaService.cs",
-              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\UseCases\\MembresiaService.cs",
-              "RelativeToolTip": "Application\\UseCases\\MembresiaService.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAowDcAAAAwAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "LoginRequest.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Requests\\LoginRequest.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\Requests\\LoginRequest.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Requests\\LoginRequest.cs",
+              "RelativeToolTip": "Application\\DTOs\\Requests\\LoginRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-17T01:16:56.185Z"
+              "WhenOpened": "2025-12-22T10:04:14.606Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MembresiaResponse.cs",
-              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\DTOs\\Responses\\MembresiaResponse.cs",
-              "RelativeDocumentMoniker": "Application\\DTOs\\Responses\\MembresiaResponse.cs",
-              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\DTOs\\Responses\\MembresiaResponse.cs",
-              "RelativeToolTip": "Application\\DTOs\\Responses\\MembresiaResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 10,
+              "Title": "AsistenciaService.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\UseCases\\AsistenciaService.cs",
+              "RelativeDocumentMoniker": "Application\\UseCases\\AsistenciaService.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\UseCases\\AsistenciaService.cs",
+              "RelativeToolTip": "Application\\UseCases\\AsistenciaService.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAvwEMAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-16T18:44:40.334Z"
+              "WhenOpened": "2025-12-11T07:44:06.493Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "MiembroResponse.cs",
-              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\DTOs\\Responses\\MiembroResponse.cs",
-              "RelativeDocumentMoniker": "Application\\DTOs\\Responses\\MiembroResponse.cs",
-              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\DTOs\\Responses\\MiembroResponse.cs",
-              "RelativeToolTip": "Application\\DTOs\\Responses\\MiembroResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAgAAAAAAAAAA==",
+              "Title": "SeedData.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Persistence\\Data\\SeedData.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Data\\SeedData.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Persistence\\Data\\SeedData.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\Data\\SeedData.cs",
+              "ViewState": "AgIAAGQAAAAAAAAAAAAgwI0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-16T18:44:30.478Z"
+              "WhenOpened": "2025-12-20T19:12:58.713Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\API\\Program.cs",
+              "RelativeDocumentMoniker": "API\\Program.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\API\\Program.cs",
+              "RelativeToolTip": "API\\Program.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAAE8AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T12:06:33.745Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AsistenciaResponse.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Responses\\AsistenciaResponse.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\Responses\\AsistenciaResponse.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Responses\\AsistenciaResponse.cs",
+              "RelativeToolTip": "Application\\DTOs\\Responses\\AsistenciaResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBMAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T07:42:58.849Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "EmpleadoConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Persistence\\Configurations\\EmpleadoConfiguration.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Configurations\\EmpleadoConfiguration.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Persistence\\Configurations\\EmpleadoConfiguration.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\Configurations\\EmpleadoConfiguration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T10:27:41.464Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UsuarioQuery.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Queries\\UsuarioQuery.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Queries\\UsuarioQuery.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Queries\\UsuarioQuery.cs",
+              "RelativeToolTip": "Infrastructure\\Queries\\UsuarioQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T12:03:06.653Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Persistence\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Persistence\\AppDbContext.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\AppDbContext.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAiwAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T19:12:21.238Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DescuentoConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Persistence\\Configurations\\DescuentoConfiguration.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Configurations\\DescuentoConfiguration.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Persistence\\Configurations\\DescuentoConfiguration.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\Configurations\\DescuentoConfiguration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T12:17:51.444Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ActividadConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Persistence\\Configurations\\ActividadConfiguration.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Configurations\\ActividadConfiguration.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Persistence\\Configurations\\ActividadConfiguration.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\Configurations\\ActividadConfiguration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T10:27:10.305Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "IUsuarioQuery.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\Interfaces\\IQuerys\\IUsuarioQuery.cs",
+              "RelativeDocumentMoniker": "Application\\Interfaces\\IQuerys\\IUsuarioQuery.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\Interfaces\\IQuerys\\IUsuarioQuery.cs",
+              "RelativeToolTip": "Application\\Interfaces\\IQuerys\\IUsuarioQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T12:01:40.369Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ILoginService.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\Interfaces\\IServices\\ILoginService.cs",
+              "RelativeDocumentMoniker": "Application\\Interfaces\\IServices\\ILoginService.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\Interfaces\\IServices\\ILoginService.cs",
+              "RelativeToolTip": "Application\\Interfaces\\IServices\\ILoginService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T12:04:12.723Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "LoginService.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\UseCases\\LoginService.cs",
+              "RelativeDocumentMoniker": "Application\\UseCases\\LoginService.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\UseCases\\LoginService.cs",
+              "RelativeToolTip": "Application\\UseCases\\LoginService.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAewCMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T12:04:49.448Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Empleado.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Entities\\Empleado.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\Empleado.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Entities\\Empleado.cs",
+              "RelativeToolTip": "Domain\\Entities\\Empleado.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAwAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T10:02:21.562Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ILoginCommand.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\Interfaces\\ICommands\\ILoginCommand.cs",
+              "RelativeDocumentMoniker": "Application\\Interfaces\\ICommands\\ILoginCommand.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\Interfaces\\ICommands\\ILoginCommand.cs",
+              "RelativeToolTip": "Application\\Interfaces\\ICommands\\ILoginCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T12:00:12.524Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "AsistenciaQuery.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Queries\\AsistenciaQuery.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Queries\\AsistenciaQuery.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Queries\\AsistenciaQuery.cs",
+              "RelativeToolTip": "Infrastructure\\Queries\\AsistenciaQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T12:28:57.394Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "AsistenciaController.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\API\\Controllers\\AsistenciaController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\AsistenciaController.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\API\\Controllers\\AsistenciaController.cs",
+              "RelativeToolTip": "API\\Controllers\\AsistenciaController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T12:22:24.428Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "MetodoAsistencia.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Enums\\MetodoAsistencia.cs",
+              "RelativeDocumentMoniker": "Domain\\Enums\\MetodoAsistencia.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Enums\\MetodoAsistencia.cs",
+              "RelativeToolTip": "Domain\\Enums\\MetodoAsistencia.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T12:35:37.792Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "AsistenciaAddRequest.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Requests\\AsistenciaAddRequest.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\Requests\\AsistenciaAddRequest.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Requests\\AsistenciaAddRequest.cs",
+              "RelativeToolTip": "Application\\DTOs\\Requests\\AsistenciaAddRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T12:26:10.232Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ActividadQuery.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Queries\\ActividadQuery.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Queries\\ActividadQuery.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Queries\\ActividadQuery.cs",
+              "RelativeToolTip": "Infrastructure\\Queries\\ActividadQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T08:40:30.37Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "AsistenciaUpdateRequest.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Requests\\AsistenciaUpdateRequest.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\Requests\\AsistenciaUpdateRequest.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Requests\\AsistenciaUpdateRequest.cs",
+              "RelativeToolTip": "Application\\DTOs\\Requests\\AsistenciaUpdateRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T12:26:20.676Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Asistencia.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Entities\\Asistencia.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\Asistencia.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Entities\\Asistencia.cs",
+              "RelativeToolTip": "Domain\\Entities\\Asistencia.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T12:25:33.853Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Pago.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Entities\\Pago.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\Pago.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Entities\\Pago.cs",
+              "RelativeToolTip": "Domain\\Entities\\Pago.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T09:02:02.198Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "Factory.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Persistence\\Factory.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Factory.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Persistence\\Factory.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\Factory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-10T22:28:45.717Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Clase.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Entities\\Clase.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\Clase.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Entities\\Clase.cs",
+              "RelativeToolTip": "Domain\\Entities\\Clase.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAkwAwAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T12:36:05.463Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "AsistenciaConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Persistence\\Configurations\\AsistenciaConfiguration.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Configurations\\AsistenciaConfiguration.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Persistence\\Configurations\\AsistenciaConfiguration.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\Configurations\\AsistenciaConfiguration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T19:12:34.981Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "Ticket.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Entities\\Ticket.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\Ticket.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Entities\\Ticket.cs",
+              "RelativeToolTip": "Domain\\Entities\\Ticket.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T09:18:03.975Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "MetodoPago.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Enums\\MetodoPago.cs",
+              "RelativeDocumentMoniker": "Domain\\Enums\\MetodoPago.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Enums\\MetodoPago.cs",
+              "RelativeToolTip": "Domain\\Enums\\MetodoPago.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T09:00:40.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "AsistenciaCommand.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Commands\\AsistenciaCommand.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Commands\\AsistenciaCommand.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Commands\\AsistenciaCommand.cs",
+              "RelativeToolTip": "Infrastructure\\Commands\\AsistenciaCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T12:27:56.325Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "TipoDescuento.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Enums\\TipoDescuento.cs",
+              "RelativeDocumentMoniker": "Domain\\Enums\\TipoDescuento.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Enums\\TipoDescuento.cs",
+              "RelativeToolTip": "Domain\\Enums\\TipoDescuento.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T09:00:44.751Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "ClaseQuery.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Queries\\ClaseQuery.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Queries\\ClaseQuery.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Queries\\ClaseQuery.cs",
+              "RelativeToolTip": "Infrastructure\\Queries\\ClaseQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T12:28:32.431Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "MiembroQuery.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Queries\\MiembroQuery.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Queries\\MiembroQuery.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Queries\\MiembroQuery.cs",
+              "RelativeToolTip": "Infrastructure\\Queries\\MiembroQuery.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAIA0wDAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T07:39:31.678Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "Microsoft.Common.CurrentVersion.targets",
+              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "ViewState": "AgIAANIUAAAAAAAAAAASwPsUAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2025-12-18T14:01:39.883Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "MembresiaQuery.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Queries\\MembresiaQuery.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Queries\\MembresiaQuery.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Queries\\MembresiaQuery.cs",
+              "RelativeToolTip": "Infrastructure\\Queries\\MembresiaQuery.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAgwBkAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T09:51:57.856Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "ApiError.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Responses\\ApiError.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\Responses\\ApiError.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Responses\\ApiError.cs",
+              "RelativeToolTip": "Application\\DTOs\\Responses\\ApiError.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T12:27:21.384Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "PagoService.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\UseCases\\PagoService.cs",
+              "RelativeDocumentMoniker": "Application\\UseCases\\PagoService.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\UseCases\\PagoService.cs",
+              "RelativeToolTip": "Application\\UseCases\\PagoService.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAwwBgAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T09:10:04.639Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
               "Title": "MiembroService.cs",
-              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\UseCases\\MiembroService.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\UseCases\\MiembroService.cs",
               "RelativeDocumentMoniker": "Application\\UseCases\\MiembroService.cs",
-              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Application\\UseCases\\MiembroService.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\UseCases\\MiembroService.cs",
               "RelativeToolTip": "Application\\UseCases\\MiembroService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAANEAAAAAAAAAAAASwPQAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-16T18:43:50.487Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "MiembroController.cs",
-              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\API\\Controllers\\MiembroController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\MiembroController.cs",
-              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\API\\Controllers\\MiembroController.cs",
-              "RelativeToolTip": "API\\Controllers\\MiembroController.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAA5wC8AAAAzAAAAAAAAAA==",
+              "DocumentIndex": 39,
+              "Title": "PagoResponse.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Responses\\PagoResponse.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\Responses\\PagoResponse.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Responses\\PagoResponse.cs",
+              "RelativeToolTip": "Application\\DTOs\\Responses\\PagoResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-16T18:43:25.414Z"
+              "WhenOpened": "2025-12-11T04:18:30.561Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 42,
+              "Title": "MembresiaResponse.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Responses\\MembresiaResponse.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\Responses\\MembresiaResponse.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Responses\\MembresiaResponse.cs",
+              "RelativeToolTip": "Application\\DTOs\\Responses\\MembresiaResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T04:18:09.284Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "PagoController.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\API\\Controllers\\PagoController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\PagoController.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\API\\Controllers\\PagoController.cs",
+              "RelativeToolTip": "API\\Controllers\\PagoController.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAiwBQAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T09:09:39.401Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "MiembroResponse.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Responses\\MiembroResponse.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\Responses\\MiembroResponse.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Responses\\MiembroResponse.cs",
+              "RelativeToolTip": "Application\\DTOs\\Responses\\MiembroResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBQAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T18:44:30.478Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "PagoCommand.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Commands\\PagoCommand.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Commands\\PagoCommand.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Commands\\PagoCommand.cs",
+              "RelativeToolTip": "Infrastructure\\Commands\\PagoCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBcAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T09:10:22.672Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "ReporteService.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\UseCases\\ReporteService.cs",
+              "RelativeDocumentMoniker": "Application\\UseCases\\ReporteService.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\UseCases\\ReporteService.cs",
+              "RelativeToolTip": "Application\\UseCases\\ReporteService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T09:21:47.68Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "BadRequestException.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\Exceptions\\BadRequestException.cs",
+              "RelativeDocumentMoniker": "Application\\Exceptions\\BadRequestException.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\Exceptions\\BadRequestException.cs",
+              "RelativeToolTip": "Application\\Exceptions\\BadRequestException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T10:06:29.215Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "TicketResponse.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Responses\\TicketResponse.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\Responses\\TicketResponse.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\DTOs\\Responses\\TicketResponse.cs",
+              "RelativeToolTip": "Application\\DTOs\\Responses\\TicketResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T04:19:23.425Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "IPagoCommand.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\Interfaces\\ICommands\\IPagoCommand.cs",
+              "RelativeDocumentMoniker": "Application\\Interfaces\\ICommands\\IPagoCommand.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\Interfaces\\ICommands\\IPagoCommand.cs",
+              "RelativeToolTip": "Application\\Interfaces\\ICommands\\IPagoCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T09:46:11.84Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "PagoQuery.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Queries\\PagoQuery.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Queries\\PagoQuery.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Infrastructure\\Queries\\PagoQuery.cs",
+              "RelativeToolTip": "Infrastructure\\Queries\\PagoQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T09:22:31.384Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "MiembroController.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\API\\Controllers\\MiembroController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\MiembroController.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\API\\Controllers\\MiembroController.cs",
+              "RelativeToolTip": "API\\Controllers\\MiembroController.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAADwv0gAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T07:41:03.795Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "MembresiaService.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\UseCases\\MembresiaService.cs",
+              "RelativeDocumentMoniker": "Application\\UseCases\\MembresiaService.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\UseCases\\MembresiaService.cs",
+              "RelativeToolTip": "Application\\UseCases\\MembresiaService.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T07:43:12.653Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "IMiembroService.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\Interfaces\\IServices\\IMiembroService.cs",
+              "RelativeDocumentMoniker": "Application\\Interfaces\\IServices\\IMiembroService.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\Interfaces\\IServices\\IMiembroService.cs",
+              "RelativeToolTip": "Application\\Interfaces\\IServices\\IMiembroService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T07:38:17.444Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "IMiembroQuery.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\Interfaces\\IQuerys\\IMiembroQuery.cs",
+              "RelativeDocumentMoniker": "Application\\Interfaces\\IQuerys\\IMiembroQuery.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Application\\Interfaces\\IQuerys\\IMiembroQuery.cs",
+              "RelativeToolTip": "Application\\Interfaces\\IQuerys\\IMiembroQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T07:38:58.146Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
               "Title": "Descuento.cs",
-              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Domain\\Entities\\Descuento.cs",
+              "DocumentMoniker": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Entities\\Descuento.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Descuento.cs",
-              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Domain\\Entities\\Descuento.cs",
+              "ToolTip": "C:\\Users\\54116\\Desktop\\pc\\PortFolio\\Gym-Repo\\Backend\\Domain\\Entities\\Descuento.cs",
               "RelativeToolTip": "Domain\\Entities\\Descuento.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-16T15:45:50.684Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Factory.cs",
-              "DocumentMoniker": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Infrastructure\\Persistence\\Factory.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Factory.cs",
-              "ToolTip": "E:\\UNAJ\\Ingenieria de Software I\\integrador_GRUPAL\\Gimnasio\\Backend\\Infrastructure\\Persistence\\Factory.cs",
-              "RelativeToolTip": "Infrastructure\\Persistence\\Factory.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T22:28:45.717Z"
+              "WhenOpened": "2025-11-16T15:45:50.684Z",
+              "EditorCaption": ""
             }
           ]
         }

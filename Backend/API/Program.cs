@@ -77,6 +77,9 @@ builder.Services.AddScoped<IReporteQuery, ReporteQuery>();
 builder.Services.AddScoped<IInscripcionCommand, InscripcionCommand>();
 builder.Services.AddScoped<IInscripcionService, InscripcionService>();
 builder.Services.AddScoped<IInscripcionQuery, InscripcionQuery>();
+builder.Services.AddScoped<IUsuarioQuery, UsuarioQuery>();
+builder.Services.AddScoped<ILoginCommand, LoginCommand>();
+builder.Services.AddScoped<ILoginService, LoginService>();
 
 
 var app = builder.Build();

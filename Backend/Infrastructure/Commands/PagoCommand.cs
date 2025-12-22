@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using Application.DTOs.Requests;
@@ -24,33 +25,11 @@ namespace Infrastructure.Commands
             _context = context;
         }
 
-        public async Task<PagoResponse> AddAsync(PagoRequest request)
+        public async Task<Pago> AddAsync(Pago pago)
         {
-            var membresia = await _context.Membresias
-                .FirstOrDefaultAsync(m => m.Id == request.MembresiaId);
-
-            if (membresia == null)
-                throw new NotFoundException($"No existe una membresía con ID {request.MembresiaId}");
-
-            var pago = new Pago
-            {
-                MembresiaId = request.MembresiaId,
-                Monto = request.Monto,
-                Fecha = DateTime.Now,
-                MetodoPago = (MetodoPago)request.MetodoPagoId
-            };
-
             _context.Pagos.Add(pago);
             await _context.SaveChangesAsync();
-
-            return new PagoResponse
-            {
-                Id = pago.Id,
-                MembresiaId = pago.MembresiaId,
-                Monto = pago.Monto,
-                Fecha = pago.Fecha,
-                MetodoPago = pago.MetodoPago.ToString()
-            };
+            return pago;
         }
     }
 }

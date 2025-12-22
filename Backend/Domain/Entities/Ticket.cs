@@ -11,8 +11,8 @@ namespace Domain.Entities
         public int Id { get; set; }
         public int PagoId { get; set; }
         public DateTime FechaEmision { get; set; }
-        public string Detalle { get; set; }
+        public string? Detalle { get; set; }
 
-        public Pago Pago { get; set; }
+        public Pago? Pago { get; set; }
     }
 }
