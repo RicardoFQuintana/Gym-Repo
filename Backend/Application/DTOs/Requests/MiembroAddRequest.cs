@@ -14,9 +14,9 @@ namespace Application.DTOs.Requests
         public string? Direccion { get; set; }
         public int? Telefono { get; set; }
         public DateTime? FechaNacimiento { get; set; }
-        public string? UrlFoto { get; set; }
         public int TipoMembresiaId { get; set; }
         public int DescuentoId { get; set; }
-        public int MetodoPagoId { get; set; }
+
+        public string? UrlFoto { get; set; }
     }
 }

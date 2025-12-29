@@ -16,7 +16,10 @@ const estado = {
   tiposMembresiaMap: {} // { "Mensual": {nombre, precio}, ... }
 };
 
+
+
 // === INICIALIZACIÓN ===
+//
 document.addEventListener("DOMContentLoaded", async () => {
   await cargarPagos();
   await cargarTiposMembresia();

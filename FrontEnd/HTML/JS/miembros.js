@@ -1,6 +1,7 @@
 // =============================
 // CONFIGURACIÓN / ESTADO
 // =============================
+const API_BASE = "https://localhost:7271/api";
 const API_BASE_MIEMBRO = "https://localhost:7271/api/Miembro";
 const API_BASE_ENTRENADOR = "https://localhost:7271/api/Entrenador";
 const API_BASE_DESCUENTO = "https://localhost:7271/api/Descuento";
@@ -14,6 +15,10 @@ let descuentosDisponibles = [];
 let fotoFileMiembro = null;          // input file real
 let urlFotoInputHidden = null;  
 
+let miembroTemporal = null;
+let tipoMembresiaActual = null;
+let descuentoActual = 0;
+
 // =============================
 // INICIALIZACIÓN
 // =============================
@@ -22,10 +27,12 @@ document.addEventListener("DOMContentLoaded", () => {
   inicializarElementos();
   inicializarEventos();
   inicializarCarga();
+
+
 });
 
 // DOM elements (serán llenados en inicializarElementos)
-let modalForm, contenedorForm, btnAbrirModal, btnCancelarForm, btnGuardarForm;
+let contenedorForm, btnAbrirModal, btnCancelarForm, btnGuardarForm;
 let tablaBody, btnBuscarMiembro;
 let modalConsulta, btnConfirmarConsulta, btnCancelarConsulta;
 let modalDetalle, btnCerrarDetalle, btnEditarDetalle, btnEliminarDetalle, btnImprimirDetalle, detalleContenido;
@@ -77,6 +84,9 @@ function inicializarElementos() {
   fotoFileMiembro = document.getElementById("fotoFile");
   urlFotoInputHidden = document.getElementById("urlFotoInput");
 
+  metodoPagoSelect = document.getElementById("metodoPago");
+
+
   
   // inputs dentro del DIV miembroForm (no es <form>)
   inputCampos = {
@@ -105,12 +115,16 @@ function inicializarEventos() {
   }
 
   if (fotoFileMiembro) {
-    fotoFileMiembro.addEventListener("change", async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
+    fotoFileMiembro.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
 
-        const base64 = await convertirArchivoABase64(file);
-        urlFotoInputHidden.value = base64;
+      // 🔒 normalizamos nombre
+      const nombreSeguro = file.name.replace(/\s+/g, "_");
+
+      // ✅ SOLO guardamos la URL
+      urlFotoInputHidden.value =
+        `../ASSETS/img/ImagenesPersonas/ImagenesEditadas/${nombreSeguro}`;
     });
   }
 
@@ -229,13 +243,60 @@ function inicializarEventos() {
       });
     }
   });
+
+  const btnNuevoPago = document.getElementById("btnNuevoPago");
+  if (btnNuevoPago) {
+    btnNuevoPago.addEventListener("click", abrirModalPagoDesdeMiembro);
+  }
+
+  const btnCerrarNuevoPago = document.getElementById("cerrarNuevoPago");
+  if (btnCerrarNuevoPago) {
+    btnCerrarNuevoPago.addEventListener("click", () => {
+
+      // ❌ descartamos el alta temporal
+      miembroPendienteCreacion = null;
+
+      // cerramos pago
+      cerrarModalNuevoPago();
+
+      // volvemos al formulario de miembro
+      abrirModalElement(modalForm);
+    });
+  }
+  inputCampos.tipoMembresia.addEventListener("change", async (e) => {
+    const id = e.target.value;
+    if (!id) return;
+    await cargarTipoMembresia(id);
+    calcularTotal();
+  });
+
+  inputCampos.descuentoSelect.addEventListener("change", async (e) => {
+    const id = e.target.value;
+    await cargarDescuento(id);
+    calcularTotal();
+  });
+
 }
 
 function convertirArchivoABase64(file) {
   return new Promise((resolve, reject) => {
+
+    // 🔒 límite 1MB
+    if (file.size > 1024 * 1024) {
+      reject("La imagen no puede superar 1MB");
+      return;
+    }
+
     const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = () => reject("Error leyendo archivo");
+
+    reader.onload = () => {
+      // SOLO base64, sin "data:image/..."
+      const base64 = reader.result.split(",")[1];
+      resolve(base64);
+    };
+
+    reader.onerror = () => reject("Error leyendo imagen");
+
     reader.readAsDataURL(file);
   });
 }
@@ -446,132 +507,85 @@ function escapeHtml(text) {
 // Form / Guardar (Crear / Actualizar)
 // =============================
 async function guardarMiembroHandler() {
-    // Validaciones mínimas
-    const nombre = inputCampos.nombre.value.trim();
-    const apellido = inputCampos.apellido.value.trim();
-    const dni = inputCampos.dni.value.trim();
 
-    if (!nombre || !apellido || !dni) {
-        return alert("Nombre, Apellido y DNI son obligatorios.");
-    }
+  // =====================
+  // VALIDACIONES
+  // =====================
+  const nombre = inputCampos.nombre.value.trim();
+  const apellido = inputCampos.apellido.value.trim();
+  const dni = inputCampos.dni.value.trim();
 
-    const isEditing = !!miembroSeleccionado;
+  if (!nombre || !apellido || !dni) {
+    alert("Nombre, Apellido y DNI son obligatorios.");
+    return;
+  }
 
-    // -----------------------------------
-    // Construcción del payload BASE (POST o PATCH según sea)
-    // -----------------------------------
-    const payload = {
-        nombre,
-        apellido,
-        dni: parseInt(dni),
-        direccion: inputCampos.direccion.value.trim(),
-        telefono: inputCampos.telefono.value.trim()
-            ? parseInt(inputCampos.telefono.value.trim())
-            : null,
-        fechaNacimiento: inputCampos.fechaNacimiento.value || null,
-        urlFoto: urlFotoInputHidden.value.trim() // acá JS ya dejó base64 o url real
-    };
+  const isEditing = !!miembroSeleccionado;
 
-    // ======================================
-    // CAMPOS EXCLUSIVOS PARA CREAR
-    // ======================================
-    if (!isEditing) {
-        // tipoMembresiaId
-        if (inputCampos.tipoMembresia?.value) {
-            payload.tipoMembresiaId = parseInt(inputCampos.tipoMembresia.value);
-        }
+  // =====================
+  // PAYLOAD BASE (DTO REAL)
+  // =====================
+  const payload = {
+    nombre,
+    apellido,
+    dni: parseInt(dni),
+    direccion: inputCampos.direccion.value.trim(),
+    telefono: inputCampos.telefono.value.trim()
+      ? parseInt(inputCampos.telefono.value.trim())
+      : null,
+    fechaNacimiento: inputCampos.fechaNacimiento.value || null,
+    urlFoto: urlFotoInputHidden.value,
+    tipoMembresiaId: parseInt(inputCampos.tipoMembresia.value),
+    descuentoId: inputCampos.descuentoSelect?.value
+      ? parseInt(inputCampos.descuentoSelect.value)
+      : null,
+    metodoPagoId: parseInt(inputCampos.metodoPago.value)
+  };
 
-        // metodoPagoId
-        if (inputCampos.metodoPago?.value) {
-            payload.metodoPagoId = parseInt(inputCampos.metodoPago.value);
-        }
-
-        // descuentoId
-        if (inputCampos.descuentoSelect?.value) {
-            payload.descuentoId = parseInt(inputCampos.descuentoSelect.value);
-        }
-    }
-    // ======================================
-    // EDITAR — PATCH SOLO LO PERMITIDO
-    // ======================================
-    else {
-        // EL PATCH *NO ACEPTA* membresía / metodoPago / descuento
-        // Asignamos entrenador luego de actualizar.
-    }
-
+  // =====================================================
+  // ✳️ EDITAR MIEMBRO
+  // =====================================================
+  if (isEditing) {
     try {
-        let res;
+      const res = await actualizarMiembroAPI(miembroSeleccionado.id, payload);
 
-        // -----------------------------------
-        // 1) Crear o Actualizar Miembro
-        // -----------------------------------
-        if (isEditing) {
-            res = await actualizarMiembroAPI(miembroSeleccionado.id, payload);
-        } else {
-            res = await crearMiembroAPI(payload);
-        }
+      if (!res.ok) {
+        alert("Error al actualizar el miembro.");
+        return;
+      }
 
-        if (!res.ok && res.status !== 201) {
-            const errorJson = await res.json().catch(() => null);
-            const errMsg = errorJson?.message || errorJson?.title || JSON.stringify(errorJson || "");
-            alert(`Error al guardar (código ${res.status}). ${errMsg}`);
-            return;
-        }
-
-        // -----------------------------------
-        // 2) Tomamos el ID recién creado o el existente
-        // -----------------------------------
-        let miembroId = isEditing ? miembroSeleccionado.id : null;
-
-        if (!isEditing) {
-            const creado = await res.json().catch(() => null);
-            if (!creado || !creado.id) {
-                alert("Miembro creado pero el servidor no devolvió un ID.");
-                return;
-            }
-            miembroId = creado.id;
-        }
-
-        // -----------------------------------
-        // 3) Asignar Entrenador automáticamente (CREAR o EDITAR)
-        // -----------------------------------
-        const entrenadorId = inputCampos.entrenadorPersonal?.value;
-
-        if (entrenadorId && entrenadorId !== "" && entrenadorId !== "0") {
-            // No permitir eliminar entrenador → solo asignar si eligen alguno
-            try {
-                const asignarRes = await fetch(
-                    `${API_BASE_MIEMBRO}/asignar-entrenador?miembroId=${miembroId}&entrenadorId=${entrenadorId}`,
-                    { method: "PUT" }
-                );
-
-                if (!asignarRes.ok) {
-                    alert("Miembro guardado, pero NO se pudo asignar el entrenador.");
-                }
-            } catch (err) {
-                console.error("Error asignando entrenador:", err);
-                alert("Miembro guardado, pero falló la asignación del entrenador.");
-            }
-        }
-
-        // -----------------------------------
-        // Finalizar
-        // -----------------------------------
-        await cargarMiembros();
-        cerrarModalElement(modalForm);
-        miembroSeleccionado = null;
-
-        alert(
-            isEditing
-                ? "Miembro actualizado correctamente."
-                : "Miembro creado correctamente. Entrenador asignado si correspondía."
+      // Entrenador (igual que antes)
+      const entrenadorId = inputCampos.entrenadorPersonal?.value;
+      if (entrenadorId && entrenadorId !== "0") {
+        await fetch(
+          `${API_BASE_MIEMBRO}/asignar-entrenador?miembroId=${miembroSeleccionado.id}&entrenadorId=${entrenadorId}`,
+          { method: "PUT" }
         );
+      }
+
+      await cargarMiembros();
+      cerrarModalElement(modalForm);
+      miembroSeleccionado = null;
+
+      alert("Miembro actualizado correctamente ✔");
 
     } catch (err) {
-        console.error("Error general al guardar miembro:", err);
-        alert("Error de red al guardar miembro.");
+      console.error(err);
+      alert("Error de red al actualizar miembro.");
     }
+
+    return; // ⛔ NO sigue a pago
+  }
+
+  // =====================================================
+  // ✳️ CREAR MIEMBRO → SE GUARDA TEMPORAL PARA PAGO
+  // =====================================================
+  miembroTemporal = payload;
+
+  cerrarModalElement(modalForm);
+  abrirModalPagoDesdeMiembro();
 }
+
 function limpiarFormulario() {
   if (!inputCampos) return;
   inputCampos.miembroId.value = "";
@@ -602,6 +616,202 @@ function cargarFormularioParaEdicion(miembro) {
   if (inputCampos.urlFotoInput) inputCampos.urlFotoInput.value = miembro.urlFoto ?? "";
   if (inputCampos.descuentoSelect) inputCampos.descuentoSelect.value = miembro.descuentoId ?? "";
   miembroSeleccionado = miembro;
+}
+
+function abrirModalPagoDesdeMiembro() {
+  if (!miembroTemporal || !tipoMembresiaActual) {
+    alert("Datos incompletos para el pago.");
+    return;
+  }
+
+  const total =
+    tipoMembresiaActual.costo -
+    tipoMembresiaActual.costo * (descuentoActual || 0);
+
+  document.getElementById("np-miembro").value =
+    `${miembroTemporal.nombre} ${miembroTemporal.apellido}`;
+
+  document.getElementById("np-membresia").value =
+    tipoMembresiaActual.nombre;
+
+  document.getElementById("np-monto-base").value =
+    `$${tipoMembresiaActual.costo.toLocaleString()}`;
+
+  document.getElementById("np-descuento").value =
+    `${Math.round((descuentoActual || 0) * 100)}%`;
+
+  document.getElementById("np-total").value =
+    `$${Math.round(total).toLocaleString()}`;
+
+  document.getElementById("np-metodo").value =
+    metodoPagoSelect.options[metodoPagoSelect.selectedIndex].text;
+
+  document.getElementById("modalNuevoPago").classList.add("active");
+}
+
+
+
+function cerrarModalNuevoPago() {
+  const modal = document.getElementById("modalNuevoPago");
+  if (!modal) return;
+
+  modal.classList.remove("active");
+
+  document.getElementById("np-membresia").value = "";
+  document.getElementById("np-monto-base").value = "";
+  document.getElementById("np-descuento").value = "";
+  document.getElementById("np-total").value = "";
+  document.getElementById("np-miembro").value = "";
+}
+
+function imprimirTicket(pago) {
+  try {
+    if (!pago || !pago.ticket) {
+      throw new Error("Pago o ticket inexistente");
+    }
+
+    const t = pago.ticket;
+
+    const contenidoHTML = `
+      <!DOCTYPE html>
+      <html lang="es">
+      <head>
+        <meta charset="UTF-8" />
+        <title>Ticket de Pago</title>
+
+        <style>
+          body {
+            font-family: monospace;
+            margin: 30px;
+            background: #f2f2f2;
+          }
+
+          .ticket {
+            background: white;
+            padding: 20px;
+            max-width: 320px;
+            margin: auto;
+            border: 1px dashed #000;
+          }
+
+          h2 {
+            text-align: center;
+            margin-bottom: 10px;
+          }
+
+          .campo {
+            margin: 6px 0;
+            font-size: 14px;
+          }
+
+          .linea {
+            border-top: 1px dashed #000;
+            margin: 12px 0;
+          }
+
+          .footer {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 15px;
+          }
+        </style>
+      </head>
+
+      <body>
+        <div class="ticket">
+          <h2>Gimnasio Cuerpo Sano</h2>
+
+          <div class="campo">Ticket Nº: ${t.id}</div>
+          <div class="campo">Fecha: ${new Date(t.fechaEmision).toLocaleString()}</div>
+
+          <div class="linea"></div>
+
+          <div class="campo">Membresía ID: ${pago.membresiaId}</div>
+          <div class="campo">Monto: $${(pago.monto / 100).toLocaleString()}</div>
+          <div class="campo">Método: ${pago.metodoPago}</div>
+
+          <div class="linea"></div>
+
+          <div class="campo">${t.detalle}</div>
+
+          <div class="footer">
+            Gracias por su pago
+          </div>
+        </div>
+
+        <script>
+          window.onload = () => window.print();
+        </script>
+      </body>
+      </html>
+    `;
+
+    const w = window.open("", "_blank");
+    if (!w) throw new Error("Popup bloqueado");
+
+    w.document.write(contenidoHTML);
+    w.document.close();
+
+  } catch (err) {
+    console.error("Error imprimirTicket:", err);
+    alert("No se pudo imprimir el ticket.");
+  }
+}
+
+// Confirmar y POST al backend
+async function confirmarPago() {
+
+  if (!miembroTemporal) {
+    alert("No hay datos del miembro para crear.");
+    return;
+  }
+
+  try {
+    // 1️⃣ Crear miembro
+    const resMiembro = await fetch(`${API_BASE}/Miembro`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(miembroTemporal)
+    });
+
+    if (!resMiembro.ok) throw new Error("Error creando miembro");
+
+    const miembroCreado = await resMiembro.json();
+
+    // 2️⃣ Crear pago
+    const total =
+      tipoMembresiaActual.costo -
+      tipoMembresiaActual.costo * (descuentoActual || 0);
+
+    const pagoPayload = {
+      miembroId: miembroCreado.id,
+      metodoPagoId: miembroTemporal.metodoPagoId,
+      tipoMembresiaId: tipoMembresiaActual.id,
+      monto: Math.round(total * 100)
+    };
+
+    const resPago = await fetch(`${API_BASE}/Pago`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(pagoPayload)
+    });
+
+    if (!resPago.ok) throw new Error("Error en el pago");
+
+    const pago = await resPago.json();
+    imprimirTicket(pago);
+
+    // 3️⃣ Limpieza
+    miembroTemporal = null;
+    cerrarModalNuevoPago();
+    await cargarMiembros();
+
+    alert("Miembro creado y pago registrado ✔");
+
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
 }
 
 // -----------------------------

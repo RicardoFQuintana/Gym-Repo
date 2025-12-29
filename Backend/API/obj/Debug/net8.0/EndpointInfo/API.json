@@ -1830,10 +1830,6 @@
             "format": "date-time",
             "nullable": true
           },
-          "urlFoto": {
-            "type": "string",
-            "nullable": true
-          },
           "tipoMembresiaId": {
             "type": "integer",
             "format": "int32"
@@ -1842,9 +1838,9 @@
             "type": "integer",
             "format": "int32"
           },
-          "metodoPagoId": {
-            "type": "integer",
-            "format": "int32"
+          "urlFoto": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

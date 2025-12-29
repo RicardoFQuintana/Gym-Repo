@@ -40,23 +40,6 @@ namespace Application.UseCases
 
             var tipoMembresia = await _tipoMembresiaService.GetById(request.TipoMembresiaId);
 
-            decimal costo = tipoMembresia.Costo;
-            int duracionDias = tipoMembresia.DuracionDias;
-            decimal porcentajeDescuento = (await _descuentoService.GetById(request.DescuentoId)).Porcentaje;
-            decimal costoFinal = costo - (costo * porcentajeDescuento);
-
-            var pago = new Pago
-            {
-                Monto = costoFinal,
-                Fecha = DateTime.Now,
-                MetodoPago = (MetodoPago)request.MetodoPagoId,
-                Ticket = new Ticket
-                {
-                    FechaEmision = DateTime.Now,
-                    Detalle = $"Pago inicial de membresía del miembro {request.Nombre} {request.Apellido}"
-                }
-            };
-
             var miembro = new Miembro
             {
                 Nombre = request.Nombre,
@@ -71,15 +54,16 @@ namespace Application.UseCases
                 Membresia = new Membresia
                 {
                     TipoMembresiaId = request.TipoMembresiaId,
-                    CostoFinal = costoFinal,
+                    CostoFinal = tipoMembresia.Costo,
                     FechaInicio = DateTime.Now.Date,
-                    FechaVencimiento = DateTime.Now.Date.AddDays(duracionDias),
-                    Pagos = new List<Pago> { pago }
+                    FechaVencimiento = DateTime.Now.Date.AddDays(tipoMembresia.DuracionDias),
+                    Pagos = new List<Pago>() // 👈 vacío
                 },
 
                 Inscripciones = new List<Inscripcion>(),
                 Asistencias = new List<Asistencia>()
             };
+
 
             await _command.Add(miembro);
 

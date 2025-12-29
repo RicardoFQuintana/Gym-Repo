@@ -26,10 +26,22 @@ namespace API.Controllers
                 var miembro = await _service.Add(request);
                 return StatusCode(201, miembro);
             }
-
-            catch(ConflictException ex)
+            catch (ConflictException ex)
             {
                 return Conflict(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ERROR:");
+                Console.WriteLine(ex.Message);
+
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine("INNER:");
+                    Console.WriteLine(ex.InnerException.Message);
+                }
+
+                throw;
             }
         }
 
