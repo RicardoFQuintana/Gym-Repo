@@ -187,6 +187,7 @@ C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\bin\Debug\net8.0\API.dl
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\bin\Debug\net8.0\API.pdb
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\bin\Debug\net8.0\Azure.Core.dll
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\bin\Debug\net8.0\Azure.Identity.dll
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\bin\Debug\net8.0\BCrypt.Net-Next.dll
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\bin\Debug\net8.0\Humanizer.dll
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\bin\Debug\net8.0\Microsoft.Build.Locator.dll
@@ -349,11 +350,10 @@ C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\obj\Debug\net8.0\static
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.API.props
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.API.props
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\obj\Debug\net8.0\staticwebassets.pack.json
-C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\obj\Debug\net8.0\API.csproj.Up2Date
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\obj\Debug\net8.0\API.dll
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\obj\Debug\net8.0\refint\API.dll
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\obj\Debug\net8.0\API.pdb
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\obj\Debug\net8.0\API.genruntimeconfig.cache
 C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\obj\Debug\net8.0\ref\API.dll
-C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\54116\Desktop\pc\PortFolio\Gym-Repo\Backend\API\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

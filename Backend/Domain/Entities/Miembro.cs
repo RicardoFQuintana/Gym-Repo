@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
@@ -9,6 +11,7 @@ namespace Domain.Entities
 {
     public class Miembro : Persona
     {
+        
         public int DescuentoId { get; set; }
         public int? EntrenadorId { get; set; }
         public Entrenador Entrenador { get; set; }
