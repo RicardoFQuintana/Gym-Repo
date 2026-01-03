@@ -96,8 +96,13 @@
                     ============================ -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="fotoFile">Elegir Foto:</label>
-                            <input type="file" id="fotoFile" accept="image/*"  required/>
+                            <label class="file-label">Elegir foto</label>
+
+                            <label class="file-upload">
+                                <input type="file" id="fotoFile" accept="image/*">
+                                <span class="file-btn">Seleccionar foto</span>
+                                <span class="file-name" id="fileName">Ningún archivo seleccionado</span>
+                            </label>
                         </div>
                         <div class="form-group">
                             <label for="metodoPago">Método de Pago:</label>
@@ -121,7 +126,7 @@
                         </div>
                     </div>
 
-                    <!-- Oculto: URL de foto (Base64) -->
+                    <!-- Oculto: URL de foto -->
                     <input type="hidden" id="urlFotoInput" />
 
                     <!-- Botones -->

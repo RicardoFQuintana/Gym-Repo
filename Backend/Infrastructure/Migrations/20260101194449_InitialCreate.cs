@@ -13,19 +13,13 @@ namespace Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateSequence(
-                name: "EntrenadorSequence");
-
-            migrationBuilder.CreateSequence(
-                name: "MiembroSequence");
-
             migrationBuilder.CreateTable(
                 name: "Actividad",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -39,7 +33,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Porcentaje = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
@@ -48,29 +42,30 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Empleados",
+                name: "Empleado",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Usuario = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Rol = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Usuario = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rol = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Activo = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Empleados", x => x.Id);
+                    table.PrimaryKey("PK_Empleado", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Entrenador",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR [EntrenadorSequence]"),
-                    UrlCertificado = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UrlCertificado = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Dni = table.Column<int>(type: "int", nullable: false),
                     Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Telefono = table.Column<int>(type: "int", nullable: true),
@@ -88,7 +83,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     DuracionDias = table.Column<int>(type: "int", nullable: false),
                     Costo = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
@@ -103,7 +98,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Cupo = table.Column<int>(type: "int", nullable: false),
                     Dia = table.Column<int>(type: "int", nullable: false),
                     HoraInicio = table.Column<TimeSpan>(type: "time", nullable: false),
@@ -119,24 +114,25 @@ namespace Infrastructure.Migrations
                         column: x => x.ActividadId,
                         principalTable: "Actividad",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Clase_Entrenador_EntrenadorId",
                         column: x => x.EntrenadorId,
                         principalTable: "Entrenador",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Miembro",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR [MiembroSequence]"),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     DescuentoId = table.Column<int>(type: "int", nullable: false),
                     EntrenadorId = table.Column<int>(type: "int", nullable: true),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Dni = table.Column<int>(type: "int", nullable: false),
                     Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Telefono = table.Column<int>(type: "int", nullable: true),
@@ -151,12 +147,13 @@ namespace Infrastructure.Migrations
                         column: x => x.DescuentoId,
                         principalTable: "Descuento",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Miembro_Entrenador_EntrenadorId",
                         column: x => x.EntrenadorId,
                         principalTable: "Entrenador",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -178,7 +175,7 @@ namespace Infrastructure.Migrations
                         column: x => x.ClaseId,
                         principalTable: "Clase",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Asistencia_Miembro_MiembroId",
                         column: x => x.MiembroId,
@@ -273,7 +270,7 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PagoId = table.Column<int>(type: "int", nullable: false),
                     FechaEmision = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Detalle = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Detalle = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -308,9 +305,9 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Empleados",
+                table: "Empleado",
                 columns: new[] { "Id", "Activo", "PasswordHash", "Rol", "Usuario" },
-                values: new object[] { 1, true, "$2a$12$DuwymARFebDA7JnbmuknHuxr78z6uUj5cSvtnqfEwo1Ydawp.fgfm", "Admin", "admin" });
+                values: new object[] { 1, true, "HASH", "Admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "Entrenador",
@@ -512,38 +509,32 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Detalle", "FechaEmision", "PagoId" },
                 values: new object[,]
                 {
-                    { 1, "Pago registrado el 2025-01-02 por Juan Gómez. Monto: $15.000. Método: QR.", new DateTime(2025, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
-                    { 2, "Pago registrado el 2025-01-03 por Lucía Ramírez. Monto: $40.000. Método: TarjetaDebito.", new DateTime(2025, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 },
-                    { 3, "Pago registrado el 2025-01-04 por Carlos Fernández. Monto: $140.000. Método: TarjetaCredito.", new DateTime(2025, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 3 },
-                    { 4, "Pago registrado el 2025-01-05 por Mariana López. Monto: $15.000. Método: Efectivo.", new DateTime(2025, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 4 },
-                    { 5, "Pago registrado el 2025-01-06 por Diego Pérez. Monto: $40.000. Método: QR.", new DateTime(2025, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 5 },
-                    { 6, "Pago registrado el 2025-01-07 por Sofía Martínez. Monto: $140.000. Método: TarjetaDebito.", new DateTime(2025, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 6 },
-                    { 7, "Pago registrado el 2025-01-08 por Martín García. Monto: $15.000. Método: TarjetaCredito.", new DateTime(2025, 1, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 7 },
-                    { 8, "Pago registrado el 2025-01-09 por Camila Sosa. Monto: $40.000. Método: Efectivo.", new DateTime(2025, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 8 },
-                    { 9, "Pago registrado el 2025-01-10 por Federico Vargas. Monto: $140.000. Método: QR.", new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 9 },
-                    { 10, "Pago registrado el 2025-01-11 por Valentina Silva. Monto: $15.000. Método: TarjetaDebito.", new DateTime(2025, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 10 },
-                    { 11, "Pago registrado el 2025-01-12 por Gonzalo Rodríguez. Monto: $40.000. Método: TarjetaCredito.", new DateTime(2025, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 11 },
-                    { 12, "Pago registrado el 2025-01-13 por Carolina Torres. Monto: $140.000. Método: Efectivo.", new DateTime(2025, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 12 },
-                    { 13, "Pago registrado el 2025-01-14 por Andrés Alvarez. Monto: $15.000. Método: QR.", new DateTime(2025, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 13 },
-                    { 14, "Pago registrado el 2025-01-15 por Florencia Molina. Monto: $40.000. Método: TarjetaDebito.", new DateTime(2025, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 14 },
-                    { 15, "Pago registrado el 2025-01-16 por Pablo Herrera. Monto: $140.000. Método: TarjetaCredito.", new DateTime(2025, 1, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 15 },
-                    { 16, "Pago registrado el 2025-01-17 por Agustina Rossi. Monto: $15.000. Método: Efectivo.", new DateTime(2025, 1, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), 16 },
-                    { 17, "Pago registrado el 2025-01-18 por Sebastián Domínguez. Monto: $40.000. Método: QR.", new DateTime(2025, 1, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), 17 },
-                    { 18, "Pago registrado el 2025-01-19 por Ana Ruiz. Monto: $140.000. Método: TarjetaDebito.", new DateTime(2025, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 18 },
-                    { 19, "Pago registrado el 2025-01-20 por Tomás Ortiz. Monto: $15.000. Método: TarjetaCredito.", new DateTime(2025, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 19 },
-                    { 20, "Pago registrado el 2025-01-21 por Laura Iglesias. Monto: $40.000. Método: Efectivo.", new DateTime(2025, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 20 },
-                    { 21, "Pago registrado el 2025-01-22 por Ricardo Castro. Monto: $140.000. Método: QR.", new DateTime(2025, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 21 },
-                    { 22, "Pago registrado el 2025-01-23 por Gabriela Díaz. Monto: $15.000. Método: TarjetaDebito.", new DateTime(2025, 1, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), 22 },
-                    { 23, "Pago registrado el 2025-01-24 por Nicolás Páez. Monto: $40.000. Método: TarjetaCredito.", new DateTime(2025, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 23 },
-                    { 24, "Pago registrado el 2025-01-25 por Sabrina Suárez. Monto: $140.000. Método: Efectivo.", new DateTime(2025, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 24 },
-                    { 25, "Pago registrado el 2025-01-26 por Bruno Méndez. Monto: $15.000. Método: QR.", new DateTime(2025, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 25 }
+                    { 1, "Pago registrado el 2025-01-02 por Juan Gómez. Monto: $15,000. Método: QR.", new DateTime(2025, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 2, "Pago registrado el 2025-01-03 por Lucía Ramírez. Monto: $40,000. Método: TarjetaDebito.", new DateTime(2025, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 },
+                    { 3, "Pago registrado el 2025-01-04 por Carlos Fernández. Monto: $140,000. Método: TarjetaCredito.", new DateTime(2025, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 3 },
+                    { 4, "Pago registrado el 2025-01-05 por Mariana López. Monto: $15,000. Método: Efectivo.", new DateTime(2025, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 4 },
+                    { 5, "Pago registrado el 2025-01-06 por Diego Pérez. Monto: $40,000. Método: QR.", new DateTime(2025, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 5 },
+                    { 6, "Pago registrado el 2025-01-07 por Sofía Martínez. Monto: $140,000. Método: TarjetaDebito.", new DateTime(2025, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 6 },
+                    { 7, "Pago registrado el 2025-01-08 por Martín García. Monto: $15,000. Método: TarjetaCredito.", new DateTime(2025, 1, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 7 },
+                    { 8, "Pago registrado el 2025-01-09 por Camila Sosa. Monto: $40,000. Método: Efectivo.", new DateTime(2025, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 8 },
+                    { 9, "Pago registrado el 2025-01-10 por Federico Vargas. Monto: $140,000. Método: QR.", new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 9 },
+                    { 10, "Pago registrado el 2025-01-11 por Valentina Silva. Monto: $15,000. Método: TarjetaDebito.", new DateTime(2025, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 10 },
+                    { 11, "Pago registrado el 2025-01-12 por Gonzalo Rodríguez. Monto: $40,000. Método: TarjetaCredito.", new DateTime(2025, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 11 },
+                    { 12, "Pago registrado el 2025-01-13 por Carolina Torres. Monto: $140,000. Método: Efectivo.", new DateTime(2025, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 12 },
+                    { 13, "Pago registrado el 2025-01-14 por Andrés Alvarez. Monto: $15,000. Método: QR.", new DateTime(2025, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 13 },
+                    { 14, "Pago registrado el 2025-01-15 por Florencia Molina. Monto: $40,000. Método: TarjetaDebito.", new DateTime(2025, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 14 },
+                    { 15, "Pago registrado el 2025-01-16 por Pablo Herrera. Monto: $140,000. Método: TarjetaCredito.", new DateTime(2025, 1, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 15 },
+                    { 16, "Pago registrado el 2025-01-17 por Agustina Rossi. Monto: $15,000. Método: Efectivo.", new DateTime(2025, 1, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), 16 },
+                    { 17, "Pago registrado el 2025-01-18 por Sebastián Domínguez. Monto: $40,000. Método: QR.", new DateTime(2025, 1, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), 17 },
+                    { 18, "Pago registrado el 2025-01-19 por Ana Ruiz. Monto: $140,000. Método: TarjetaDebito.", new DateTime(2025, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 18 },
+                    { 19, "Pago registrado el 2025-01-20 por Tomás Ortiz. Monto: $15,000. Método: TarjetaCredito.", new DateTime(2025, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 19 },
+                    { 20, "Pago registrado el 2025-01-21 por Laura Iglesias. Monto: $40,000. Método: Efectivo.", new DateTime(2025, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 20 },
+                    { 21, "Pago registrado el 2025-01-22 por Ricardo Castro. Monto: $140,000. Método: QR.", new DateTime(2025, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 21 },
+                    { 22, "Pago registrado el 2025-01-23 por Gabriela Díaz. Monto: $15,000. Método: TarjetaDebito.", new DateTime(2025, 1, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), 22 },
+                    { 23, "Pago registrado el 2025-01-24 por Nicolás Páez. Monto: $40,000. Método: TarjetaCredito.", new DateTime(2025, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 23 },
+                    { 24, "Pago registrado el 2025-01-25 por Sabrina Suárez. Monto: $140,000. Método: Efectivo.", new DateTime(2025, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 24 },
+                    { 25, "Pago registrado el 2025-01-26 por Bruno Méndez. Monto: $15,000. Método: QR.", new DateTime(2025, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 25 }
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Actividad_Nombre",
-                table: "Actividad",
-                column: "Nombre",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Asistencia_ClaseId",
@@ -564,24 +555,6 @@ namespace Infrastructure.Migrations
                 name: "IX_Clase_EntrenadorId",
                 table: "Clase",
                 column: "EntrenadorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Descuento_Nombre",
-                table: "Descuento",
-                column: "Nombre",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Empleados_Usuario",
-                table: "Empleados",
-                column: "Usuario",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Entrenador_Dni",
-                table: "Entrenador",
-                column: "Dni",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inscripcion_ClaseId",
@@ -610,12 +583,6 @@ namespace Infrastructure.Migrations
                 column: "DescuentoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Miembro_Dni",
-                table: "Miembro",
-                column: "Dni",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Miembro_EntrenadorId",
                 table: "Miembro",
                 column: "EntrenadorId");
@@ -639,7 +606,7 @@ namespace Infrastructure.Migrations
                 name: "Asistencia");
 
             migrationBuilder.DropTable(
-                name: "Empleados");
+                name: "Empleado");
 
             migrationBuilder.DropTable(
                 name: "Inscripcion");
@@ -670,12 +637,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Entrenador");
-
-            migrationBuilder.DropSequence(
-                name: "EntrenadorSequence");
-
-            migrationBuilder.DropSequence(
-                name: "MiembroSequence");
         }
     }
 }

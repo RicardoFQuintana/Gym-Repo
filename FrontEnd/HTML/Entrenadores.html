@@ -70,16 +70,30 @@
 
 
                     <div class="form-row">
+
                         <div class="form-group">
-                            <label>Foto del Entrenador:</label>
-                            <input type="file" id="fotoFile" accept="image/*">
+                            <label class="file-label">Foto del Entrenador:</label>
+
+                            <label class="file-upload">
+                                <input type="file" id="fotoFile" accept="image/*">
+                                <span class="file-btn">Seleccionar foto</span>
+                                <span class="file-name" id="fileNameFoto">Ningún archivo seleccionado</span>
+                            </label>
                         </div>
 
                         <div class="form-group">
-                            <label>Certificado:</label>
-                            <input type="file" id="fotoFileCertificado" accept="image/*">
+                            <label class="file-label">Certificado:</label>
+
+                            <label class="file-upload">
+                                <input type="file" id="fotoFileCertificado" accept="image/*">
+                                <span class="file-btn">Seleccionar foto</span>
+                                <span class="file-name" id="fileNameCertificado">Ningún archivo seleccionado</span>
+                            </label>
                         </div>
                     </div>
+
+                    <input type="hidden" id="urlFotoEntrenador">
+                    <input type="hidden" id="urlCertificadoEntrenador">
 
 
                     <div class="btn-group">

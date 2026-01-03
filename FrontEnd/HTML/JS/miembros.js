@@ -1,3 +1,14 @@
+// ⛑️ CAPTURA GLOBAL DE ERRORES JS
+window.onerror = function (msg, url, line, col, error) {
+  alert(
+    "ERROR JS:\n" +
+    msg +
+    "\nLínea: " + line +
+    "\nColumna: " + col
+  );
+  console.error("Error completo:", error);
+  return true; // evita que el runtime cierre la app
+};
 // =============================
 // CONFIGURACIÓN / ESTADO
 // =============================
@@ -5,15 +16,15 @@ const API_BASE = "https://localhost:7271/api";
 const API_BASE_MIEMBRO = "https://localhost:7271/api/Miembro";
 const API_BASE_ENTRENADOR = "https://localhost:7271/api/Entrenador";
 const API_BASE_DESCUENTO = "https://localhost:7271/api/Descuento";
+const BASE_IMG_PATH = "../ASSETS/img/";
 
 let miembros = [];
 let paginaActual = 1;
-const filasPorPagina = 5;
+const filasPorPagina = 4;
 let miembroSeleccionado = null;
 let entrenadoresDisponibles = [];
 let descuentosDisponibles = [];
-let fotoFileMiembro = null;          // input file real
-let urlFotoInputHidden = null;  
+
 
 let miembroTemporal = null;
 let tipoMembresiaActual = null;
@@ -39,12 +50,19 @@ let modalDetalle, btnCerrarDetalle, btnEditarDetalle, btnEliminarDetalle, btnImp
 let modalAsignar, miembroNombreAsignar, selectEntrenador, btnConfirmarAsignacion, btnCancelarAsignacion;
 let modalCarnet, btnCerrarCarnet, btnImprimirCarnet, carnetNombre, carnetDni, carnetId, carnetFoto, carnetImprimible, barcodeCanvas;
 let inputCampos; 
+let fotoInput, fileNameSpan, urlFotoInput;
 
 
 // =============================
 // INICIALIZAR ELEMENTOS & EVENTOS
 // =============================
 function inicializarElementos() {
+
+
+  fotoInput = document.getElementById("fotoFile");
+  fileNameSpan = document.getElementById("fileName");
+  urlFotoInput = document.getElementById("urlFotoInput"); // hidden
+
   modalForm = document.getElementById("modalMiembro");
   contenedorForm = document.getElementById("miembroForm"); // es DIV en tu HTML
   btnAbrirModal = document.getElementById("abrirMiembroBtn");
@@ -81,8 +99,6 @@ function inicializarElementos() {
   carnetFoto = document.getElementById("carnetFoto");
   carnetImprimible = document.getElementById("carnetImprimible");
   barcodeCanvas = document.getElementById("barcodeCanvas");
-  fotoFileMiembro = document.getElementById("fotoFile");
-  urlFotoInputHidden = document.getElementById("urlFotoInput");
 
   metodoPagoSelect = document.getElementById("metodoPago");
 
@@ -105,26 +121,40 @@ function inicializarElementos() {
 }
 
 function inicializarEventos() {
+
+
+  fotoInput.addEventListener("change", () => {
+    if (!fotoInput.files.length) {
+      fileNameSpan.textContent = "Ningún archivo seleccionado";
+      urlFotoInput.value = "";
+      return;
+    }
+
+    const file = fotoInput.files[0];
+
+    // Validación básica
+    if (!file.type.startsWith("image/")) {
+      alert("Debe ser una imagen");
+      fotoInput.value = "";
+      fileNameSpan.textContent = "Ningún archivo seleccionado";
+      urlFotoInput.value = "";
+      return;
+    }
+
+    // ✅ SOLO el nombre del archivo
+    fileNameSpan.textContent = file.name;
+    urlFotoInput.value = file.name;
+
+    console.log("Foto seleccionada:", file.name);
+  });
+
+
   // Abrir modal nuevo miembro
   if (btnAbrirModal) {
     btnAbrirModal.addEventListener("click", () => {
       limpiarFormulario();
       miembroSeleccionado = null;
       abrirModalElement(modalForm);
-    });
-  }
-
-  if (fotoFileMiembro) {
-    fotoFileMiembro.addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      // 🔒 normalizamos nombre
-      const nombreSeguro = file.name.replace(/\s+/g, "_");
-
-      // ✅ SOLO guardamos la URL
-      urlFotoInputHidden.value =
-        `../ASSETS/img/ImagenesPersonas/ImagenesEditadas/${nombreSeguro}`;
     });
   }
 
@@ -278,29 +308,6 @@ function inicializarEventos() {
 
 }
 
-function convertirArchivoABase64(file) {
-  return new Promise((resolve, reject) => {
-
-    // 🔒 límite 1MB
-    if (file.size > 1024 * 1024) {
-      reject("La imagen no puede superar 1MB");
-      return;
-    }
-
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      // SOLO base64, sin "data:image/..."
-      const base64 = reader.result.split(",")[1];
-      resolve(base64);
-    };
-
-    reader.onerror = () => reject("Error leyendo imagen");
-
-    reader.readAsDataURL(file);
-  });
-}
-
 // =============================
 // CARGA INICIAL
 // =============================
@@ -448,7 +455,9 @@ function renderizarTabla() {
       <td>${escapeHtml(m.direccion || "")}</td>
       <td>${m.telefono || ""}</td>
       <td>${m.fechaNacimiento ? m.fechaNacimiento.substring(0,10) : ""}</td>
-      <td>${m.urlFoto ? `<img src="${m.urlFoto}" width="50">` : ""}</td>
+      <td><img src="${ m.urlFoto ? `${BASE_IMG_PATH}ImagenesPersonas/ImagenesEditadas/${m.urlFoto}` 
+        : `${BASE_IMG_PATH}ImagenesPersonas/ImagenesEditadas/default-user.png`}" class="avatar" width="50" alt="Foto miembro">
+      </td>
       <td>
         <button class="btn btn-edit btn-small" onclick="abrirEditarMiembro(${m.id})" data-tooltip="Editar Miembro">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-pen-line-icon lucide-file-pen-line"><path d="m18.226 5.226-2.52-2.52A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.351"/><path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><path d="M8 18h1"/></svg>
@@ -534,7 +543,7 @@ async function guardarMiembroHandler() {
       ? parseInt(inputCampos.telefono.value.trim())
       : null,
     fechaNacimiento: inputCampos.fechaNacimiento.value || null,
-    urlFoto: urlFotoInputHidden.value,
+    urlFoto: urlFotoInputHidden.value || null,
     tipoMembresiaId: parseInt(inputCampos.tipoMembresia.value),
     descuentoId: inputCampos.descuentoSelect?.value
       ? parseInt(inputCampos.descuentoSelect.value)
@@ -588,6 +597,7 @@ async function guardarMiembroHandler() {
 
 function limpiarFormulario() {
   if (!inputCampos) return;
+
   inputCampos.miembroId.value = "";
   inputCampos.nombre.value = "";
   inputCampos.apellido.value = "";
@@ -595,28 +605,64 @@ function limpiarFormulario() {
   inputCampos.direccion.value = "";
   inputCampos.telefono.value = "";
   inputCampos.fechaNacimiento.value = "";
+
   if (inputCampos.urlFotoInput) inputCampos.urlFotoInput.value = "";
   if (inputCampos.tipoMembresia) inputCampos.tipoMembresia.value = "";
   if (inputCampos.metodoPago) inputCampos.metodoPago.value = "";
   if (inputCampos.descuentoSelect) inputCampos.descuentoSelect.value = "";
+
+  // estado
   miembroSeleccionado = null;
-  if (fotoFileMiembro) fotoFileMiembro.value = "";
-  if (urlFotoInputHidden) urlFotoInputHidden.value = "";
+
+  // input file
+  if (fotoInput) fotoInput.value = "";
+
+  // hidden con nombre de la foto
+  if (urlFotoInput) urlFotoInput.value = "";
+
+  // texto visual del nombre del archivo
+  if (fileNameSpan) fileNameSpan.textContent = "Ningún archivo seleccionado";
 }
 
 function cargarFormularioParaEdicion(miembro) {
   if (!inputCampos) return;
+
   inputCampos.miembroId.value = miembro.id ?? "";
   inputCampos.nombre.value = miembro.nombre ?? "";
   inputCampos.apellido.value = miembro.apellido ?? "";
   inputCampos.dni.value = miembro.dni ?? "";
   inputCampos.direccion.value = miembro.direccion ?? "";
   inputCampos.telefono.value = miembro.telefono ?? "";
-  inputCampos.fechaNacimiento.value = miembro.fechaNacimiento ? miembro.fechaNacimiento.substring(0,10) : "";
-  if (inputCampos.urlFotoInput) inputCampos.urlFotoInput.value = miembro.urlFoto ?? "";
-  if (inputCampos.descuentoSelect) inputCampos.descuentoSelect.value = miembro.descuentoId ?? "";
+
+  inputCampos.fechaNacimiento.value = miembro.fechaNacimiento
+    ? miembro.fechaNacimiento.substring(0, 10)
+    : "";
+
+  // 🔹 Foto (solo nombre)
+  if (inputCampos.urlFotoInput) {
+    inputCampos.urlFotoInput.value = miembro.urlFoto ?? "";
+  }
+
+  // 🔹 UI del selector de archivo
+  if (fileNameSpan) {
+    fileNameSpan.textContent = miembro.urlFoto
+      ? miembro.urlFoto
+      : "Ningún archivo seleccionado";
+  }
+
+  // 🔹 input file SIEMPRE limpio
+  if (fotoInput) {
+    fotoInput.value = "";
+  }
+
+  // 🔹 descuento
+  if (inputCampos.descuentoSelect) {
+    inputCampos.descuentoSelect.value = miembro.descuentoId ?? "";
+  }
+
   miembroSeleccionado = miembro;
 }
+
 
 function abrirModalPagoDesdeMiembro() {
   if (!miembroTemporal || !tipoMembresiaActual) {
@@ -648,8 +694,6 @@ function abrirModalPagoDesdeMiembro() {
 
   document.getElementById("modalNuevoPago").classList.add("active");
 }
-
-
 
 function cerrarModalNuevoPago() {
   const modal = document.getElementById("modalNuevoPago");
@@ -768,11 +812,7 @@ async function confirmarPago() {
 
   try {
     // 1️⃣ Crear miembro
-    const resMiembro = await fetch(`${API_BASE}/Miembro`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(miembroTemporal)
-    });
+    const resMiembro = await crearMiembroAPI(miembroTemporal)
 
     if (!resMiembro.ok) throw new Error("Error creando miembro");
 
@@ -889,13 +929,21 @@ async function mostrarDetalleMiembro(mi) {
     const fechaInicio = datosMembresia?.fechaInicio ? datosMembresia.fechaInicio.substring(0, 10) : "N/A";
     const fechaVenc = datosMembresia?.fechaVencimiento ? datosMembresia.fechaVencimiento.substring(0, 10) : "N/A";
 
+    // 🔹 Foto (siempre hay una)
+    const fotoSrc = mi.urlFoto
+      ? `${BASE_IMG_PATH}ImagenesPersonas/ImagenesEditadas/${mi.urlFoto}`
+      : `${BASE_IMG_PATH}ImagenesPersonas/ImagenesEditadas/default-user.png`;
+
     detalleContenido.innerHTML = `
         <h3>${nombreCompleto}</h3>
 
-        ${mi.urlFoto ? `
-            <img src="${mi.urlFoto}" alt="Foto del miembro"
-            width="150" style="display:block;margin:10px auto;border-radius:8px;"/>
-        ` : ""}
+        <img 
+          src="${fotoSrc}" 
+          alt="Foto del miembro"
+          width="150"
+          style="display:block;margin:10px auto;border-radius:8px;"
+        />
+
 
         <hr>
 
@@ -907,7 +955,6 @@ async function mostrarDetalleMiembro(mi) {
         <p><strong>Descuento:</strong> ${mi.descuento || "N/A"}</p>
 
         <hr>
-
         <h4>Membresía</h4>
         <p><strong>Tipo:</strong> ${nombreMembresia}</p>
         <p><strong>Fecha Inicio:</strong> ${fechaInicio}</p>
@@ -1021,9 +1068,9 @@ async function imprimirMiembro(mi) {
           <h2>Ficha de Miembro</h2>
 
           <div class="foto">
-            ${mi.urlFoto ? `<img src="${mi.urlFoto}" alt="Foto del miembro">` : "<p>Sin foto</p>"}
+            <img src="${mi.urlFoto ? `${BASE_IMG_PATH}ImagenesPersonas/ImagenesEditadas/${mi.urlFoto}`
+              : `${BASE_IMG_PATH}ImagenesPersonas/ImagenesEditadas/default-user.png` }" alt="Foto del miembro">
           </div>
-
           <div class="campo"><span>Nombre:</span> ${escapeHtml(mi.nombre)} ${escapeHtml(mi.apellido)}</div>
           <div class="campo"><span>ID:</span> ${mi.id}</div>
           <div class="campo"><span>DNI:</span> ${mi.dni}</div>
@@ -1083,7 +1130,11 @@ function mostrarCarnet(miembroOrId) {
   if (carnetNombre) carnetNombre.textContent = `${miembro.nombre || ""} ${miembro.apellido || ""}`;
   if (carnetDni) carnetDni.textContent = miembro.dni ?? "";
   if (carnetId) carnetId.textContent = miembro.id ?? "";
-  if (carnetFoto) carnetFoto.src = miembro.urlFoto || "../ASSETS/img/default-user.png";
+  if (carnetFoto)
+    carnetFoto.src = miembro.urlFoto
+      ? `${BASE_IMG_PATH}ImagenesPersonas/ImagenesEditadas/${miembro.urlFoto}`
+      : `${BASE_IMG_PATH}ImagenesPersonas/ImagenesEditadas/default-user.png`;
+
 
   // Generar codigo de barras
   try {

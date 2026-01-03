@@ -599,7 +599,7 @@ body.sidebar-active .content-wrapper {
 
 .trainer-cards {
   display: flex;
-  gap: 20px;
+  gap: 23px;
   transition: transform 0.4s ease;
   will-change: transform;
 }
@@ -1973,3 +1973,47 @@ canvas {
   height: 100% !important;
 }
 
+.file-label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.file-upload input[type="file"] {
+  display: none;
+}
+
+.file-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  margin-top: 25px;
+}
+
+.file-btn {
+  background: var(--highlight);
+  color: white;
+  padding: 8px 50px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.file-btn:hover {
+  background: var(--highlight-hover);
+  transform: translateY(-1px);
+}
+
+.file-name {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}

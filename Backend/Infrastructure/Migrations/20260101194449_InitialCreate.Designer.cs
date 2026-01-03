@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251227160555_InitialCreate")]
+    [Migration("20260101194449_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,10 +24,6 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.HasSequence("EntrenadorSequence");
-
-            modelBuilder.HasSequence("MiembroSequence");
 
             modelBuilder.Entity("Domain.Entities.Actividad", b =>
                 {
@@ -42,12 +38,10 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Nombre")
-                        .IsUnique();
 
                     b.ToTable("Actividad", (string)null);
 
@@ -336,7 +330,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("time");
 
                     b.Property<string>("Nombre")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -426,15 +419,13 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<decimal>("Porcentaje")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Nombre")
-                        .IsUnique();
 
                     b.ToTable("Descuento", (string)null);
 
@@ -472,32 +463,26 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Rol")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Usuario")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Usuario")
-                        .IsUnique();
-
-                    b.ToTable("Empleados", (string)null);
+                    b.ToTable("Empleado", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Activo = true,
-                            PasswordHash = "$2a$12$DuwymARFebDA7JnbmuknHuxr78z6uUj5cSvtnqfEwo1Ydawp.fgfm",
+                            PasswordHash = "HASH",
                             Rol = "Admin",
                             Usuario = "admin"
                         });
@@ -507,13 +492,11 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("NEXT VALUE FOR [EntrenadorSequence]");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseSequence(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Apellido")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Direccion")
@@ -526,26 +509,21 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Nombre")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Telefono")
                         .HasColumnType("int");
 
                     b.Property<string>("UrlCertificado")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("UrlFoto")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Dni")
-                        .IsUnique();
-
                     b.ToTable("Entrenador", (string)null);
-
-                    b.UseTpcMappingStrategy();
 
                     b.HasData(
                         new
@@ -1057,13 +1035,11 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("NEXT VALUE FOR [MiembroSequence]");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseSequence(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Apellido")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DescuentoId")
@@ -1082,7 +1058,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Nombre")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Telefono")
@@ -1095,14 +1070,9 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("DescuentoId");
 
-                    b.HasIndex("Dni")
-                        .IsUnique();
-
                     b.HasIndex("EntrenadorId");
 
                     b.ToTable("Miembro", (string)null);
-
-                    b.UseTpcMappingStrategy();
 
                     b.HasData(
                         new
@@ -1645,7 +1615,6 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Detalle")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FechaEmision")
@@ -1665,175 +1634,175 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Detalle = "Pago registrado el 2025-01-02 por Juan Gómez. Monto: $15.000. Método: QR.",
+                            Detalle = "Pago registrado el 2025-01-02 por Juan Gómez. Monto: $15,000. Método: QR.",
                             FechaEmision = new DateTime(2025, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Detalle = "Pago registrado el 2025-01-03 por Lucía Ramírez. Monto: $40.000. Método: TarjetaDebito.",
+                            Detalle = "Pago registrado el 2025-01-03 por Lucía Ramírez. Monto: $40,000. Método: TarjetaDebito.",
                             FechaEmision = new DateTime(2025, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 2
                         },
                         new
                         {
                             Id = 3,
-                            Detalle = "Pago registrado el 2025-01-04 por Carlos Fernández. Monto: $140.000. Método: TarjetaCredito.",
+                            Detalle = "Pago registrado el 2025-01-04 por Carlos Fernández. Monto: $140,000. Método: TarjetaCredito.",
                             FechaEmision = new DateTime(2025, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 3
                         },
                         new
                         {
                             Id = 4,
-                            Detalle = "Pago registrado el 2025-01-05 por Mariana López. Monto: $15.000. Método: Efectivo.",
+                            Detalle = "Pago registrado el 2025-01-05 por Mariana López. Monto: $15,000. Método: Efectivo.",
                             FechaEmision = new DateTime(2025, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 4
                         },
                         new
                         {
                             Id = 5,
-                            Detalle = "Pago registrado el 2025-01-06 por Diego Pérez. Monto: $40.000. Método: QR.",
+                            Detalle = "Pago registrado el 2025-01-06 por Diego Pérez. Monto: $40,000. Método: QR.",
                             FechaEmision = new DateTime(2025, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 5
                         },
                         new
                         {
                             Id = 6,
-                            Detalle = "Pago registrado el 2025-01-07 por Sofía Martínez. Monto: $140.000. Método: TarjetaDebito.",
+                            Detalle = "Pago registrado el 2025-01-07 por Sofía Martínez. Monto: $140,000. Método: TarjetaDebito.",
                             FechaEmision = new DateTime(2025, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 6
                         },
                         new
                         {
                             Id = 7,
-                            Detalle = "Pago registrado el 2025-01-08 por Martín García. Monto: $15.000. Método: TarjetaCredito.",
+                            Detalle = "Pago registrado el 2025-01-08 por Martín García. Monto: $15,000. Método: TarjetaCredito.",
                             FechaEmision = new DateTime(2025, 1, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 7
                         },
                         new
                         {
                             Id = 8,
-                            Detalle = "Pago registrado el 2025-01-09 por Camila Sosa. Monto: $40.000. Método: Efectivo.",
+                            Detalle = "Pago registrado el 2025-01-09 por Camila Sosa. Monto: $40,000. Método: Efectivo.",
                             FechaEmision = new DateTime(2025, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 8
                         },
                         new
                         {
                             Id = 9,
-                            Detalle = "Pago registrado el 2025-01-10 por Federico Vargas. Monto: $140.000. Método: QR.",
+                            Detalle = "Pago registrado el 2025-01-10 por Federico Vargas. Monto: $140,000. Método: QR.",
                             FechaEmision = new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 9
                         },
                         new
                         {
                             Id = 10,
-                            Detalle = "Pago registrado el 2025-01-11 por Valentina Silva. Monto: $15.000. Método: TarjetaDebito.",
+                            Detalle = "Pago registrado el 2025-01-11 por Valentina Silva. Monto: $15,000. Método: TarjetaDebito.",
                             FechaEmision = new DateTime(2025, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 10
                         },
                         new
                         {
                             Id = 11,
-                            Detalle = "Pago registrado el 2025-01-12 por Gonzalo Rodríguez. Monto: $40.000. Método: TarjetaCredito.",
+                            Detalle = "Pago registrado el 2025-01-12 por Gonzalo Rodríguez. Monto: $40,000. Método: TarjetaCredito.",
                             FechaEmision = new DateTime(2025, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 11
                         },
                         new
                         {
                             Id = 12,
-                            Detalle = "Pago registrado el 2025-01-13 por Carolina Torres. Monto: $140.000. Método: Efectivo.",
+                            Detalle = "Pago registrado el 2025-01-13 por Carolina Torres. Monto: $140,000. Método: Efectivo.",
                             FechaEmision = new DateTime(2025, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 12
                         },
                         new
                         {
                             Id = 13,
-                            Detalle = "Pago registrado el 2025-01-14 por Andrés Alvarez. Monto: $15.000. Método: QR.",
+                            Detalle = "Pago registrado el 2025-01-14 por Andrés Alvarez. Monto: $15,000. Método: QR.",
                             FechaEmision = new DateTime(2025, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 13
                         },
                         new
                         {
                             Id = 14,
-                            Detalle = "Pago registrado el 2025-01-15 por Florencia Molina. Monto: $40.000. Método: TarjetaDebito.",
+                            Detalle = "Pago registrado el 2025-01-15 por Florencia Molina. Monto: $40,000. Método: TarjetaDebito.",
                             FechaEmision = new DateTime(2025, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 14
                         },
                         new
                         {
                             Id = 15,
-                            Detalle = "Pago registrado el 2025-01-16 por Pablo Herrera. Monto: $140.000. Método: TarjetaCredito.",
+                            Detalle = "Pago registrado el 2025-01-16 por Pablo Herrera. Monto: $140,000. Método: TarjetaCredito.",
                             FechaEmision = new DateTime(2025, 1, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 15
                         },
                         new
                         {
                             Id = 16,
-                            Detalle = "Pago registrado el 2025-01-17 por Agustina Rossi. Monto: $15.000. Método: Efectivo.",
+                            Detalle = "Pago registrado el 2025-01-17 por Agustina Rossi. Monto: $15,000. Método: Efectivo.",
                             FechaEmision = new DateTime(2025, 1, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 16
                         },
                         new
                         {
                             Id = 17,
-                            Detalle = "Pago registrado el 2025-01-18 por Sebastián Domínguez. Monto: $40.000. Método: QR.",
+                            Detalle = "Pago registrado el 2025-01-18 por Sebastián Domínguez. Monto: $40,000. Método: QR.",
                             FechaEmision = new DateTime(2025, 1, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 17
                         },
                         new
                         {
                             Id = 18,
-                            Detalle = "Pago registrado el 2025-01-19 por Ana Ruiz. Monto: $140.000. Método: TarjetaDebito.",
+                            Detalle = "Pago registrado el 2025-01-19 por Ana Ruiz. Monto: $140,000. Método: TarjetaDebito.",
                             FechaEmision = new DateTime(2025, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 18
                         },
                         new
                         {
                             Id = 19,
-                            Detalle = "Pago registrado el 2025-01-20 por Tomás Ortiz. Monto: $15.000. Método: TarjetaCredito.",
+                            Detalle = "Pago registrado el 2025-01-20 por Tomás Ortiz. Monto: $15,000. Método: TarjetaCredito.",
                             FechaEmision = new DateTime(2025, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 19
                         },
                         new
                         {
                             Id = 20,
-                            Detalle = "Pago registrado el 2025-01-21 por Laura Iglesias. Monto: $40.000. Método: Efectivo.",
+                            Detalle = "Pago registrado el 2025-01-21 por Laura Iglesias. Monto: $40,000. Método: Efectivo.",
                             FechaEmision = new DateTime(2025, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 20
                         },
                         new
                         {
                             Id = 21,
-                            Detalle = "Pago registrado el 2025-01-22 por Ricardo Castro. Monto: $140.000. Método: QR.",
+                            Detalle = "Pago registrado el 2025-01-22 por Ricardo Castro. Monto: $140,000. Método: QR.",
                             FechaEmision = new DateTime(2025, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 21
                         },
                         new
                         {
                             Id = 22,
-                            Detalle = "Pago registrado el 2025-01-23 por Gabriela Díaz. Monto: $15.000. Método: TarjetaDebito.",
+                            Detalle = "Pago registrado el 2025-01-23 por Gabriela Díaz. Monto: $15,000. Método: TarjetaDebito.",
                             FechaEmision = new DateTime(2025, 1, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 22
                         },
                         new
                         {
                             Id = 23,
-                            Detalle = "Pago registrado el 2025-01-24 por Nicolás Páez. Monto: $40.000. Método: TarjetaCredito.",
+                            Detalle = "Pago registrado el 2025-01-24 por Nicolás Páez. Monto: $40,000. Método: TarjetaCredito.",
                             FechaEmision = new DateTime(2025, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 23
                         },
                         new
                         {
                             Id = 24,
-                            Detalle = "Pago registrado el 2025-01-25 por Sabrina Suárez. Monto: $140.000. Método: Efectivo.",
+                            Detalle = "Pago registrado el 2025-01-25 por Sabrina Suárez. Monto: $140,000. Método: Efectivo.",
                             FechaEmision = new DateTime(2025, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 24
                         },
                         new
                         {
                             Id = 25,
-                            Detalle = "Pago registrado el 2025-01-26 por Bruno Méndez. Monto: $15.000. Método: QR.",
+                            Detalle = "Pago registrado el 2025-01-26 por Bruno Méndez. Monto: $15,000. Método: QR.",
                             FechaEmision = new DateTime(2025, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PagoId = 25
                         });
@@ -1855,7 +1824,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -1890,7 +1860,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Clase", "Clase")
                         .WithMany("Asistencias")
                         .HasForeignKey("ClaseId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Domain.Entities.Miembro", "Miembro")
                         .WithMany("Asistencias")
@@ -1908,13 +1878,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Actividad", "Actividad")
                         .WithMany("Clases")
                         .HasForeignKey("ActividadId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Entrenador", "Entrenador")
                         .WithMany("Clases")
                         .HasForeignKey("EntrenadorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Actividad");
@@ -1965,12 +1935,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Descuento", "Descuento")
                         .WithMany("Miembros")
                         .HasForeignKey("DescuentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Entrenador", "Entrenador")
                         .WithMany("Miembros")
-                        .HasForeignKey("EntrenadorId");
+                        .HasForeignKey("EntrenadorId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Descuento");
 
@@ -2034,8 +2005,7 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Inscripciones");
 
-                    b.Navigation("Membresia")
-                        .IsRequired();
+                    b.Navigation("Membresia");
                 });
 
             modelBuilder.Entity("Domain.Entities.Pago", b =>
