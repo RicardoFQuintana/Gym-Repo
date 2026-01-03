@@ -2,14 +2,14 @@
 // CONFIGURACIÓN / ESTADO
 // =============================
 const API_BASE_ENTRENADOR = "https://localhost:7271/api/Entrenador";
+const CERTIFICADO_IMG_PATH = "../ASSETS/img/ImagenesCertificados/";
+const ENTRENADOR_IMG_PATH = "../ASSETS/img/ImagenesPersonas/ImagenesEditadas/";
 
 let entrenadores = [];
 let paginaActual = 1;
-const filasPorPagina = 5;
+const filasPorPagina = 4;
 let entrenadorSeleccionado = null;
 
-let fotoBase64 = null;
-let certificadoBase64 = null;
 
 // =============================
 // VARIABLES DE DOM
@@ -20,6 +20,8 @@ let modalConsulta, btnConfirmarConsulta, btnCancelarConsulta;
 let modalDetalle, btnCerrarDetalle, btnEditarDetalle, btnEliminarDetalle, btnImprimirDetalle, detalleContenido;
 
 let inputCampos;
+
+let fotoInput, certInput, fileNameFoto, fileNameCert, urlFotoEntrenador, urlCertEntrenador;
 
 // =============================
 // INICIALIZACIÓN
@@ -64,10 +66,17 @@ function inicializarElementos() {
         dni: document.getElementById("dni"),
         direccion: document.getElementById("direccion"),
         telefono: document.getElementById("telefono"),
-        fechaNacimiento: document.getElementById("fechaNacimiento"),
-        fotoFile: document.getElementById("fotoFile"),
-        certificadoFile: document.getElementById("fotoFileCertificado")
+        fechaNacimiento: document.getElementById("fechaNacimiento")
     };
+
+    fotoInput = document.getElementById("fotoFile");
+    certInput = document.getElementById("fotoFileCertificado");
+
+    fileNameFoto = document.getElementById("fileNameFoto");
+    fileNameCert = document.getElementById("fileNameCertificado");
+
+    urlFotoEntrenador = document.getElementById("urlFotoEntrenador");
+    urlCertEntrenador = document.getElementById("urlCertificadoEntrenador");
 }
 
 // =============================
@@ -75,21 +84,47 @@ function inicializarElementos() {
 // =============================
 function inicializarEventos() {
 
+    fotoInput.addEventListener("change", () => {
+        if (!fotoInput.files.length) {
+            fileNameFoto.textContent = "Ningún archivo seleccionado";
+            urlFotoEntrenador.value = "";
+            return;
+        }
+
+        const file = fotoInput.files[0];
+        if (!file.type.startsWith("image/")) {
+            alert("Debe ser una imagen");
+            fotoInput.value = "";
+            return;
+        }
+
+        fileNameFoto.textContent = file.name;
+        urlFotoEntrenador.value = file.name;
+    });
+
+    certInput.addEventListener("change", () => {
+        if (!certInput.files.length) {
+            fileNameCert.textContent = "Ningún archivo seleccionado";
+            urlCertEntrenador.value = "";
+            return;
+        }
+
+        const file = certInput.files[0];
+        if (!file.type.startsWith("image/")) {
+            alert("Debe ser una imagen");
+            certInput.value = "";
+            return;
+        }
+
+        fileNameCert.textContent = file.name;
+        urlCertEntrenador.value = file.name; 
+    });
+
     // Abrir modal crear
     btnAbrirModal.addEventListener("click", () => {
         limpiarFormulario();
         entrenadorSeleccionado = null;
         abrirModal(modalForm);
-    });
-
-    // FOTO → convertir a base64
-    inputCampos.fotoFile.addEventListener("change", async (e) => {
-        fotoBase64 = await convertirArchivoABase64(e.target.files[0]);
-    });
-
-    // CERTIFICADO → convertir a base64
-    inputCampos.certificadoFile.addEventListener("change", async (e) => {
-        certificadoBase64 = await convertirArchivoABase64(e.target.files[0]);
     });
 
     // Guardar (crear o editar)
@@ -159,33 +194,9 @@ function inicializarEventos() {
     });
 }
 
-// =============================
-// FILE → BASE64
-// =============================
-function convertirArchivoABase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = e => reject(e);
-        reader.readAsDataURL(file);
-    });
-}
-function normalizarBase64(str) {
-    if (!str) return "";
-    if (str.startsWith("data:")) return str;  // Ya está bien
-
-    // Detectar tipo
-    let tipo = "image/png";
-
-    // Si vuelve desde BD sin prefijo, lo reconstruimos
-    return `data:${tipo};base64,${str}`;
-}
 function verCertificado(id) {
 
-    // Corregido: doble igual para permitir string/number
     const ent = entrenadores.find(e => e.id == id);
-
-    console.log("Buscando certificado de id:", id, ent);
 
     if (!ent) {
         alert("Entrenador no encontrado.");
@@ -197,30 +208,13 @@ function verCertificado(id) {
         return;
     }
 
-    try {
-        const base64 = ent.urlCertificado.split(",")[1]; 
-        const mime = ent.urlCertificado.substring(
-            ent.urlCertificado.indexOf(":") + 1,
-            ent.urlCertificado.indexOf(";")
-        );
+    // 👉 construir la ruta completa
+    const certificadoUrl = `${CERTIFICADO_IMG_PATH}${ent.urlCertificado}`;
 
-        const byteCharacters = atob(base64);
-        const byteNumbers = new Array(byteCharacters.length);
-
-        for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-
-        const blob = new Blob([new Uint8Array(byteNumbers)], { type: mime });
-        const url = URL.createObjectURL(blob);
-
-        window.open(url, "_blank");
-
-    } catch (err) {
-        console.error("Error abriendo certificado:", err);
-        alert("No se pudo abrir el certificado.");
-    }
+    // abrir en nueva pestaña
+    window.open(certificadoUrl, "_blank");
 }
+
 // =============================
 // API
 // =============================
@@ -241,7 +235,6 @@ async function cargarEntrenadores() {
         alert("Error cargando entrenadores.");
     }
 }
-
 
 function crearBoton(html, clases) {
     const b = document.createElement("button");
@@ -284,7 +277,7 @@ function renderizarTabla() {
       <td>${ent.direccion || ""}</td>
       <td>${ent.telefono || ""}</td>
       <td>${ent.fechaNacimiento ? ent.fechaNacimiento.substring(0,10) : ""}</td>
-      <td>${ent.urlFoto ? `<img src="${ent.urlFoto}" width="50">` : ""}</td>
+      <td><img src="${ent.urlFoto? `${ENTRENADOR_IMG_PATH}${ent.urlFoto}` : `${ENTRENADOR_IMG_PATH}default-user.png`}" class = avatar width="50"></td>
       <td>${ent.urlCertificado ? `<button class="btn-small btn" onclick="verCertificado('${ent.id}')">Ver</button>` : "N/A"}</td>
       <td>
         <button class="btn btn-edit btn-small" onclick="abrirEditarEntrenador(${ent.id})" data-tooltip="Editar Entrenador">
@@ -320,8 +313,10 @@ function renderizarTabla() {
 // =============================
 function limpiarFormulario() {
     Object.values(inputCampos).forEach(i => i.value = "");
-    fotoBase64 = null;
-    certificadoBase64 = null;
+    urlFotoEntrenador.value = "";
+    urlCertEntrenador.value = "";
+    fileNameFoto.textContent = "Ningún archivo seleccionado";
+    fileNameCert.textContent = "Ningún archivo seleccionado";
     entrenadorSeleccionado = null;
 }
 
@@ -334,9 +329,12 @@ function cargarFormularioParaEdicion(ent) {
     inputCampos.telefono.value = ent.telefono || "";
     inputCampos.fechaNacimiento.value = ent.fechaNacimiento ? ent.fechaNacimiento.substring(0,10) : "";
 
-    // mantener fotos si no se cambian
-    fotoBase64 = ent.urlFoto;
-    certificadoBase64 = ent.urlCertificado;
+    // mantener nombres de archivos
+    urlFotoEntrenador.value = ent.urlFoto || "";
+    urlCertEntrenador.value = ent.urlCertificado || "";
+
+    fileNameFoto.textContent = ent.urlFoto || "Ningún archivo seleccionado";
+    fileNameCert.textContent = ent.urlCertificado || "Ningún archivo seleccionado";
 
     entrenadorSeleccionado = ent;
 }
@@ -353,12 +351,19 @@ async function guardarEntrenador() {
         direccion: inputCampos.direccion.value.trim(),
         telefono: inputCampos.telefono.value.trim() ? parseInt(inputCampos.telefono.value) : null,
         fechaNacimiento: inputCampos.fechaNacimiento.value || null,
-        urlFoto: fotoBase64,
-        urlCertificado: certificadoBase64
+        urlFoto: urlFotoEntrenador.value,
+        urlCertificado: urlCertEntrenador.value
     };
 
-    if (!data.urlFoto) return alert("Debes elegir una foto.");
-    if (!data.urlCertificado) return alert("Debes elegir un certificado.");
+    if (!data.urlFoto) {
+        alert("Debes elegir una foto.");
+        return;
+    }
+
+    if (!data.urlCertificado) {
+        alert("Debes elegir un certificado.");
+        return;
+    }
 
     const isEditing = !!entrenadorSeleccionado;
     const url = isEditing
@@ -448,16 +453,23 @@ function mostrarDetalle(ent) {
         ? ent.miembros.map(m => `<li>${m.nombre} ${m.apellido} (DNI ${m.dni})</li>`).join("")
         : "<li>No tiene miembros asignados.</li>";
 
+    const fotoSrc = ent.urlFoto
+        ? `${ENTRENADOR_IMG_PATH}${ent.urlFoto}`
+        : `${ENTRENADOR_IMG_PATH}default-user.png`;
+
+    const certificadoSrc = ent.urlCertificado
+        ? `${CERTIFICADO_IMG_PATH}${ent.urlCertificado}`
+        : ""; 
+
+
     detalleContenido.innerHTML = `
         <h3>${ent.nombre} ${ent.apellido}</h3>
 
-        ${ent.urlFoto ? `
-            <img src="${ent.urlFoto}" alt="Foto del entrenador"
+        <img src="${fotoSrc}" alt="Foto del entrenador"
             width="150" style="display:auto;margin:10px 130px  10px  0px;border-radius:8px;"/>
-        ` : ""}  ${ent.urlCertificado ? `
-                <img src="${ent.urlCertificado}" alt="certificado del entrenador"
-                width="150" height="150" style="display:auto;margin:10px auto;border-radius:8px;"/>
-            ` : ""}
+
+        ${certificadoSrc ? `<img src="${certificadoSrc}" alt="certificado del entrenador"
+            width="150" height="150" style="display:auto;margin:10px auto;border-radius:8px;"/>` : ""}
 
         <hr>
 
@@ -499,6 +511,9 @@ async function imprimirEntrenador(ent) {
                 </div>
             `).join("")
             : `<div class="campo">No tiene miembros asignados.</div>`;
+
+        const fotoPrint = ent.urlFoto ? `${ENTRENADOR_IMG_PATH}${ent.urlFoto}` : ""; 
+        const certificadoPrint = ent.urlCertificado ? `${CERTIFICADO_IMG_PATH}${ent.urlCertificado}` : "";
 
         const contenidoHTML = `
             <!DOCTYPE html>
@@ -582,7 +597,12 @@ async function imprimirEntrenador(ent) {
                     <h2>Ficha del Entrenador</h2>
 
                     <div class="foto">
-                        ${ent.urlFoto ? `<img src="${ent.urlFoto}" alt="Foto del entrenador">` : "<p>Sin foto</p>"} ${ent.urlCertificado ? `<img src="${ent.urlCertificado}" width="250">` : ""}
+                        <img src="${fotoPrint}" alt="Foto del entrenador">
+
+                        ${certificadoPrint
+                            ? `<img src="${certificadoPrint}" style="width:250px;height:auto;margin-top:10px;">`
+                            : ""
+                        }
                     </div>
 
                     <div class="campo"><span>Nombre:</span> ${ent.nombre} ${ent.apellido}</div>
@@ -590,10 +610,9 @@ async function imprimirEntrenador(ent) {
                     <div class="campo"><span>DNI:</span> ${ent.dni}</div>
                     <div class="campo"><span>Teléfono:</span> ${ent.telefono || "N/A"}</div>
                     <div class="campo"><span>Dirección:</span> ${ent.direccion || "N/A"}</div>
-                    <div class="campo"><span>Fecha de Nacimiento:</span> ${ent.fechaNacimiento}</div>
-
-                    <div class="foto">
-                        
+                    <div class="campo">
+                        <span>Fecha de Nacimiento:</span>
+                        ${ent.fechaNacimiento ? ent.fechaNacimiento.substring(0,10) : "N/A"}
                     </div>
 
                     <div class="linea"></div>

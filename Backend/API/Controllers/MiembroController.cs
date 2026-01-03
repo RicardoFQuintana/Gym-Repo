@@ -41,7 +41,11 @@ namespace API.Controllers
                     Console.WriteLine(ex.InnerException.Message);
                 }
 
-                throw;
+                return StatusCode(500, new
+                {
+                    message = "Error interno al crear el miembro",
+                    detail = ex.InnerException?.Message ?? ex.Message
+                });
             }
         }
 
